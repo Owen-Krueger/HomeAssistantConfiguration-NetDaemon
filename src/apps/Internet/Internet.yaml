@@ -1,0 +1,3 @@
+﻿InternetConfiguration:
+  InternetUp: binary_sensor.internet_up
+  InternetModemSmartPlug: switch.internet_modem_smart_plug
