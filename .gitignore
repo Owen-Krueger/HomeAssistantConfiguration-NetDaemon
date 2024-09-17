@@ -396,3 +396,8 @@ FodyWeavers.xsd
 
 # JetBrains Rider
 *.sln.iml
+
+# NetDaemon
+generate_code.ps1
+src/HomeAssistantGenerated.cs
+src/NetDaemonCodegen/*
