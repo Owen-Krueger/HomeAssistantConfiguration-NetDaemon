@@ -4,7 +4,7 @@ WORKDIR /app
 # Copy csproj and restore as distinct layers
 WORKDIR /src
 COPY *.csproj ./
-RUN dotnet restore
+RUN dotnet restore ./NetDaemon.csproj
 
 # Copy everything else and build
 COPY . ./
