@@ -3,7 +3,7 @@ WORKDIR /app
 
 WORKDIR /src
 COPY *.csproj ./
-RUN dotnet restore "src/NetDaemon.csproj"
+RUN dotnet restore ./NetDaemon.csproj
 
 COPY . ./
 RUN dotnet publish -c Release -o out ./NetDaemon.csproj
