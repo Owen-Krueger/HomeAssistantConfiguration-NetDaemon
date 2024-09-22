@@ -11,8 +11,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.gitignore = .gitignore
 		Dockerfile = Dockerfile
 		README.md = README.md
-		update_all_dependencies.ps1 = update_all_dependencies.ps1
-		generate_code.ps1 = generate_code.ps1
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "scripts", "scripts", "{2CE5E6FC-A748-4A7C-8483-7AB0CDDB59C1}"
+	ProjectSection(SolutionItems) = preProject
+		scripts\update_all_dependencies.ps1 = scripts\update_all_dependencies.ps1
+		scripts\generate_entities.ps1 = scripts\generate_entities.ps1
 	EndProjectSection
 EndProject
 Global

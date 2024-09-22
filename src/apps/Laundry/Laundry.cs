@@ -1,7 +1,4 @@
-﻿using HomeAssistantGenerated;
-using NetDaemon.Utilities;
-
-namespace NetDaemon.apps.Laundry;
+﻿namespace NetDaemon.apps.Laundry;
 
 /// <summary>
 /// Automations for laundry.
@@ -10,21 +7,23 @@ namespace NetDaemon.apps.Laundry;
 public class Laundry
 {
     private readonly IServices services;
+    private readonly ILogger<Laundry> logger;
     
     /// <summary>
     /// Sets up laundry automations.
     /// </summary>
-    public Laundry(IHaContext context)
+    public Laundry(IHaContext context, ILogger<Laundry> logger)
     {
         var entities = new Entities(context);
         services = new Services(context);
+        this.logger = logger;
 
         entities.Sensor.WasherWasherMachineState
             .StateChanges()
             .Where(x =>
                 x.Old?.State == "run" &&
                 x.New?.State == "stop")
-            .Subscribe(_ => NotifyUsers(true));
+            .Subscribe(_ => NotifyFamily(true));
         
         // Usually, state becomes "finished", but occasionally goes from "cooling" to "none".
         entities.Sensor.DryerDryerMachineState
@@ -32,16 +31,18 @@ public class Laundry
             .Where(x =>
                 x.Old?.State == "run" &&
                 x.New?.State == "stop")
-            .Subscribe(_ => NotifyUsers(false));
+            .Subscribe(_ => NotifyFamily(false));
     }
 
     /// <summary>
     /// Notifies users that the washer or dryer has completed.
     /// </summary>
-    private void NotifyUsers(bool washer)
+    private void NotifyFamily(bool washer)
     {
+        logger.LogInformation("Notifying family that the {Device} has completed.", washer ? "washer" : "dryer");
+
         var device = washer ? "washer" : "dryer";
-        services.Notify.NotifyAll(
+        services.Notify.Family(
             $"The {device} has completed!",
             "Laundry");
     }

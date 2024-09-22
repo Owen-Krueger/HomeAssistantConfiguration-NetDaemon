@@ -1,3 +1,6 @@
+# Navigate to src folder
+cd ../src
+
 # Update the codegen
 dotnet tool update -g NetDaemon.HassModel.CodeGen
 
@@ -17,3 +20,6 @@ ForEach ($file in Get-ChildItem . -Recurse | Where-Object { $_.Extension -like "
         & dotnet add $fullName package $package
     }
 }
+
+# Navigate back to working directory
+cd -

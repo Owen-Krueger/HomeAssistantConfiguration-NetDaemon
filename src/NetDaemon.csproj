@@ -6,6 +6,7 @@
         <LangVersion>12.0</LangVersion>
         <Nullable>enable</Nullable>
         <RootNamespace>NetDaemon</RootNamespace>
+        <UserSecretsId>a2d7aab7-803f-445a-84f4-b869823a8813</UserSecretsId>
     </PropertyGroup>
     
     <ItemGroup>
@@ -21,9 +22,9 @@
             <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
         </None>
     </ItemGroup>
-    <Target Name="AfterPublishMessage" AfterTargets="Publish">
-        <Message Text="Publish done! Copy all content in directory: $(PublishDir) to the `/config/netdaemon4' folder for add-on or your custom folder to deploy." Importance="high" />
-    </Target>
+<!--    <Target Name="Generate Entities" BeforeTargets="Build">-->
+<!--        <Exec Command="powershell -ExecutionPolicy Bypass -File $(ProjectDir)\scripts\generate_entities.ps1" />-->
+<!--    </Target>-->
         
     <ItemGroup>
         <PackageReference Include="NetDaemon.AppModel" Version="24.37.1" />

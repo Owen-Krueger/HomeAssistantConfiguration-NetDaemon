@@ -1,6 +1,5 @@
 ﻿using System.Reactive.Concurrency;
 using System.Threading.Tasks;
-using HomeAssistantGenerated;
 using NetDaemon.HassModel.Entities;
 
 namespace NetDaemon.apps.Internet;
@@ -25,8 +24,8 @@ public class Internet
         entities.BinarySensor.InternetUp
             .StateChanges()
             .WhenStateIsFor(x => x.IsOff(), TimeSpan.FromSeconds(90), scheduler)
-            .SubscribeAsync(async _ => await RestartModemAsync(), e => 
-                logger.LogError(e, "Exception thrown while restarting modem."));
+            .SubscribeAsync(async _ => await RestartModemAsync(),
+                e => logger.LogError(e, "Exception thrown while restarting modem."));
     }
 
     /// <summary>
