@@ -1,15 +1,15 @@
-using System.IO;
 using System.Reflection;
 using Microsoft.Extensions.Hosting;
 using NetDaemon.Extensions.Logging;
 using NetDaemon.Extensions.Scheduler;
 using NetDaemon.Extensions.Tts;
 using NetDaemon.Runtime;
+using Serilog;
 
 try
 {
-    var builder = Host.CreateDefaultBuilder(args)
-        .UseNetDaemonDefaultLogging()
+    await Host.CreateDefaultBuilder(args)
+        .UseNetDaemonAppSettings()
         .UseNetDaemonRuntime()
         .UseNetDaemonTextToSpeech()
         .ConfigureServices((_, services) =>
@@ -18,13 +18,8 @@ try
                 .AddNetDaemonStateManager()
                 .AddNetDaemonScheduler()
                 .AddHomeAssistantGenerated()
-        );
-    if (File.Exists("appsettings.json"))
-    {
-        builder.UseNetDaemonAppSettings();
-    }
-    
-    await builder.Build()
+        )
+        .Build()
         .RunAsync()
         .ConfigureAwait(false);
 }
