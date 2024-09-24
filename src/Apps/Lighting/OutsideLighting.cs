@@ -65,7 +65,7 @@ public class OutsideLighting
     /// <summary>
     /// Turns on the porch lights.
     /// </summary>
-    private void TurnOnPorch() => SetPorchLighting(true);
+    private void TurnOnPorch() => SetPorchLightingState(true);
 
     /// <summary>
     /// Turns on the porch lights if it's late and the lights are off.
@@ -100,13 +100,13 @@ public class OutsideLighting
     /// Turns off porch lights if they're actively on.
     /// </summary>
     private void TurnOffPorch()
-        => SetPorchLighting(false);
+        => SetPorchLightingState(false);
 
     /// <summary>
     /// Turns on or off the porch and holiday lights.
     /// </summary>
     /// <param name="isOn">Whether to turn on the lights.</param>
-    private void SetPorchLighting(bool isOn)
+    private void SetPorchLightingState(bool isOn)
     {
         logger.LogInformation("Turning the porch lights {State}.", isOn ? "on" : "off");
         switch (isOn)

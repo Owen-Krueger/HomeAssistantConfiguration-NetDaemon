@@ -4,11 +4,17 @@ using NetDaemon.HassModel.Entities;
 
 namespace NetDaemon.apps.Lighting;
 
+/// <summary>
+/// Automations for bedroom lighting.
+/// </summary>
 [NetDaemonApp]
 public class BedroomLighting
 {
     private readonly IEntities entities;
     
+    /// <summary>
+    /// Sets up automations.
+    /// </summary>
     public BedroomLighting(IHaContext context)
     {
         entities = new Entities(context);
@@ -20,17 +26,21 @@ public class BedroomLighting
         entities.Light.BedroomLamps
             .StateChanges()
             .Where(x => 
-                x.Old?.State == "off" && 
-                x.New?.State == "on")
+                x.Old.IsOff() && 
+                x.New.IsOn())
             .Subscribe(_ => ActivateNightLighting());
         entities.Switch.BedroomLights
             .StateChanges()
             .Where(x => 
-                x.Old?.State == "on" && 
-                x.New?.State == "off")
+                x.Old.IsOn() && 
+                x.New.IsOff())
             .Subscribe(_ => ActivateNightLighting());
     }
 
+    /// <summary>
+    /// When bedside button is pressed, toggle lamps. If it's nighttime and lamps are being turned on, turn
+    /// off the bedroom lights.
+    /// </summary>
     private void OnBedsideButtonPressed()
     {
         entities.Light.BedroomLamps.Toggle();
@@ -41,6 +51,9 @@ public class BedroomLighting
         }
     }
 
+    /// <summary>
+    /// If it's late, turn on lamps and turn off bedroom lights.
+    /// </summary>
     private void ActivateNightLighting()
     {
         if (!IsLate())
@@ -52,14 +65,19 @@ public class BedroomLighting
         entities.Switch.BedroomLights.TurnOff();
     }
 
-    private bool IsLate()
+    /// <summary>
+    /// Returns if it's between 9PM and midnight.
+    /// </summary>
+    private static bool IsLate()
     {
         var currentTime = DateTimeOffset.Now.ToUsCentralTime().TimeOfDay;
-        // Between 9PM and midnight.
         return currentTime > TimeSpan.FromHours(21) && currentTime < TimeSpan.FromMinutes(1439);
     }
 }
 
+/// <summary>
+/// Event data from a button press.
+/// </summary>
 internal record ZhaEventData
 {
     [JsonPropertyName("device_id")] public string? DeviceId { get; init; }

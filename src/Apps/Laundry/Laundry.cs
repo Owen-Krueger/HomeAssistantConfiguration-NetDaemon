@@ -10,7 +10,7 @@ public class Laundry
     private readonly ILogger<Laundry> logger;
     
     /// <summary>
-    /// Sets up laundry automations.
+    /// Sets up automations.
     /// </summary>
     public Laundry(IHaContext context, ILogger<Laundry> logger)
     {
@@ -25,6 +25,7 @@ public class Laundry
                 x.New?.State == "stop")
             .Subscribe(_ => NotifyFamily(true));
         
+        // Usually, state becomes "finished", but occasionally goes from "cooling" to "none".
         entities.Sensor.DryerDryerJobState
             .StateChanges()
             .Where(x =>
