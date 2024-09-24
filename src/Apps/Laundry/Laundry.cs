@@ -25,12 +25,11 @@ public class Laundry
                 x.New?.State == "stop")
             .Subscribe(_ => NotifyFamily(true));
         
-        // Usually, state becomes "finished", but occasionally goes from "cooling" to "none".
-        entities.Sensor.DryerDryerMachineState
+        entities.Sensor.DryerDryerJobState
             .StateChanges()
             .Where(x =>
-                x.Old?.State == "run" &&
-                x.New?.State == "stop")
+                x.Old?.State == "cooling" &&
+                x.New?.State is "finished" or "none")
             .Subscribe(_ => NotifyFamily(false));
     }
 

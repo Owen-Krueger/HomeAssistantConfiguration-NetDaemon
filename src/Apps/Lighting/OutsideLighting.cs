@@ -11,6 +11,7 @@ namespace NetDaemon.apps.Lighting;
 public class OutsideLighting
 {
     private readonly IEntities entities;
+    private readonly IScheduler scheduler;
     private readonly ILogger<OutsideLighting> logger;
     
     /// <summary>
@@ -20,16 +21,12 @@ public class OutsideLighting
     {
         entities = new Entities(context);
         this.logger = logger;
+        this.scheduler = scheduler;
 
         // Schedule-based automations.
-        scheduler.Schedule(GetSunsetTime().AddMinutes(-15), TurnOnPorch);
+        SetUpSunsetTriggers();
         scheduler.ScheduleCron("0 22 * * *", TurnOffPorchTimeBased);
         scheduler.ScheduleCron("0 0 * * *", TurnOffPorch); // Turn off the porch at midnight, no matter what.
-        
-        // Gets the next time to run our sunset script. 1 minute after sunset should have the next
-        // sunset time exposed in HomeAssistant.
-        scheduler.Schedule(GetSunsetTime().AddMinutes(1), 
-            () => scheduler.Schedule(GetSunsetTime(), TurnOnPorch));
 
         // Location-based automations.
         entities.Sensor.AllisonDistanceMiles
@@ -52,6 +49,17 @@ public class OutsideLighting
             .StateChanges()
             .WhenStateIsFor(x => x?.State == "home", TimeSpan.FromMinutes(5), scheduler)
             .Subscribe(_ => TurnOffPorch());
+    }
+
+    /// <summary>
+    /// Sets up the triggers to turn on the porch and set up the trigger for the following day.
+    /// Getting the trigger for the following day 1 minute after sunset should have the next
+    /// sunset time exposed in HomeAssistant.
+    /// </summary>
+    private void SetUpSunsetTriggers()
+    {
+        scheduler.Schedule(GetSunsetTime().AddMinutes(-15), TurnOnPorch);
+        scheduler.Schedule(GetSunsetTime().AddMinutes(1), SetUpSunsetTriggers);
     }
 
     /// <summary>
