@@ -8,17 +8,17 @@ namespace NetDaemon.Apps.Security;
 /// Automations for the lock on the front door.
 /// </summary>
 [NetDaemonApp]
-public class FrontDoor
+public class FrontDoorSecurity
 {
     private readonly IEntities entities;
     private readonly IServices services;
     private readonly IScheduler scheduler;
-    private readonly ILogger<FrontDoor> logger;
+    private readonly ILogger<FrontDoorSecurity> logger;
 
     /// <summary>
     /// Sets up automations.
     /// </summary>
-    public FrontDoor(IHaContext context, IScheduler scheduler, ILogger<FrontDoor> logger)
+    public FrontDoorSecurity(IHaContext context, IScheduler scheduler, ILogger<FrontDoorSecurity> logger)
     {
         entities = new Entities(context);
         services = new Services(context);

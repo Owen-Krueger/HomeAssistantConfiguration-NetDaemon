@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using NetDaemon.Events;
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Utilities;
 
@@ -19,7 +20,7 @@ public class BedroomLighting
     {
         entities = new Entities(context);
 
-        context.Events.Filter<ZhaEventData>("zha_event")
+        context.Events.Filter<ZhaEvent>("zha_event")
             .Where(x =>
                 x.Data is { DeviceId: "99d54b9a73f87bfe21094394baa6fecf", Command: "single" })
             .Subscribe(_ => OnBedsideButtonPressed());
@@ -71,13 +72,4 @@ public class BedroomLighting
     private static bool IsLate()
         => DateTimeOffset.Now.IsBetween(new TimeOnly(19, 0), new TimeOnly(23, 59, 59));
     
-}
-
-/// <summary>
-/// Event data from a button press.
-/// </summary>
-internal record ZhaEventData
-{
-    [JsonPropertyName("device_id")] public string? DeviceId { get; init; }
-    [JsonPropertyName("command")] public string? Command { get; init; }
 }
