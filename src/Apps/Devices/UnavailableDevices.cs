@@ -10,6 +10,7 @@ namespace NetDaemon.Apps.Devices;
 [NetDaemonApp]
 public class UnavailableDevices
 {
+    private readonly IServices services;
     private readonly IScheduler scheduler;
     private readonly ILogger<UnavailableDevices> logger;
 
@@ -19,11 +20,16 @@ public class UnavailableDevices
     public UnavailableDevices(IHaContext context, IScheduler scheduler, ILogger<UnavailableDevices> logger)
     {
         var entities = new Entities(context);
+        services = new Services(context);
         this.scheduler = scheduler;
         this.logger = logger;
 
         List<EntityGroup> entityGroups =
         [
+            new EntityGroup(entities.Switch.DownstairsTvSmartPlug),
+            new EntityGroup(entities.Switch.UpstairsTvSmartPlug),
+            new EntityGroup(entities.Switch.InternetModemSmartPlug),
+            new EntityGroup(entities.Switch.OwenComputerSmartPlug),
             new EntityGroup(entities.Switch.AllisonLivingRoomLamp, entities.Button.AllisonLivingRoomLampPing, entities.Switch.OwenLivingRoomLamp),
             new EntityGroup(entities.Switch.OwenLivingRoomLamp, entities.Button.OwenLivingRoomLampPing, entities.Switch.AllisonLivingRoomLamp),
             new EntityGroup(entities.Switch.BedroomLights, entities.Button.BedroomLightsPing),
@@ -41,11 +47,30 @@ public class UnavailableDevices
 
         foreach (var group in entityGroups)
         {
-            group.UnavailableEntity
-                .StateChanges()
-                .Where(x => x.New?.State == "unavailable")
-                .Subscribe(_ => PingEntity(group));
+            if (group.PingEntity is not null)
+            {
+                group.UnavailableEntity
+                    .StateChanges()
+                    .Where(x => x.New?.State == "unavailable")
+                    .Subscribe(_ => PingEntity(group));
+            }
+            else
+            {
+                group.UnavailableEntity
+                    .StateChanges()
+                    .Where(x => x.New?.State == "unavailable")
+                    .Subscribe(_ => NotifyEntityUnavailable(group.UnavailableEntity));
+            }
         }
+    }
+
+    /// <summary>
+    /// Notifies Owen that device is unavailable.
+    /// </summary>
+    private void NotifyEntityUnavailable(SwitchEntity entity)
+    {
+        logger.LogInformation("{Entity} is unavailable. Notifying Owen.", entity.EntityId);
+        services.Notify.Owen($"{entity.EntityId} is unavailable", "Unavailable Device");
     }
 
     /// <summary>
@@ -56,7 +81,7 @@ public class UnavailableDevices
         logger.LogInformation("Pinging {Entity} because it's unavailable (Attempt {Count})", 
             group.UnavailableEntity.EntityId, count);
         
-        group.PingEntity.CallService("button/press");
+        group.PingEntity!.CallService("button/press");
         scheduler.Schedule(DateTimeOffset.Now.AddSeconds(10), 
             _ => VerifyEntityIsAlive(group, count));
     }
@@ -66,7 +91,7 @@ public class UnavailableDevices
     /// </summary>
     private void VerifyEntityIsAlive(EntityGroup group, int count)
     {
-        if (group.PingEntity.State != "unavailable") // Ping fixed state.
+        if (group.PingEntity!.State != "unavailable") // Ping fixed state.
         {
             SyncEntities(group.UnavailableEntity, group.SyncEntity);
             return;
@@ -120,7 +145,15 @@ public class UnavailableDevices
 internal record EntityGroup
 {
     /// <summary>
-    /// Instantiates a new <see cref="EntityGroup"/> without an entity to sync to.
+    /// Instantiates a new <see cref="EntityGroup"/> for a non-pingable entity.
+    /// </summary>
+    public EntityGroup(SwitchEntity unavailableEntity)
+    {
+        UnavailableEntity = unavailableEntity;
+    }
+    
+    /// <summary>
+    /// Instantiates a new <see cref="EntityGroup"/> for a pingable entity without an entity to sync to.
     /// </summary>
     public EntityGroup(SwitchEntity unavailableEntity, ButtonEntity pingEntity)
     {
@@ -129,7 +162,7 @@ internal record EntityGroup
     }
 
     /// <summary>
-    /// Instantiates a new <see cref="EntityGroup"/> with an entity to sync to.
+    /// Instantiates a new <see cref="EntityGroup"/> for a pingable entity with an entity to sync to.
     /// </summary>
     public EntityGroup(SwitchEntity unavailableEntity, ButtonEntity pingEntity, SwitchEntity syncEntity)
     {
@@ -144,9 +177,9 @@ internal record EntityGroup
     public SwitchEntity UnavailableEntity { get; set; }
 
     /// <summary>
-    /// Button to press/ping to bring entity back from the dead.
+    /// Optional. Button to press/ping to bring entity back from the dead.
     /// </summary>
-    public ButtonEntity PingEntity { get; set; }
+    public ButtonEntity? PingEntity { get; set; }
 
     /// <summary>
     /// Optional. Represents the state the <see cref="UnavailableEntity"/> should be set to after becoming
