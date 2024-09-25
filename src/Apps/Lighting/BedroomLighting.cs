@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
-using HomeAssistantGenerated.Utilities;
 using NetDaemon.HassModel.Entities;
+using NetDaemon.Utilities;
 
 namespace NetDaemon.apps.Lighting;
 
@@ -69,10 +69,8 @@ public class BedroomLighting
     /// Returns if it's between 9PM and midnight.
     /// </summary>
     private static bool IsLate()
-    {
-        var currentTime = DateTimeOffset.Now.ToUsCentralTime().TimeOfDay;
-        return currentTime > TimeSpan.FromHours(21) && currentTime < TimeSpan.FromMinutes(1439);
-    }
+        => DateTimeOffset.Now.IsBetween(new TimeOnly(19, 0), new TimeOnly(23, 59, 59));
+    
 }
 
 /// <summary>

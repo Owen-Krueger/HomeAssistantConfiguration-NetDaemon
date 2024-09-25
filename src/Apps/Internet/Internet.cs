@@ -1,5 +1,4 @@
 ﻿using System.Reactive.Concurrency;
-using System.Threading.Tasks;
 using NetDaemon.HassModel.Entities;
 
 namespace NetDaemon.apps.Internet;
@@ -15,7 +14,7 @@ public class Internet
     private readonly IScheduler scheduler;
     
     /// <summary>
-    /// SeTs up internet automations.
+    /// Sets up internet automations.
     /// </summary>
     public Internet(IHaContext context, IScheduler scheduler, ILogger<Internet> logger)
     {

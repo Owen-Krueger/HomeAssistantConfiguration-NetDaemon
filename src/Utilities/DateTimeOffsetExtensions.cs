@@ -1,12 +1,22 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace HomeAssistantGenerated.Utilities;
+namespace NetDaemon.Utilities;
 
 /// <summary>
 /// Extension methods for working with DateTimeOffsets.
 /// </summary>
 public static class DateTimeOffsetExtensions
 {
+    /// <summary>
+    /// Returns if the provided <see cref="DateTimeOffset"/> is between the start and end times.
+    /// </summary>
+    public static bool IsBetween(this DateTimeOffset date, TimeOnly startTime, TimeOnly endTime)
+    {
+        var currentTimeOfDay = date.ToUsCentralTime().TimeOfDay;
+
+        return currentTimeOfDay > startTime.ToTimeSpan() && currentTimeOfDay < endTime.ToTimeSpan();
+    }
+    
     /// <summary>
     /// Converts a time to the time in a particular time zone.
     /// </summary>

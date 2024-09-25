@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using NetDaemon.HassModel.Entities;
+using NetDaemon.Utilities;
 
 namespace NetDaemon.Apps.Cameras;
 
@@ -30,11 +31,11 @@ public class CatCameras
 
         entities.Person.Allison
             .StateChanges()
-            .Where(x => x.New?.State == "home")
+            .Where(x => x.New.IsHome())
             .Subscribe(_ => TurnOffCameras());
         entities.Person.Owen
             .StateChanges()
-            .Where(x => x.New?.State == "home")
+            .Where(x => x.New.IsHome())
             .Subscribe(_ => TurnOffCameras());
         entities.InputBoolean.CatCamerasOn
             .StateChanges()
@@ -47,7 +48,7 @@ public class CatCameras
     /// </summary>
     private void TurnOnCameras()
     {
-        if (IsAnyoneHome())
+        if (entities.IsAnyoneHome())
         {
             return;
         }
@@ -60,7 +61,7 @@ public class CatCameras
     /// </summary>
     private void TurnOffCameras()
     {
-        if (!IsAnyoneHome())
+        if (!entities.IsAnyoneHome())
         {
             return;
         }
@@ -103,10 +104,4 @@ public class CatCameras
         logger.LogInformation("Cat cameras turned {State}", stateString);
         services.Notify.Owen($"Cat cameras have been turned {stateString}", "Cameras");
     }
-
-    /// <summary>
-    /// Returns if anyone is actively home.
-    /// </summary>
-    private bool IsAnyoneHome()
-        => entities.Person.Owen.State == "home" || entities.Person.Allison.State == "home";
 }

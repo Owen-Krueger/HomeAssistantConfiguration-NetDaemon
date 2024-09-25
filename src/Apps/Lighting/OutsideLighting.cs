@@ -127,10 +127,10 @@ public class OutsideLighting
         switch (isOn)
         {
             case true when entities.Group.HolidayLights.IsOff():
-                entities.Group.HolidayLights.CallService("homeassistant.turn_on");
+                entities.Group.HolidayLights.CallService("switch.turn_on");
                 break;
             case false when entities.Group.HolidayLights.IsOn():
-                entities.Group.HolidayLights.CallService("homeassistant.turn_off");
+                entities.Group.HolidayLights.CallService("switch.turn_off");
                 break;
         }
     }
