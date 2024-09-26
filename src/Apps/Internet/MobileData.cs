@@ -33,7 +33,7 @@ public class MobileData
     }
 
     /// <summary>
-    /// Notifies Owen if he's home without Wifi on.
+    /// Notifies Owen if he's home without Wi-Fi on.
     /// </summary>
     private void NotifyOwen()
     {

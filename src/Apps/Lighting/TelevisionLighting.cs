@@ -11,6 +11,7 @@ namespace NetDaemon.apps.Lighting;
 public class TelevisionLighting
 {
     private readonly IEntities entities;
+    private readonly IServices services;
     private readonly ILogger<TelevisionLighting> logger;
 
     /// <summary>
@@ -19,6 +20,7 @@ public class TelevisionLighting
     public TelevisionLighting(IHaContext context, IScheduler scheduler, ILogger<TelevisionLighting> logger)
     {
         entities = new Entities(context);
+        services = new Services(context);
         this.logger = logger;
 
         entities.BinarySensor.UpstairsTvOn
@@ -31,7 +33,7 @@ public class TelevisionLighting
             .Subscribe(_ => TurnOnLights(false));
         entities.BinarySensor.UpstairsTvOn
             .StateChanges()
-            .Where(x => x.New.IsOff())
+            .WhenStateIsFor(x => x.IsOff(), TimeSpan.FromSeconds(30), scheduler)
             .Subscribe(_ => TurnOffLivingRoomLamps());
     }
 
@@ -56,9 +58,10 @@ public class TelevisionLighting
         switch (upstairs)
         {
             case true when entities.Group.LivingRoomLamps.IsOff():
-                entities.Group.LivingRoomLamps.CallService("switch.turn_on");
+                SetLivingRoomLampState(true);
                 break;
             case false when entities.Light.DownstairsLights.IsOff():
+                logger.LogInformation("Turning on downstairs lights due to television activity.");
                 entities.Light.DownstairsLights.TurnOn();
                 break;
         }
@@ -74,6 +77,22 @@ public class TelevisionLighting
             return;
         }
         
-        entities.Group.LivingRoomLamps.CallService("switch.turn_off");
+        SetLivingRoomLampState(false);
+    }
+
+    /// <summary>
+    /// Turns on or off the living room lamps depending on the input.
+    /// </summary>
+    private void SetLivingRoomLampState(bool isOn)
+    {
+        logger.LogInformation("Turning living room lamps {State} due to television activity.", isOn ? "on" : "off");
+        var livingRoomLampsTarget = ServiceTarget.FromEntity(entities.Group.LivingRoomLamps.EntityId);
+        if (isOn)
+        {
+            services.Switch.TurnOn(livingRoomLampsTarget);
+            return;
+        }
+        
+        services.Switch.TurnOff(livingRoomLampsTarget);
     }
 }

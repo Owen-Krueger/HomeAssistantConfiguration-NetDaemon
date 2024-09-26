@@ -37,7 +37,7 @@ public class FrontDoorSecurity
     }
 
     /// <summary>
-    /// Locks the front door if nobody is home and it's currently unlocked.
+    /// Locks the front door if nobody is home, and it's currently unlocked.
     /// </summary>
     private void LockFrontDoor()
     {

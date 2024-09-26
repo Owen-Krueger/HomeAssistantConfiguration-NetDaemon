@@ -1,6 +1,7 @@
 ﻿using System.Reactive.Concurrency;
 using NetDaemon.Extensions.Scheduler;
 using NetDaemon.HassModel.Entities;
+using NetDaemon.Utilities;
 
 namespace NetDaemon.apps.Lighting;
 
@@ -11,6 +12,7 @@ namespace NetDaemon.apps.Lighting;
 public class OutsideLighting
 {
     private readonly IEntities entities;
+    private readonly IServices services;
     private readonly IScheduler scheduler;
     private readonly ILogger<OutsideLighting> logger;
     
@@ -20,6 +22,7 @@ public class OutsideLighting
     public OutsideLighting(IHaContext context, IScheduler scheduler, ILogger<OutsideLighting> logger)
     {
         entities = new Entities(context);
+        services = new Services(context);
         this.logger = logger;
         this.scheduler = scheduler;
 
@@ -58,8 +61,12 @@ public class OutsideLighting
     /// </summary>
     private void SetUpSunsetTriggers()
     {
-        scheduler.Schedule(GetSunsetTime().AddMinutes(-15), TurnOnPorch);
-        scheduler.Schedule(GetSunsetTime().AddMinutes(1), SetUpSunsetTriggers);
+        var nextSunset = GetSunsetTime();
+        var nextTrigger = nextSunset.AddMinutes(-15);
+        logger.LogInformation("Next time to turn on porch set to {Date}", nextTrigger.ToUsCentralTime());
+        
+        scheduler.Schedule(nextTrigger, TurnOnPorch);
+        scheduler.Schedule(nextSunset.AddMinutes(1), SetUpSunsetTriggers);
     }
 
     /// <summary>
@@ -123,14 +130,15 @@ public class OutsideLighting
         {
             return;
         }
-        
+
+        var holidayLightsTarget = ServiceTarget.FromEntity(entities.Group.HolidayLights.EntityId);
         switch (isOn)
         {
             case true when entities.Group.HolidayLights.IsOff():
-                entities.Group.HolidayLights.CallService("switch.turn_on");
+                services.Switch.TurnOn(holidayLightsTarget);
                 break;
             case false when entities.Group.HolidayLights.IsOn():
-                entities.Group.HolidayLights.CallService("switch.turn_off");
+                services.Switch.TurnOff(holidayLightsTarget);
                 break;
         }
     }

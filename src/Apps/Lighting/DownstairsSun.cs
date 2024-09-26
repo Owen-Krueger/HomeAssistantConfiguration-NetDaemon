@@ -1,4 +1,5 @@
 ﻿using System.Reactive.Concurrency;
+using NetDaemon.HassModel.Entities;
 
 namespace NetDaemon.apps.Lighting;
 
@@ -9,6 +10,7 @@ namespace NetDaemon.apps.Lighting;
 public class DownstairsSun
 {
     private readonly IEntities entities;
+    private readonly IServices services;
     private readonly ILogger<DownstairsSun> logger;
 
     /// <summary>
@@ -17,6 +19,7 @@ public class DownstairsSun
     public DownstairsSun(IHaContext context, IScheduler scheduler, ILogger<DownstairsSun> logger)
     {
         entities = new Entities(context);
+        services = new Services(context);
         this.logger = logger;
 
         entities.Light.DownstairsLights
@@ -32,10 +35,10 @@ public class DownstairsSun
             .Subscribe(_ => SetDownstairsLightLevel());
         // Around sunrise
         entities.Sun.Sun
-            .StateChanges()
+            .StateAllChanges()
             .Where(x =>
-                int.Parse(x.Old?.State ?? "0") < 10 &&
-                int.Parse(x.New?.State ?? "0") >= 10)
+                x.New?.Attributes?.Elevation < 10 &&
+                x.New?.Attributes?.Elevation >= 10)
             .Subscribe(_ => SetDownstairsLightLevel());
     }
 
@@ -45,25 +48,24 @@ public class DownstairsSun
     private void SetDownstairsLightLevel()
     {
         var brightnessAttribute = entities.Light.DownstairsLights.Attributes?.Brightness;
-        var elevationAttribute = entities.Sun.Sun.Attributes?.Elevation;
-        if (!int.TryParse(brightnessAttribute?.ToString(), out var brightness) ||
-            !int.TryParse(elevationAttribute?.ToString(), out var elevation))
+        var elevation = entities.Sun.Sun.Attributes?.Elevation ?? 0;
+        if (!int.TryParse(brightnessAttribute?.ToString(), out var brightness))
         {
             // Unable to pull brightness or elevation.
-            logger.LogError("Unable to parse attributes. Brightness attribute: {Brightness}. Elevation attribute: {Elevation}.",
-                brightnessAttribute, elevationAttribute);
+            logger.LogError("Unable to parse brightness integer: {Brightness}.", brightnessAttribute);
             return;
         }
 
+        var downstairsLightsTarget = ServiceTarget.FromEntity(entities.Light.DownstairsLights.EntityId);
         switch (elevation)
         {
             case >= 10 when brightness != 255:
                 logger.LogInformation("Setting downstairs lights to 100% brightness.");
-                entities.Light.DownstairsLights.CallService("light.turn_on", new { brightness = 255 });
+                services.Light.TurnOn(downstairsLightsTarget, new LightTurnOnParameters { Brightness = 255 });
                 return;
             case < 10 when brightness != 128:
                 logger.LogInformation("Setting downstairs to 50% brightness.");
-                entities.Light.DownstairsLights.CallService("light.turn_on", new { brightness = 128 });
+                services.Light.TurnOn(downstairsLightsTarget, new LightTurnOnParameters { Brightness = 128 });
                 return;
         }
     }

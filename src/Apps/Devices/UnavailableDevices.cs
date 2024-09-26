@@ -81,6 +81,7 @@ public class UnavailableDevices
         logger.LogInformation("Pinging {Entity} because it's unavailable (Attempt {Count})", 
             group.UnavailableEntity.EntityId, count);
         
+        services.Button.Press(ServiceTarget.FromEntity(group.PingEntity!.EntityId));
         group.PingEntity!.CallService("button/press");
         scheduler.Schedule(DateTimeOffset.Now.AddSeconds(10), 
             _ => VerifyEntityIsAlive(group, count));
@@ -114,7 +115,7 @@ public class UnavailableDevices
     /// </summary>
     /// <param name="entityToUpdate">Entity to update to match state from <see cref="correctEntity"/></param>
     /// <param name="correctEntity">Entity to update <see cref="entityToUpdate"/> from.</param>
-    private static void SyncEntities(SwitchEntity entityToUpdate, SwitchEntity? correctEntity)
+    private void SyncEntities(SwitchEntity entityToUpdate, SwitchEntity? correctEntity)
     {
         if (correctEntity is null) // No need to sync entities.
         {
@@ -131,7 +132,7 @@ public class UnavailableDevices
 
         if (correctEntityState)
         {
-            entityToUpdate.CallService("switch.turn_on");
+            services.Switch.TurnOn(ServiceTarget.FromEntity(entityToUpdate.EntityId));
             return;
         }
 

@@ -12,13 +12,15 @@ namespace NetDaemon.apps.Lighting;
 public class BedroomLighting
 {
     private readonly IEntities entities;
+    private readonly ILogger<BedroomLighting> logger;
     
     /// <summary>
     /// Sets up automations.
     /// </summary>
-    public BedroomLighting(IHaContext context)
+    public BedroomLighting(IHaContext context, ILogger<BedroomLighting> logger)
     {
         entities = new Entities(context);
+        this.logger = logger;
 
         context.Events.Filter<ZhaEvent>("zha_event")
             .Where(x =>
@@ -44,12 +46,16 @@ public class BedroomLighting
     /// </summary>
     private void OnBedsideButtonPressed()
     {
+        logger.LogInformation("Toggling bedroom lamps. Current state: {State}", entities.Light.BedroomLamps.EntityState);
         entities.Light.BedroomLamps.Toggle();
 
-        if (IsLate() && entities.Switch.BedroomLights.IsOn())
+        if (!IsLate() || entities.Switch.BedroomLights.IsOff() || entities.Light.BedroomLamps.IsOff())
         {
-            entities.Switch.BedroomLights.TurnOff();
+            return;
         }
+        
+        logger.LogInformation("Turning off bedroom lights, due to it being late and lamps are on.");
+        entities.Switch.BedroomLights.TurnOff();
     }
 
     /// <summary>
@@ -62,6 +68,7 @@ public class BedroomLighting
             return;
         }
 
+        logger.LogInformation("Turning on lamps and turning off lights, due to it being night-time.");
         entities.Light.BedroomLamps.TurnOn();
         entities.Switch.BedroomLights.TurnOff();
     }

@@ -44,6 +44,7 @@ public class OffLighting
     {
         if (entities.InputBoolean.ModeGuest.IsOn())
         {
+            logger.LogInformation("Not turning off lights due to house being in guest mode.");
             return;
         }
 
@@ -91,16 +92,19 @@ public class OffLighting
     {
         if (entities.Group.UpstairsActive.IsOff())
         {
+            logger.LogInformation("Turning off upstairs living area.");
             entities.Scene.UpstairsLivingAreaOff.TurnOn();
         }
 
         if (entities.Group.DownstairsActive.IsOff())
         {
+            logger.LogInformation("Turning off downstairs lights.");
             entities.Light.DownstairsLights.TurnOff();
         }
 
         if (entities.BinarySensor.OwenComputerActive.IsOff())
         {
+            logger.LogInformation("Turning off office lights.");
             entities.Switch.OfficeLights.TurnOff();
         }
     }
