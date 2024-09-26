@@ -1,6 +1,8 @@
-﻿using NetDaemon.Constants;
+﻿using System.Reactive.Concurrency;
+using NetDaemon.Constants;
 using NetDaemon.Events;
 using NetDaemon.Models;
+using NetDaemon.Utilities;
 
 namespace NetDaemon.Apps.Security;
 
@@ -11,36 +13,63 @@ namespace NetDaemon.Apps.Security;
 public class GarageSecurity
 {
     private readonly IEntities entities;
+    private readonly IServices services;
     private readonly ILogger<GarageSecurity> logger;
     private const string CloseGarageDoorAction = "CLOSE_GARAGE_DOOR";
 
     /// <summary>
     /// Sets up the automations.
     /// </summary>
-    public GarageSecurity(IHaContext context, ILogger<GarageSecurity> logger)
+    public GarageSecurity(IHaContext context, IScheduler scheduler, ILogger<GarageSecurity> logger)
     {
         entities = new Entities(context);
+        services = new Services(context);
         this.logger = logger;
 
+        entities.Person.Owen
+            .StateChanges()
+            .WhenStateIsFor(x => !x.IsHome(), TimeSpan.FromMinutes(5), scheduler)
+            .Subscribe(_ => SendNotification());
+        entities.Person.Allison
+            .StateChanges()
+            .WhenStateIsFor(x => !x.IsHome(), TimeSpan.FromMinutes(5), scheduler)
+            .Subscribe(_ => SendNotification());
         context.Events.Filter<MobileNotificationActionEvent>(EventTypes.MobileAppNotificationActionEvent)
             .Where(x => x.Data?.Action == CloseGarageDoorAction)
-            .Subscribe(x =>
-            {
-                logger.LogInformation("Request that garage door close.");
-            });
+            .Subscribe(_ => ShutGarageDoor());
 
-        var services = new Services(context);
+    }
+
+    /// <summary>
+    /// Sends a notification if nobody is home and the garage door is open.
+    /// </summary>
+    private void SendNotification()
+    {
+        if (entities.IsAnyoneHome() || entities.Cover.PrimaryGarageDoor.State == "open")
+        {
+            return;
+        }
+        
         services.Notify.Owen("Garage door is open.", "Garage", 
             data: new MobileAppNotificationData
-        {
-            Actions = [
-                new MobileAppNotificationAction
-                {
-                    Action = CloseGarageDoorAction,
-                    Title = "Close Garage Door",
-                    Uri = "/dashboard-mobile-plus/0"
-                }
-            ]
-        });
+            {
+                Actions = [
+                    new MobileAppNotificationAction
+                    {
+                        Action = CloseGarageDoorAction,
+                        Title = "Close Garage Door",
+                        Uri = "/dashboard-mobile-plus/0"
+                    }
+                ]
+            });
+    }
+
+    /// <summary>
+    /// Shuts the garage door.
+    /// </summary>
+    private void ShutGarageDoor()
+    {
+        logger.LogInformation("Shutting garage door.");
+        entities.Cover.PrimaryGarageDoor.CloseCover();
     }
 }

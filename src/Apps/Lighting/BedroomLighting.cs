@@ -25,7 +25,7 @@ public class BedroomLighting
 
         context.Events.Filter<ZhaEvent>(EventTypes.ZhaEvent)
             .Where(x =>
-                x.Data is { DeviceId: "99d54b9a73f87bfe21094394baa6fecf", Command: "single" })
+                x.Data is { DeviceId: DeviceIds.BedsideButtonId, Command: "single" })
             .Subscribe(_ => OnBedsideButtonPressed());
         entities.Light.BedroomLamps
             .StateChanges()
