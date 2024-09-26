@@ -10,15 +10,17 @@ namespace NetDaemon.apps.Internet;
 public class Internet
 {
     private readonly IEntities entities;
+    private readonly IServices services;
     private readonly ILogger<Internet> logger;
     private readonly IScheduler scheduler;
     
     /// <summary>
-    /// Sets up internet automations.
+    /// Sets up automations.
     /// </summary>
     public Internet(IHaContext context, IScheduler scheduler, ILogger<Internet> logger)
     {
         entities = new Entities(context);
+        services = new Services(context);
         this.logger = logger;
         this.scheduler = scheduler;
 
@@ -41,11 +43,30 @@ public class Internet
             return;
         }
         
-        logger.LogInformation("Restarting modem smart plug.");
+        logger.LogInformation("Restarting modem smart plug. Starting by turning modem off for 15 seconds.");
         modemSmartPlug.TurnOff();
         scheduler.Schedule(DateTimeOffset.Now.AddSeconds(15), TurnOnModemSmartPlug);
     }
 
+    /// <summary>
+    /// Turns modem back on.
+    /// </summary>
     private void TurnOnModemSmartPlug()
-        => entities.Switch.InternetModemSmartPlug.TurnOn();
+    {
+        logger.LogInformation("Turning modem back on.");
+        entities.Switch.InternetModemSmartPlug.TurnOn();
+        scheduler.Schedule(DateTimeOffset.Now.AddMinutes(3), VerifyInternetWorking);
+    }
+
+    /// <summary>
+    /// Verifies if the internet is working again. Notifies Owen if still down.
+    /// </summary>
+    private void VerifyInternetWorking()
+    {
+        logger.LogInformation("Internet state: {State}", entities.BinarySensor.InternetUp);
+        if (entities.BinarySensor.InternetUp.IsOff())
+        {
+            services.Notify.Owen("Internet still down after modem restart.", "Internet");
+        }
+    }
 }

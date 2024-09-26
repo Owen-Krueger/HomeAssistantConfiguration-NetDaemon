@@ -100,7 +100,7 @@ public class UnavailableDevices
 
         if (count >= 3) // We were unsuccessful.
         {
-            logger.LogWarning("{Entity} pinged multiple times but is still unavailable", 
+            logger.LogWarning("{Entity} pinged multiple times but is still unavailable.", 
                 group.UnavailableEntity.EntityId);
             return;
         }
@@ -124,6 +124,8 @@ public class UnavailableDevices
 
         var entityToUpdateState = entityToUpdate.IsOn();
         var correctEntityState = correctEntity.IsOn();
+        logger.LogInformation("Syncing entity state for {Entity}. Current state: {CurrentState}. New state: {NewState}",
+            entityToUpdate.EntityId, entityToUpdate.State, entityToUpdate.State);
 
         if (entityToUpdateState == correctEntityState) // Entities already synced.
         {
