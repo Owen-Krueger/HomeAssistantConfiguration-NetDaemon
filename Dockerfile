@@ -10,11 +10,11 @@ COPY . .
 
 # Build
 WORKDIR '/src/'
-RUN dotnet build "NetDaemon.csproj" -c Release -o /app/build
+RUN dotnet build "src/NetDaemon.csproj" -c Release -o /app/build
 
 # Publish
 FROM build AS publish
-RUN dotnet publish "NetDaemon.csproj" -c Release -o /app/publish
+RUN dotnet publish "src/NetDaemon.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
