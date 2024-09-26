@@ -26,7 +26,7 @@ public class GarageSecurity
             });
 
         var services = new Services(context);
-        services.Notify.Owen("Test", "Test", new MobileAppNotificationData
+        services.Notify.Owen("Test", "Test", data: new MobileAppNotificationData
         {
             Actions = [
                 new MobileAppNotificationAction

@@ -2,7 +2,12 @@
 
 namespace NetDaemon.Events;
 
-public class MobileNotificationActionEvent
+public record MobileNotificationActionEvent
 {
-    public MobileAppNotificationAction Action { get; set; }
+    /// <summary>
+    /// Instantiates an empty <see cref="MobileAppNotificationAction"/> record.
+    /// </summary>
+    public MobileNotificationActionEvent() { }
+
+    public MobileAppNotificationAction Action { get; set; } = new();
 }
