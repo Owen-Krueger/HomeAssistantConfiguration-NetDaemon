@@ -177,16 +177,16 @@ internal record EntityGroup
     /// <summary>
     /// Entity to monitor for state becoming "unavailable".
     /// </summary>
-    public SwitchEntity UnavailableEntity { get; set; }
+    public SwitchEntity UnavailableEntity { get; init; }
 
     /// <summary>
     /// Optional. Button to press/ping to bring entity back from the dead.
     /// </summary>
-    public ButtonEntity? PingEntity { get; set; }
+    public ButtonEntity? PingEntity { get; init; }
 
     /// <summary>
     /// Optional. Represents the state the <see cref="UnavailableEntity"/> should be set to after becoming
     /// available again.
     /// </summary>
-    public SwitchEntity? SyncEntity { get; set; }
+    public SwitchEntity? SyncEntity { get; init; }
 }
