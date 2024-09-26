@@ -510,7 +510,7 @@
         {
           "jsonName": "bluetooth_list",
           "cSharpName": "BluetoothList",
-          "clrType": "System.Collections.Generic.IReadOnlyList\u00601[System.Object]"
+          "clrType": "System.Object"
         },
         {
           "jsonName": "restored",
@@ -1905,6 +1905,11 @@
           "id": "button.utility_room_lights_ping",
           "friendlyName": "Utility Room Lights Ping",
           "cSharpName": "UtilityRoomLightsPing"
+        },
+        {
+          "id": "button.wake_on_lan_owen_desktop",
+          "friendlyName": "Wake on LAN Owen Desktop",
+          "cSharpName": "WakeOnLanOwenDesktop"
         }
       ],
       "attributes": [
@@ -2886,6 +2891,86 @@
           "id": "input_boolean.mode_vacation",
           "friendlyName": "Vacation Mode",
           "cSharpName": "ModeVacation"
+        },
+        {
+          "id": "input_boolean.netdaemon_net_daemon_apps_cameras_cat_cameras",
+          "friendlyName": "netdaemon_net_daemon_apps_cameras_cat_cameras",
+          "cSharpName": "NetdaemonNetDaemonAppsCamerasCatCameras"
+        },
+        {
+          "id": "input_boolean.netdaemon_net_daemon_apps_devices_unavailable_devices",
+          "friendlyName": "netdaemon_net_daemon_apps_devices_unavailable_devices",
+          "cSharpName": "NetdaemonNetDaemonAppsDevicesUnavailableDevices"
+        },
+        {
+          "id": "input_boolean.netdaemon_net_daemon_apps_internet_internet",
+          "friendlyName": "netdaemon_net_daemon_apps_internet_internet",
+          "cSharpName": "NetdaemonNetDaemonAppsInternetInternet"
+        },
+        {
+          "id": "input_boolean.netdaemon_net_daemon_apps_internet_mobile_data",
+          "friendlyName": "netdaemon_net_daemon_apps_internet_mobile_data",
+          "cSharpName": "NetdaemonNetDaemonAppsInternetMobileData"
+        },
+        {
+          "id": "input_boolean.netdaemon_net_daemon_apps_laundry_laundry",
+          "friendlyName": "netdaemon_net_daemon_apps_laundry_laundry",
+          "cSharpName": "NetdaemonNetDaemonAppsLaundryLaundry"
+        },
+        {
+          "id": "input_boolean.netdaemon_net_daemon_apps_lighting_bedroom_lighting",
+          "friendlyName": "netdaemon_net_daemon_apps_lighting_bedroom_lighting",
+          "cSharpName": "NetdaemonNetDaemonAppsLightingBedroomLighting"
+        },
+        {
+          "id": "input_boolean.netdaemon_net_daemon_apps_lighting_downstairs_sun",
+          "friendlyName": "netdaemon_net_daemon_apps_lighting_downstairs_sun",
+          "cSharpName": "NetdaemonNetDaemonAppsLightingDownstairsSun"
+        },
+        {
+          "id": "input_boolean.netdaemon_net_daemon_apps_lighting_garage_lighting",
+          "friendlyName": "netdaemon_net_daemon_apps_lighting_garage_lighting",
+          "cSharpName": "NetdaemonNetDaemonAppsLightingGarageLighting"
+        },
+        {
+          "id": "input_boolean.netdaemon_net_daemon_apps_lighting_holiday_lighting",
+          "friendlyName": "netdaemon_net_daemon_apps_lighting_holiday_lighting",
+          "cSharpName": "NetdaemonNetDaemonAppsLightingHolidayLighting"
+        },
+        {
+          "id": "input_boolean.netdaemon_net_daemon_apps_lighting_off_lighting",
+          "friendlyName": "netdaemon_net_daemon_apps_lighting_off_lighting",
+          "cSharpName": "NetdaemonNetDaemonAppsLightingOffLighting"
+        },
+        {
+          "id": "input_boolean.netdaemon_net_daemon_apps_lighting_outside_lighting",
+          "friendlyName": "netdaemon_net_daemon_apps_lighting_outside_lighting",
+          "cSharpName": "NetdaemonNetDaemonAppsLightingOutsideLighting"
+        },
+        {
+          "id": "input_boolean.netdaemon_net_daemon_apps_lighting_television_lighting",
+          "friendlyName": "netdaemon_net_daemon_apps_lighting_television_lighting",
+          "cSharpName": "NetdaemonNetDaemonAppsLightingTelevisionLighting"
+        },
+        {
+          "id": "input_boolean.netdaemon_net_daemon_apps_lighting_toggleable_lighting",
+          "friendlyName": "netdaemon_net_daemon_apps_lighting_toggleable_lighting",
+          "cSharpName": "NetdaemonNetDaemonAppsLightingToggleableLighting"
+        },
+        {
+          "id": "input_boolean.netdaemon_net_daemon_apps_lighting_work_lighting",
+          "friendlyName": "netdaemon_net_daemon_apps_lighting_work_lighting",
+          "cSharpName": "NetdaemonNetDaemonAppsLightingWorkLighting"
+        },
+        {
+          "id": "input_boolean.netdaemon_net_daemon_apps_security_front_door_security",
+          "friendlyName": "netdaemon_net_daemon_apps_security_front_door_security",
+          "cSharpName": "NetdaemonNetDaemonAppsSecurityFrontDoorSecurity"
+        },
+        {
+          "id": "input_boolean.netdaemon_net_daemon_apps_security_garage_security",
+          "friendlyName": "netdaemon_net_daemon_apps_security_garage_security",
+          "cSharpName": "NetdaemonNetDaemonAppsSecurityGarageSecurity"
         },
         {
           "id": "input_boolean.night_automations",
