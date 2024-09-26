@@ -1,19 +1,19 @@
 using System.Reflection;
 using Microsoft.Extensions.Hosting;
-using NetDaemon.Extensions.Logging;
 using NetDaemon.Extensions.Scheduler;
 using NetDaemon.Extensions.Tts;
 using NetDaemon.Runtime;
-using Serilog;
 
 try
 {
     await Host.CreateDefaultBuilder(args)
-        .UseNetDaemonAppSettings()
+        //.UseNetDaemonAppSettings()
+        //.RegisterAppSettingsJsonToHost()
         .UseNetDaemonRuntime()
         .UseNetDaemonTextToSpeech()
-        .ConfigureServices((_, services) =>
+        .ConfigureServices((context, services) =>
             services
+                .ConfigureNetDaemonServices(context.Configuration)
                 .AddAppsFromAssembly(Assembly.GetExecutingAssembly())
                 .AddNetDaemonStateManager()
                 .AddNetDaemonScheduler()
