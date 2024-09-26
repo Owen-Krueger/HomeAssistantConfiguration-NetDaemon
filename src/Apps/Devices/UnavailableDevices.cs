@@ -82,7 +82,6 @@ public class UnavailableDevices
             group.UnavailableEntity.EntityId, count);
         
         services.Button.Press(ServiceTarget.FromEntity(group.PingEntity!.EntityId));
-        group.PingEntity!.CallService("button/press");
         scheduler.Schedule(DateTimeOffset.Now.AddSeconds(10), 
             _ => VerifyEntityIsAlive(group, count));
     }
@@ -92,8 +91,9 @@ public class UnavailableDevices
     /// </summary>
     private void VerifyEntityIsAlive(EntityGroup group, int count)
     {
-        if (group.PingEntity!.State != "unavailable") // Ping fixed state.
+        if (group.UnavailableEntity.State != "unavailable") // Ping fixed state.
         {
+            logger.LogInformation("{Entity} appears to be alive again.", group.UnavailableEntity.EntityId);
             SyncEntities(group.UnavailableEntity, group.SyncEntity);
             return;
         }
