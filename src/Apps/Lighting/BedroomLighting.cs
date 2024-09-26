@@ -1,4 +1,5 @@
 ﻿using System.Text.Json.Serialization;
+using NetDaemon.Constants;
 using NetDaemon.Events;
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Utilities;
@@ -22,7 +23,7 @@ public class BedroomLighting
         entities = new Entities(context);
         this.logger = logger;
 
-        context.Events.Filter<ZhaEvent>("zha_event")
+        context.Events.Filter<ZhaEvent>(EventTypes.ZhaEvent)
             .Where(x =>
                 x.Data is { DeviceId: "99d54b9a73f87bfe21094394baa6fecf", Command: "single" })
             .Subscribe(_ => OnBedsideButtonPressed());

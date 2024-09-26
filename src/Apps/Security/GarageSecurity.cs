@@ -1,4 +1,6 @@
-﻿using NetDaemon.Models;
+﻿using NetDaemon.Constants;
+using NetDaemon.Events;
+using NetDaemon.Models;
 
 namespace NetDaemon.Apps.Security;
 
@@ -10,6 +12,7 @@ public class GarageSecurity
 {
     private readonly IEntities entities;
     private readonly ILogger<GarageSecurity> logger;
+    private const string CloseGarageDoorAction = "CLOSE_GARAGE_DOOR";
 
     /// <summary>
     /// Sets up the automations.
@@ -18,22 +21,24 @@ public class GarageSecurity
     {
         entities = new Entities(context);
         this.logger = logger;
-        
-        context.Events.Where(e => e.EventType == "mobile_app_notification_action")
-            .Subscribe(e => 
+
+        context.Events.Filter<MobileNotificationActionEvent>(EventTypes.MobileAppNotificationActionEvent)
+            .Where(x => x.Data?.Action == CloseGarageDoorAction)
+            .Subscribe(x =>
             {
-                logger.LogInformation("Received event: {Event}", e.DataElement.ToString());
+                logger.LogInformation("Request that garage door close.");
             });
 
         var services = new Services(context);
-        services.Notify.Owen("Test", "Test", data: new MobileAppNotificationData
+        services.Notify.Owen("Garage door is open.", "Garage", 
+            data: new MobileAppNotificationData
         {
             Actions = [
                 new MobileAppNotificationAction
                 {
-                    Action = "TEST",
-                    Title = "Title",
-                    Uri = "/dashboard-mobile-plus/upstairs"
+                    Action = CloseGarageDoorAction,
+                    Title = "Close Garage Door",
+                    Uri = "/dashboard-mobile-plus/0"
                 }
             ]
         });
