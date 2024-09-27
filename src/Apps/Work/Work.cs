@@ -54,7 +54,7 @@ public class Work
     /// </summary>
     private void VerifyComputerOn()
     {
-        logger.LogInformation("Computer state: {State}", entities.BinarySensor.OwenComputerActive);
+        logger.LogInformation("Computer state: {State}", entities.BinarySensor.OwenComputerActive.State);
         services.Notify.Owen(entities.Lock.FrontDoorLock.IsLocked() ? 
                 "Computer turned on." : "Attempted to turn on computer but failed.",
             "Computer");    

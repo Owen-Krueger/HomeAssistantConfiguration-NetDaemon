@@ -56,6 +56,7 @@ public class OffLighting
         else
         {
             logger.LogInformation("Turning off lights depending on states.");
+            entities.Scene.AllOffDynamic.TurnOn();
             TurnOffLightsBasedOnState();
         }
     }

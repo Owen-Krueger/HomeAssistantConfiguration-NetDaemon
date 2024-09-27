@@ -37,21 +37,21 @@ public class OutsideLighting
             .Where(x =>
                     x.Old?.State > 5 &&
                     x.New?.State <= 5)
-            .Subscribe(_ => TurnOnPorchLocationBased());
+            .Subscribe(_ => SetPorchLightingStateFromLocation(true));
         entities.Sensor.OwenDistanceMiles
             .StateChanges()
             .Where(x =>
                 x.Old?.State > 5 &&
                 x.New?.State <= 5)
-            .Subscribe(_ => TurnOnPorchLocationBased());
+            .Subscribe(_ => SetPorchLightingStateFromLocation(true));
         entities.Person.Allison
             .StateChanges()
             .WhenStateIsFor(x => x?.State == "home", TimeSpan.FromMinutes(5), scheduler)
-            .Subscribe(_ => TurnOffPorch());
+            .Subscribe(_ => SetPorchLightingStateFromLocation(false));
         entities.Person.Owen
             .StateChanges()
             .WhenStateIsFor(x => x?.State == "home", TimeSpan.FromMinutes(5), scheduler)
-            .Subscribe(_ => TurnOffPorch());
+            .Subscribe(_ => SetPorchLightingStateFromLocation(false));
     }
 
     /// <summary>
@@ -65,23 +65,18 @@ public class OutsideLighting
         var nextTrigger = nextSunset.AddMinutes(-15);
         logger.LogInformation("Next time to turn on porch set to {Date}", nextTrigger.ToUsCentralTime());
         
-        scheduler.Schedule(nextTrigger, TurnOnPorch);
+        scheduler.Schedule(nextTrigger, () => SetPorchLightingState(true));
         scheduler.Schedule(nextSunset.AddMinutes(1), SetUpSunsetTriggers);
     }
 
     /// <summary>
-    /// Turns on the porch lights.
-    /// </summary>
-    private void TurnOnPorch() => SetPorchLightingState(true);
-
-    /// <summary>
     /// Turns on the porch lights if it's late and the lights are off.
     /// </summary>
-    private void TurnOnPorchLocationBased()
+    private void SetPorchLightingStateFromLocation(bool isOn)
     {
         if (DateTime.Now.TimeOfDay > TimeSpan.FromHours(22))
         {
-            TurnOnPorch();
+            SetPorchLightingState(isOn);
         }
     }
 
@@ -100,7 +95,7 @@ public class OutsideLighting
             return;
         }
      
-        TurnOffPorch();
+        SetPorchLightingState(false);
     }
 
     /// <summary>
