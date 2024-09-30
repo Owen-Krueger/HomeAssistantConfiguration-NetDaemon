@@ -15,6 +15,7 @@ public class GarageSecurity
     private readonly IEntities entities;
     private readonly IServices services;
     private readonly ILogger<GarageSecurity> logger;
+    private DateTimeOffset lastExecution = DateTimeOffset.Now.AddDays(-1);
     private const string CloseGarageDoorAction = "CLOSE_GARAGE_DOOR";
 
     /// <summary>
@@ -45,11 +46,13 @@ public class GarageSecurity
     /// </summary>
     private void SendNotification()
     {
-        if (entities.IsAnyoneHome() || entities.Cover.PrimaryGarageDoor.State == "open")
+        if (entities.IsAnyoneHome() || entities.Cover.PrimaryGarageDoor.State == "closed" || 
+            lastExecution >= DateTimeOffset.Now.AddMinutes(-5)) // To prevent two notifications if Owen and Allison are traveling together.
         {
             return;
         }
         
+        lastExecution = DateTimeOffset.Now;
         services.Notify.Owen("Garage door is open.", "Garage", 
             data: new MobileAppNotificationData
             {

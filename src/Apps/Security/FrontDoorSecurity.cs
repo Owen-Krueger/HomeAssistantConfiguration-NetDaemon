@@ -14,6 +14,7 @@ public class FrontDoorSecurity
     private readonly IServices services;
     private readonly IScheduler scheduler;
     private readonly ILogger<FrontDoorSecurity> logger;
+    private DateTimeOffset lastExecution = DateTimeOffset.Now.AddDays(-1);
 
     /// <summary>
     /// Sets up automations.
@@ -41,12 +42,14 @@ public class FrontDoorSecurity
     /// </summary>
     private void LockFrontDoor()
     {
-        if (entities.IsAnyoneHome() || entities.Lock.FrontDoorLock.IsLocked())
+        if (entities.IsAnyoneHome() || entities.Lock.FrontDoorLock.IsLocked() ||
+            lastExecution >= DateTimeOffset.Now.AddMinutes(-5)) // To prevent two notifications if Owen and Allison are traveling together.
         {
             return;
         }
         
         logger.LogInformation("Locking front door.");
+        lastExecution = DateTimeOffset.Now;
         entities.Lock.FrontDoorLock.Lock();
         scheduler.Schedule(DateTimeOffset.Now.AddSeconds(10), VerifyFrontDoorLocked);
     }

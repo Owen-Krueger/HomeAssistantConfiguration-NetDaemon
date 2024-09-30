@@ -126,6 +126,7 @@ public class OutsideLighting
             return;
         }
 
+        logger.LogInformation("Turning holiday lights {State}", isOn ? "on" : "off");
         var holidayLightsTarget = ServiceTarget.FromEntity(entities.Group.HolidayLights.EntityId);
         switch (isOn)
         {

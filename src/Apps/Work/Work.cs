@@ -27,7 +27,7 @@ public class Work
 
         entities.Person.Owen
             .StateChanges()
-            .Where(x => x.New.IsHome())
+            .WhenStateIsFor(x => x.IsHome(), TimeSpan.FromMinutes(1), scheduler)
             .Subscribe(_ => TurnOnComputer());
     }
 

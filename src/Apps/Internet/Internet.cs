@@ -63,7 +63,7 @@ public class Internet
     /// </summary>
     private void VerifyInternetWorking()
     {
-        logger.LogInformation("Internet state: {State}", entities.BinarySensor.InternetUp);
+        logger.LogInformation("Internet state: {State}", entities.BinarySensor.InternetUp.State);
         if (entities.BinarySensor.InternetUp.IsOff())
         {
             services.Notify.Owen("Internet still down after modem restart.", "Internet");

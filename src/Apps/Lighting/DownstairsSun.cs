@@ -47,6 +47,11 @@ public class DownstairsSun
     /// </summary>
     private void SetDownstairsLightLevel()
     {
+        if (entities.Light.DownstairsLights.IsOff())
+        {
+            return;
+        }
+        
         var brightnessAttribute = entities.Light.DownstairsLights.Attributes?.Brightness;
         var elevation = entities.Sun.Sun.Attributes?.Elevation ?? 0;
         
