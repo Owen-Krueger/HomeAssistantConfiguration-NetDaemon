@@ -79,6 +79,6 @@ public class BedroomLighting
     /// Returns if it's between 9PM and midnight.
     /// </summary>
     private static bool IsLate()
-        => DateTimeOffset.Now.IsBetween(new TimeOnly(19, 0), new TimeOnly(23, 59, 59));
+        => DateTimeOffset.Now.IsBetween(new TimeOnly(21, 00), new TimeOnly(23, 59, 59));
     
 }
