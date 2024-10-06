@@ -1,5 +1,4 @@
-﻿using System.Text.Json.Serialization;
-using NetDaemon.Constants;
+﻿using NetDaemon.Constants;
 using NetDaemon.Events;
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Utilities;
