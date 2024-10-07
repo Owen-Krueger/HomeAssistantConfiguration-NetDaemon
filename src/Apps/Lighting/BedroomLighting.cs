@@ -47,7 +47,7 @@ public class BedroomLighting
     private void OnBedsideButtonPressed()
     {
         logger.LogInformation("Toggling bedroom lamps. Current state: {State}",
-            entities.Light.BedroomLamps.EntityState?.State);
+            entities.Light.BedroomLamps.EntityState?.State.GetOnOffStringFromState());
         entities.Light.BedroomLamps.Toggle();
 
         if (!IsLate() || entities.Switch.BedroomLights.IsOff() || entities.Light.BedroomLamps.IsOff())

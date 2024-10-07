@@ -3,6 +3,7 @@ using System.Linq;
 using NetDaemon.Constants;
 using NetDaemon.Events;
 using NetDaemon.HassModel.Entities;
+using NetDaemon.Utilities;
 
 namespace NetDaemon.apps.Lighting;
 
@@ -76,7 +77,7 @@ public class ToggleableLighting
         // Work-around from lights that get out of sync.
         var firstLightState = group.Lights[0].EntityState?.IsOn() ?? false; 
         logger.LogInformation("Toggle requested for {Lights}. Turning lights {State}.",
-            devicesString, !firstLightState);
+            devicesString, (!firstLightState).GetOnOffString());
 
         foreach (var light in group.Lights)
         {

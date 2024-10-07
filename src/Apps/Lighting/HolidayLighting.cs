@@ -15,7 +15,7 @@ public class HolidayLighting
     private readonly IEntities entities;
     private readonly IScheduler scheduler;
     private readonly ILogger<HolidayLighting> logger;
-    private readonly List<IDisposable> automationTriggers = [];
+    private List<IDisposable> automationTriggers = [];
 
     /// <summary>
     /// Sets up automations.
@@ -55,7 +55,7 @@ public class HolidayLighting
                 break;
             // Remove any existing automation triggers and turn off holiday lights if they're on.
             case false when automationTriggers.Count > 0:
-                automationTriggers.ForEach(x => x.Dispose());
+                automationTriggers = automationTriggers.DisposeTriggers();
                 TurnOffHolidayLights(); // Turn off the lights if they're on when we turn off holiday mode.
                 break;
         }

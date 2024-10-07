@@ -85,7 +85,7 @@ public class TelevisionLighting
     /// </summary>
     private void SetLivingRoomLampState(bool isOn)
     {
-        logger.LogInformation("Turning living room lamps {State} due to television activity.", isOn ? "on" : "off");
+        logger.LogInformation("Turning living room lamps {State} due to television activity.", isOn.GetOnOffString());
         var livingRoomLampsTarget = ServiceTarget.FromEntity(entities.Group.LivingRoomLamps.EntityId);
         if (isOn)
         {

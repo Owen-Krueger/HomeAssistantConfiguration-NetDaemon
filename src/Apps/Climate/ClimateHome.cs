@@ -1,8 +1,10 @@
-﻿using System.Reactive.Concurrency;
+﻿using System.Collections.Generic;
+using System.Reactive.Concurrency;
 using NetDaemon.Extensions.Scheduler;
+using NetDaemon.HassModel.Entities;
 using NetDaemon.Utilities;
 
-namespace HomeAssistantGenerated.Apps.Climate;
+namespace NetDaemon.Apps.Climate;
 
 /// <summary>
 /// Automations for climate.
@@ -11,7 +13,10 @@ namespace HomeAssistantGenerated.Apps.Climate;
 public class ClimateHome
 {
     private readonly IEntities entities;
+    private readonly IServices services;
+    private readonly IScheduler scheduler;
     private readonly ILogger<ClimateHome> logger;
+    private List<IDisposable> automationTriggers = [];
 
     /// <summary>
     /// Sets up automations.
@@ -19,10 +24,34 @@ public class ClimateHome
     public ClimateHome(IHaContext context, IScheduler scheduler, ILogger<ClimateHome> logger)
     {
         entities = new Entities(context);
+        services = new Services(context);
+        this.scheduler = scheduler;
         this.logger = logger;
 
-        //scheduler.ScheduleCron("0 6 * * *", SetDayTemperature);
-        //scheduler.ScheduleCron("0 21 * * *", SetNightTemperature);
+        /*UpdateAutomationTriggers();
+        entities.InputSelect.ThermostatState
+            .StateChanges()
+            .Subscribe(_ => UpdateAutomationTriggers());*/
+    }
+
+    /// <summary>
+    /// Updates the automation triggers. If state is "Home", ensures that the triggers are active. If state
+    /// is "Away", ensures all triggers are disposed.
+    /// </summary>
+    private void UpdateAutomationTriggers()
+    {
+        switch (entities.InputSelect.ThermostatState.GetEnumFromState<ThermostatState>())
+        {
+            // Sets up automation triggers.
+            case ThermostatState.Home when automationTriggers.Count == 0:
+                automationTriggers.Add(scheduler.ScheduleCron("0 6 * * *", SetDayTemperature));
+                automationTriggers.Add(scheduler.ScheduleCron("0 21 * * *", SetNightTemperature));
+                break;
+            // Removes any existing automation triggers.
+            case ThermostatState.Away when automationTriggers.Count > 0:
+                automationTriggers = automationTriggers.DisposeTriggers();
+                break;
+        }
     }
 
     /// <summary>
@@ -54,7 +83,10 @@ public class ClimateHome
             setTemperature -= entities.InputNumber.ClimateNightOffset.State ?? 0;
         }
 
-        logger.LogInformation("Setting temperature (Old: {Old}) (New: {New}", entities.Climate.Main.Attributes.Temperature, setTemperature);
+        logger.LogInformation("Setting temperature (Old: {Old}) (New: {New})", 
+            entities.Climate.Main.Attributes?.Temperature, setTemperature);
+        NotifyTemperatureUpdate(setTemperature);
+        
         entities.Climate.Main.SetTemperature(setTemperature);
 
         if (!isDay)
@@ -68,12 +100,24 @@ public class ClimateHome
     /// </summary>
     private void TurnOnBedroomFan(double setTemperature)
     {
-        if (entities.Sensor.BedroomTemperatureSensorTemperature.State <= setTemperature)
+        var bedroomTemperature = entities.Sensor.BedroomTemperatureSensorTemperature.State; 
+        if (bedroomTemperature <= setTemperature)
         {
             return;
         }
 
-        logger.LogInformation("Turning on bedroom fan.");
+        logger.LogInformation("Turning on bedroom fan. (Current Temp: {CurrentTemp} Set Temp: {SetTemp})",
+            bedroomTemperature, setTemperature);
         entities.Switch.BedroomFan.TurnOn();
+    }
+
+    private void NotifyTemperatureUpdate(double temperature)
+    {
+        if (entities.InputBoolean.ClimateNotifyTimeBased.IsOff())
+        {
+            return;
+        }
+        
+        services.Notify.Owen($"Temperature set to {temperature}.", "Climate");
     }
 }

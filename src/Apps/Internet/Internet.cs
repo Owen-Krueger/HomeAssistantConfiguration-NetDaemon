@@ -1,5 +1,6 @@
 ﻿using System.Reactive.Concurrency;
 using NetDaemon.HassModel.Entities;
+using NetDaemon.Utilities;
 
 namespace NetDaemon.apps.Internet;
 
@@ -63,7 +64,8 @@ public class Internet
     /// </summary>
     private void VerifyInternetWorking()
     {
-        logger.LogInformation("Internet state: {State}", entities.BinarySensor.InternetUp.State);
+        logger.LogInformation("Internet state: {State}", 
+            entities.BinarySensor.InternetUp.State.GetOnOffStringFromState());
         if (entities.BinarySensor.InternetUp.IsOff())
         {
             services.Notify.Owen("Internet still down after modem restart.", "Internet");

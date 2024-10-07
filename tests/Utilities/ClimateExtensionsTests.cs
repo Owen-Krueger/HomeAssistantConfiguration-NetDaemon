@@ -32,6 +32,6 @@ public class ClimateExtensionsTests
     {
         yield return new object[] { "heat", true };
         yield return new object[] { "cool", false };
-        yield return new object[] { null, false };
+        yield return new object?[] { null, false };
     }
 }

@@ -110,7 +110,7 @@ public class OutsideLighting
     /// <param name="isOn">Whether to turn on the lights.</param>
     private void SetPorchLightingState(bool isOn)
     {
-        logger.LogInformation("Turning the porch lights {State}.", isOn ? "on" : "off");
+        logger.LogInformation("Turning the porch lights {State}.", isOn.GetOnOffString());
         switch (isOn)
         {
             case true when entities.Switch.FrontPorchLights.IsOff():
@@ -126,7 +126,7 @@ public class OutsideLighting
             return;
         }
 
-        logger.LogInformation("Turning holiday lights {State}", isOn ? "on" : "off");
+        logger.LogInformation("Turning holiday lights {State}", isOn.GetOnOffString());
         var holidayLightsTarget = ServiceTarget.FromEntity(entities.Group.HolidayLights.EntityId);
         switch (isOn)
         {

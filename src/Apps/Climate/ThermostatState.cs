@@ -1,4 +1,4 @@
-﻿namespace HomeAssistantGenerated.Apps.Climate;
+﻿namespace NetDaemon.Apps.Climate;
 
 public enum ThermostatState
 {
