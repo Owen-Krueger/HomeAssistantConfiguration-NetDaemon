@@ -2,7 +2,7 @@
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Utilities;
 
-namespace NetDaemon.apps.Internet;
+namespace NetDaemon.Apps.Internet;
 
 /// <summary>
 /// Automations for internet.

@@ -1,7 +1,7 @@
 ﻿using System.Reactive.Concurrency;
 using NetDaemon.Utilities;
 
-namespace NetDaemon.apps.Internet;
+namespace NetDaemon.Apps.Internet;
 
 /// <summary>
 /// Automations for phone mobile data.

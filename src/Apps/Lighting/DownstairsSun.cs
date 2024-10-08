@@ -1,7 +1,7 @@
 ﻿using System.Reactive.Concurrency;
 using NetDaemon.HassModel.Entities;
 
-namespace NetDaemon.apps.Lighting;
+namespace NetDaemon.Apps.Lighting;
 
 /// <summary>
 /// Automations to set downstairs lighting depending on sun elevation.

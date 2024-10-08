@@ -1,7 +1,7 @@
 ﻿using System.Reactive.Concurrency;
 using NetDaemon.HassModel.Entities;
 
-namespace NetDaemon.apps.Lighting;
+namespace NetDaemon.Apps.Lighting;
 
 /// <summary>
 /// Automations for lighting in the garage.

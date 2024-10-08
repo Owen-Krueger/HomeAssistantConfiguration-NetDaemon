@@ -1,7 +1,7 @@
 ﻿using NetDaemon.HassModel.Entities;
 using NetDaemon.Utilities;
 
-namespace NetDaemon.apps.Lighting;
+namespace NetDaemon.Apps.Lighting;
 
 /// <summary>
 /// Automation for turning on lights around the house on days that Owen is working.

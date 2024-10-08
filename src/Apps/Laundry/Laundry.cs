@@ -1,4 +1,4 @@
-﻿namespace NetDaemon.apps.Laundry;
+﻿namespace NetDaemon.Apps.Laundry;
 
 /// <summary>
 /// Automations for laundry.

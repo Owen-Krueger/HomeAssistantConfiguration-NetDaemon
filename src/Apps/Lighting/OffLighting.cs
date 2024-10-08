@@ -2,7 +2,7 @@
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Utilities;
 
-namespace NetDaemon.apps.Lighting;
+namespace NetDaemon.Apps.Lighting;
 
 /// <summary>
 /// Automations dedicated to conditions where all lights should turn off.

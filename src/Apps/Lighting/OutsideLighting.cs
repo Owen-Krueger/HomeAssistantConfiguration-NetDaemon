@@ -3,7 +3,7 @@ using NetDaemon.Extensions.Scheduler;
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Utilities;
 
-namespace NetDaemon.apps.Lighting;
+namespace NetDaemon.Apps.Lighting;
 
 /// <summary>
 /// Automations for outside lighting.
