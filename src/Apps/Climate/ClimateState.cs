@@ -1,5 +1,6 @@
 ﻿using System.Reactive.Concurrency;
 using NetDaemon.HassModel.Entities;
+using NetDaemon.Models.Climate;
 using NetDaemon.Utilities;
 
 namespace NetDaemon.Apps.Climate;
@@ -23,22 +24,22 @@ public class ClimateState
         services = new Services(context);
         this.logger = logger;
 
-        // entities.Person.Allison
-        //     .StateChanges()
-        //     .Where(x => x.New.IsHome())
-        //     .Subscribe(_ => SetHomeState());
-        // entities.Person.Owen
-        //     .StateChanges()
-        //     .Where(x => x.New.IsHome())
-        //     .Subscribe(_ => SetHomeState());
-        // entities.Person.Allison
-        //     .StateChanges()
-        //     .WhenStateIsFor(x => !x.IsHome(), TimeSpan.FromMinutes(15), scheduler)
-        //     .Subscribe(_ => SetAwayState());
-        // entities.Person.Owen
-        //     .StateChanges()
-        //     .WhenStateIsFor(x => !x.IsHome(), TimeSpan.FromMinutes(15), scheduler)
-        //     .Subscribe(_ => SetAwayState());
+        entities.Person.Allison
+            .StateChanges()
+            .Where(x => x.New.IsHome())
+            .Subscribe(_ => SetHomeState());
+        entities.Person.Owen
+            .StateChanges()
+            .Where(x => x.New.IsHome())
+            .Subscribe(_ => SetHomeState());
+        entities.Person.Allison
+            .StateChanges()
+            .WhenStateIsFor(x => !x.IsHome(), TimeSpan.FromMinutes(15), scheduler)
+            .Subscribe(_ => SetAwayState());
+        entities.Person.Owen
+            .StateChanges()
+            .WhenStateIsFor(x => !x.IsHome(), TimeSpan.FromMinutes(15), scheduler)
+            .Subscribe(_ => SetAwayState());
     }
 
     /// <summary>
@@ -81,6 +82,20 @@ public class ClimateState
         
         var target = ServiceTarget.FromEntity(entities.InputSelect.ThermostatState.EntityId);
         services.InputSelect.SelectOption(target, state.ToString());
+        NotifyStateUpdate(state);
+    }
+    
+    /// <summary>
+    /// Notifies Owen that the state has been updated (if he wants updates).
+    /// </summary>
+    private void NotifyStateUpdate(ThermostatState state)
+    {
+        if (entities.InputBoolean.ClimateNotifyLocationBased.IsOff())
+        {
+            return;
+        }
+        
+        services.Notify.Owen($"Temperature state updated to {state}.", "Climate");
     }
 
     /// <summary>

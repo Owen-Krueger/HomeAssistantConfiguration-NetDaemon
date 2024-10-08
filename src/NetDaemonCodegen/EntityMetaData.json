@@ -865,6 +865,11 @@
           "cSharpName": "AllisonPhone10Focus"
         },
         {
+          "id": "binary_sensor.back_outside_plugs_cloud_connection",
+          "friendlyName": "Cloud connection",
+          "cSharpName": "BackOutsidePlugsCloudConnection"
+        },
+        {
           "id": "binary_sensor.backups_stale",
           "friendlyName": "Backups Stale",
           "cSharpName": "BackupsStale"
@@ -993,6 +998,11 @@
           "id": "binary_sensor.front_door_lock_system_hardware_failure",
           "friendlyName": "Front Door Lock System hardware failure",
           "cSharpName": "FrontDoorLockSystemHardwareFailure"
+        },
+        {
+          "id": "binary_sensor.front_outside_plugs_cloud_connection",
+          "friendlyName": "Front Outside Plugs Cloud connection",
+          "cSharpName": "FrontOutsidePlugsCloudConnection"
         },
         {
           "id": "binary_sensor.ftp",
@@ -1251,7 +1261,7 @@
         },
         {
           "id": "binary_sensor.secondary_pi_hole",
-          "friendlyName": "Secondary Pi-Hole Status",
+          "friendlyName": "Status",
           "cSharpName": "SecondaryPiHole"
         },
         {
@@ -2971,6 +2981,11 @@
           "id": "input_boolean.netdaemon_net_daemon_apps_security_garage_security",
           "friendlyName": "netdaemon_net_daemon_apps_security_garage_security",
           "cSharpName": "NetdaemonNetDaemonAppsSecurityGarageSecurity"
+        },
+        {
+          "id": "input_boolean.netdaemon_net_daemon_apps_work_work",
+          "friendlyName": "netdaemon_net_daemon_apps_work_work",
+          "cSharpName": "NetdaemonNetDaemonAppsWorkWork"
         },
         {
           "id": "input_boolean.night_automations",
@@ -5736,47 +5751,47 @@
         },
         {
           "id": "sensor.secondary_pi_hole_ads_blocked_today",
-          "friendlyName": "Secondary Pi-Hole Ads blocked today",
+          "friendlyName": "Ads blocked today",
           "cSharpName": "SecondaryPiHoleAdsBlockedToday"
         },
         {
           "id": "sensor.secondary_pi_hole_ads_percentage_blocked_today",
-          "friendlyName": "Secondary Pi-Hole Ads percentage blocked today",
+          "friendlyName": "Ads percentage blocked today",
           "cSharpName": "SecondaryPiHoleAdsPercentageBlockedToday"
         },
         {
           "id": "sensor.secondary_pi_hole_dns_queries_cached",
-          "friendlyName": "Secondary Pi-Hole DNS queries cached",
+          "friendlyName": "DNS queries cached",
           "cSharpName": "SecondaryPiHoleDnsQueriesCached"
         },
         {
           "id": "sensor.secondary_pi_hole_dns_queries_forwarded",
-          "friendlyName": "Secondary Pi-Hole DNS queries forwarded",
+          "friendlyName": "DNS queries forwarded",
           "cSharpName": "SecondaryPiHoleDnsQueriesForwarded"
         },
         {
           "id": "sensor.secondary_pi_hole_dns_queries_today",
-          "friendlyName": "Secondary Pi-Hole DNS queries today",
+          "friendlyName": "DNS queries today",
           "cSharpName": "SecondaryPiHoleDnsQueriesToday"
         },
         {
           "id": "sensor.secondary_pi_hole_dns_unique_clients",
-          "friendlyName": "Secondary Pi-Hole DNS unique clients",
+          "friendlyName": "DNS unique clients",
           "cSharpName": "SecondaryPiHoleDnsUniqueClients"
         },
         {
           "id": "sensor.secondary_pi_hole_dns_unique_domains",
-          "friendlyName": "Secondary Pi-Hole DNS unique domains",
+          "friendlyName": "DNS unique domains",
           "cSharpName": "SecondaryPiHoleDnsUniqueDomains"
         },
         {
           "id": "sensor.secondary_pi_hole_domains_blocked",
-          "friendlyName": "Secondary Pi-Hole Domains blocked",
+          "friendlyName": "Domains blocked",
           "cSharpName": "SecondaryPiHoleDomainsBlocked"
         },
         {
           "id": "sensor.secondary_pi_hole_seen_clients",
-          "friendlyName": "Secondary Pi-Hole Seen clients",
+          "friendlyName": "Seen clients",
           "cSharpName": "SecondaryPiHoleSeenClients"
         },
         {
@@ -6651,6 +6666,11 @@
           "cSharpName": "Arcadia"
         },
         {
+          "id": "switch.back_outside_plugs",
+          "friendlyName": null,
+          "cSharpName": "BackOutsidePlugs"
+        },
+        {
           "id": "switch.bedroom_bedside_echo_show_do_not_disturb_switch",
           "friendlyName": "Bedroom Bedside Echo Show do not disturb switch",
           "cSharpName": "BedroomBedsideEchoShowDoNotDisturbSwitch"
@@ -6824,6 +6844,11 @@
           "id": "switch.everywhere_shuffle_switch",
           "friendlyName": "Everywhere shuffle switch",
           "cSharpName": "EverywhereShuffleSwitch"
+        },
+        {
+          "id": "switch.front_outside_plugs",
+          "friendlyName": "Front Outside Plugs",
+          "cSharpName": "FrontOutsidePlugs"
         },
         {
           "id": "switch.front_porch_lights",
@@ -7117,7 +7142,7 @@
         },
         {
           "id": "switch.tp_link_smart_plug_66fd_led",
-          "friendlyName": "LED",
+          "friendlyName": "Front Outside Plugs LED",
           "cSharpName": "TpLinkSmartPlug66fdLed"
         },
         {
@@ -7525,17 +7550,17 @@
         },
         {
           "id": "update.secondary_pi_hole_core_update_available",
-          "friendlyName": "Secondary Pi-Hole Core update available",
+          "friendlyName": "Core update available",
           "cSharpName": "SecondaryPiHoleCoreUpdateAvailable"
         },
         {
           "id": "update.secondary_pi_hole_ftl_update_available",
-          "friendlyName": "Secondary Pi-Hole FTL update available",
+          "friendlyName": "FTL update available",
           "cSharpName": "SecondaryPiHoleFtlUpdateAvailable"
         },
         {
           "id": "update.secondary_pi_hole_web_update_available",
-          "friendlyName": "Secondary Pi-Hole Web update available",
+          "friendlyName": "Web update available",
           "cSharpName": "SecondaryPiHoleWebUpdateAvailable"
         },
         {
@@ -7684,6 +7709,11 @@
           "id": "weather.home",
           "friendlyName": "Forecast Home",
           "cSharpName": "Home"
+        },
+        {
+          "id": "weather.openweathermap",
+          "friendlyName": "OpenWeatherMap",
+          "cSharpName": "Openweathermap"
         }
       ],
       "attributes": [

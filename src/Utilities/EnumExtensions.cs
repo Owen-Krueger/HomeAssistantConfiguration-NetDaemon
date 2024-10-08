@@ -13,7 +13,7 @@ public static class EnumExtensions
     {
         if (entity.State is null || !Enum.TryParse(typeof(TEnum), entity.State, false, out var state))
         {
-            return default;
+            return default!;
         }
 
         return (TEnum)state;

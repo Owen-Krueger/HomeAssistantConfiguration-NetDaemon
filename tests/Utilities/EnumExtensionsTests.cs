@@ -33,7 +33,7 @@ public class EnumExtensionsTests
         yield return new object[] { TestEnum.Value1.ToString(), TestEnum.Value1 };
         yield return new object[] { TestEnum.Value2.ToString(), TestEnum.Value2 };
         yield return new object[] { "UnexpectedValue", TestEnum.Value1 };
-        yield return new object[] { null, TestEnum.Value1 };
+        yield return new object?[] { null, TestEnum.Value1 };
     }
 }
 

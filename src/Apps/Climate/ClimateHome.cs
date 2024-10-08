@@ -2,12 +2,13 @@
 using System.Reactive.Concurrency;
 using NetDaemon.Extensions.Scheduler;
 using NetDaemon.HassModel.Entities;
+using NetDaemon.Models.Climate;
 using NetDaemon.Utilities;
 
 namespace NetDaemon.Apps.Climate;
 
 /// <summary>
-/// Automations for climate.
+/// Automations for climate when home.
 /// </summary>
 [NetDaemonApp]
 public class ClimateHome
@@ -28,10 +29,10 @@ public class ClimateHome
         this.scheduler = scheduler;
         this.logger = logger;
 
-        /*UpdateAutomationTriggers();
+        UpdateAutomationTriggers();
         entities.InputSelect.ThermostatState
             .StateChanges()
-            .Subscribe(_ => UpdateAutomationTriggers());*/
+            .Subscribe(_ => UpdateAutomationTriggers());
     }
 
     /// <summary>
@@ -111,6 +112,9 @@ public class ClimateHome
         entities.Switch.BedroomFan.TurnOn();
     }
 
+    /// <summary>
+    /// Notifies Owen that the set temperature has been updated (if he wants updates).
+    /// </summary>
     private void NotifyTemperatureUpdate(double temperature)
     {
         if (entities.InputBoolean.ClimateNotifyTimeBased.IsOff())
