@@ -71,7 +71,11 @@ public class ClimateAway
     private void UpdateTimingThresholds()
     {
         timingThresholds = GetTimingThresholds();
-        UpdateSetTemperature();
+
+        if (GetThermostatState() == ThermostatState.Away)
+        {
+            UpdateSetTemperature();
+        }
     }
     
     /// <summary>
