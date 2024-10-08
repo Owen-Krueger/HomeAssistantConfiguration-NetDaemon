@@ -46,7 +46,7 @@ public class Work
         
         logger.LogInformation("Turning on Owen's computer.");
         services.Button.Press(ServiceTarget.FromEntity(entities.Button.WakeOnLanOwenDesktop.EntityId));
-        scheduler.Schedule(DateTimeOffset.Now.AddSeconds(30), VerifyComputerOn);
+        scheduler.Schedule(TimeSpan.FromSeconds(30), VerifyComputerOn);
     }
 
     /// <summary>

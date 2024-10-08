@@ -82,7 +82,7 @@ public class UnavailableDevices
             group.UnavailableEntity.EntityId, count);
         
         services.Button.Press(ServiceTarget.FromEntity(group.PingEntity!.EntityId));
-        scheduler.Schedule(DateTimeOffset.Now.AddSeconds(10), 
+        scheduler.Schedule(TimeSpan.FromSeconds(10), 
             _ => VerifyEntityIsAlive(group, count));
     }
 
@@ -106,7 +106,7 @@ public class UnavailableDevices
         }
 
         // Try to ping again in 5 minutes.
-        scheduler.Schedule(DateTimeOffset.Now.AddMinutes(5),
+        scheduler.Schedule(TimeSpan.FromMinutes(5), 
             _ => PingEntity(group, ++count));
     }
 

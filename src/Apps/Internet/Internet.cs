@@ -46,7 +46,7 @@ public class Internet
         
         logger.LogInformation("Restarting modem smart plug. Starting by turning modem off for 15 seconds.");
         modemSmartPlug.TurnOff();
-        scheduler.Schedule(DateTimeOffset.Now.AddSeconds(15), TurnOnModemSmartPlug);
+        scheduler.Schedule(TimeSpan.FromSeconds(15), TurnOnModemSmartPlug);
     }
 
     /// <summary>
@@ -56,7 +56,7 @@ public class Internet
     {
         logger.LogInformation("Turning modem back on.");
         entities.Switch.InternetModemSmartPlug.TurnOn();
-        scheduler.Schedule(DateTimeOffset.Now.AddMinutes(3), VerifyInternetWorking);
+        scheduler.Schedule(TimeSpan.FromMinutes(3), VerifyInternetWorking);
     }
 
     /// <summary>
