@@ -11,7 +11,7 @@ namespace NetDaemon.Apps.Climate;
 /// Automations for climate when away.
 /// </summary>
 [NetDaemonApp]
-public class ClimateAway //: IAsyncInitializable
+public class ClimateAway
 {
     private readonly IEntities entities;
     private readonly IServices services;
@@ -34,19 +34,6 @@ public class ClimateAway //: IAsyncInitializable
             .StateChanges()
             .Subscribe(_ => UpdateAutomationTriggers());
     }
-    
-    // /// <summary>
-    // /// Sets the timing thresholds when the class is initialized for the day.
-    // /// </summary>
-    // public async Task InitializeAsync(CancellationToken cancellationToken)
-    // {
-    //     if (GetThermostatState() != ThermostatState.Away)
-    //     {
-    //         return;
-    //     }
-    //     
-    //     await UpdateTimingThresholds();
-    // }
     
     /// <summary>
     /// Updates the automation triggers. If state is "Away", ensures that the triggers are active. If state
@@ -88,7 +75,7 @@ public class ClimateAway //: IAsyncInitializable
     }
     
     /// <summary>
-    /// 
+    /// Updates the set temperature, based on how close someone is to home.
     /// </summary>
     private void UpdateSetTemperature()
     {
@@ -99,12 +86,21 @@ public class ClimateAway //: IAsyncInitializable
             entities.Sensor.OwenDistanceMiles.State ?? 0
         }.Min() + 10;
 
-        // The first threshold we're below represents the new temperature we should set.
-        foreach (var timing in timingThresholds.Where(timing => minutesFromHome < timing.MinutesToDesired))
+        var temperature = 70.0;
+        foreach (var timing in timingThresholds)
         {
-            SetTemperature(timing.Temperature);
-            return;
+            // If someone's minutes from home is under the threshold, we want to set the temperature to be the
+            // temperature of the previous threshold.
+            if (minutesFromHome < timing.MinutesToDesired)
+            {
+                SetTemperature(temperature);
+                return;
+            }
+
+            temperature = timing.Temperature;
         }
+        
+        SetTemperature(temperature);
     }
 
     /// <summary>
@@ -123,58 +119,16 @@ public class ClimateAway //: IAsyncInitializable
         NotifyTemperatureUpdate(temperature);
     }
     
-    // /// <summary>
-    // /// Gets today's forecast from OpenWeather's API and gets the high/low temperature for today.
-    // /// </summary>
-    // private async Task UpdateTimingThresholds()
-    // {
-    //     logger.LogInformation("Getting high/min temperature for today...");
-    //     var forecastResult = await entities.Weather.Openweathermap.GetForecastsAsync(type: "hourly");
-    //     var forecasts = forecastResult?
-    //         .GetProperty(entities.Weather.Openweathermap.EntityId)
-    //         .GetProperty("forecast");
-    //     if (forecasts is null)
-    //     {
-    //         logger.LogWarning("Failed to get forecasts from OpenWeatherMap. Using the current temperature.");
-    //         SetAutomationState(entities.Weather.Home.Attributes?.Temperature ?? 0);
-    //         return;
-    //     }
-    //
-    //     var forecastItems = forecasts.Value.Deserialize<List<WeatherForecastItem>>();
-    //     if (forecastItems is null)
-    //     {
-    //         logger.LogWarning("Failed to deserialize forecast items from `GetForecasts` call. Using the current temperature.");
-    //         SetAutomationState(entities.Weather.Home.Attributes?.Temperature ?? 0);
-    //         return;
-    //     }
-    //
-    //     var temperatures = forecastItems
-    //         .Where(x => x.DateTime.ToUsCentralTime().Date == DateTime.Today)
-    //         .Select(x => x.Temperature);
-    //
-    //     SetAutomationState(entities.Climate.Main.IsHeatMode() switch
-    //     {
-    //         true => temperatures.Min(),
-    //         false => temperatures.Max()
-    //     });
-    // }
-
-    // private void SetAutomationState(double temperature)
-    // {
-    //     state = new ThermostatAwayState(temperature, GetTimingThresholds());
-    // }
-
-
     /// <summary>
     /// Gets the thresholds
     /// </summary>
-    /// <returns></returns>
     private List<TimingThreshold> GetTimingThresholds()
     {
         List<TimingThreshold> temperatureTimes = [];
         var desiredTemperature = entities.InputNumber.ClimateDayTemp.State ?? 70;
         var factor = entities.Climate.Main.IsHeatMode() ? -1 : 1;
 
+        temperatureTimes.Add(new TimingThreshold(desiredTemperature, 0));
         for (var i = 1; i <= 8; i++)
         {
             var temperature = desiredTemperature + factor * i;
