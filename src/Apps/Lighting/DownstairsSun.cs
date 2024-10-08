@@ -28,10 +28,10 @@ public class DownstairsSun
             .Subscribe(_ => SetDownstairsLightLevel());
         // Around sunset
         entities.Sun.Sun
-            .StateChanges()
+            .StateAllChanges()
             .Where(x =>
-                int.Parse(x.Old?.State ?? "0") >= 10 &&
-                int.Parse(x.New?.State ?? "0") < 10)
+                x.New?.Attributes?.Elevation >= 10 &&
+                x.New?.Attributes?.Elevation < 10)
             .Subscribe(_ => SetDownstairsLightLevel());
         // Around sunrise
         entities.Sun.Sun
