@@ -47,6 +47,7 @@ public class ClimateHome
             case ThermostatState.Home when automationTriggers.Count == 0:
                 automationTriggers.Add(scheduler.ScheduleCron("0 6 * * *", SetDayTemperature));
                 automationTriggers.Add(scheduler.ScheduleCron("0 21 * * *", SetNightTemperature));
+                SetTemperature(DateTimeOffset.Now.IsBetween(new TimeOnly(6, 0), new TimeOnly(21, 0)));
                 break;
             // Removes any existing automation triggers.
             case ThermostatState.Away when automationTriggers.Count > 0:
