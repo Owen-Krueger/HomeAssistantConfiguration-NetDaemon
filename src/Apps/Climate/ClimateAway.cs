@@ -15,6 +15,7 @@ public class ClimateAway
 {
     private readonly IEntities entities;
     private readonly IServices services;
+    private readonly IScheduler scheduler;
     private readonly ILogger<ClimateAway> logger;
     private List<IDisposable> automationTriggers = [];
     private List<TimingThreshold> timingThresholds = [];
@@ -26,6 +27,7 @@ public class ClimateAway
     {
         entities = new Entities(context);
         services = new Services(context);
+        this.scheduler = scheduler;
         this.logger = logger;
         
         UpdateAutomationTriggers();
@@ -48,6 +50,7 @@ public class ClimateAway
                 logger.LogInformation("Climate Away automations enabled.");
                 automationTriggers.Add(entities.InputNumber.ClimateDayTemp
                     .StateChanges()
+                    .WhenStateIsFor(_ => true, TimeSpan.FromSeconds(15), scheduler)
                     .Subscribe(_ => UpdateTimingThresholds()));
                 automationTriggers.Add(entities.Sensor.AllisonDistanceMiles
                     .StateChanges()
