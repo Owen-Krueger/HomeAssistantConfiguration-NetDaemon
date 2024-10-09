@@ -1,5 +1,6 @@
 ﻿using HomeAssistantGenerated;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Reactive.Testing;
 
 namespace NetDaemon.Tests.TestHelpers;
 
@@ -31,4 +32,9 @@ public class TestBase
     /// Mock of the HA context from the test context.
     /// </summary>
     protected HaContextMock HaMock => Context.GetRequiredService<HaContextMock>();
+
+    /// <summary>
+    /// To simulate schedule changes in tests.
+    /// </summary>
+    protected TestScheduler TestScheduler => Context.GetRequiredService<TestScheduler>();
 }

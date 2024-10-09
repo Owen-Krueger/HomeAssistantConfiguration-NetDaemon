@@ -11,6 +11,7 @@ namespace NetDaemon.Apps.Lighting;
 public class OffLighting
 {
     private readonly IEntities entities;
+    private readonly IScheduler scheduler;
     private readonly ILogger<OffLighting> logger;
 
     /// <summary>
@@ -19,6 +20,7 @@ public class OffLighting
     public OffLighting(IHaContext context, IScheduler scheduler, ILogger<OffLighting> logger)
     {
         entities = new Entities(context);
+        this.scheduler = scheduler;
         this.logger = logger;
 
         entities.Person.Owen
@@ -68,7 +70,7 @@ public class OffLighting
     {
         if (entities.InputBoolean.ModeVacation.IsOn() ||
             !entities.Person.Owen.IsHome() ||
-            !DateTimeOffset.Now.IsBetween(new TimeOnly(20, 30), new TimeOnly(03, 0)))
+            !scheduler.Now.IsBetween(new TimeOnly(20, 30), new TimeOnly(03, 0)))
         {
             return;
         }

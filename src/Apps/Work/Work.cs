@@ -39,7 +39,7 @@ public class Work
         if (entities.BinarySensor.OwenComputerActive.IsOn() ||
             entities.BinarySensor.WorkdaySensor.IsOff() ||
             !entities.Person.Owen.IsHome() ||
-            !DateTimeOffset.Now.IsBetween(new TimeOnly(7, 30), new TimeOnly(8, 30)))
+            !scheduler.Now.IsBetween(new TimeOnly(7, 30), new TimeOnly(8, 30)))
         {
             return;
         }

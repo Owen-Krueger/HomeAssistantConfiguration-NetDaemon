@@ -1,4 +1,5 @@
-﻿using NetDaemon.Constants;
+﻿using System.Reactive.Concurrency;
+using NetDaemon.Constants;
 using NetDaemon.Events;
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Utilities;
@@ -12,14 +13,16 @@ namespace NetDaemon.Apps.Lighting;
 public class BedroomLighting
 {
     private readonly IEntities entities;
+    private readonly IScheduler scheduler;
     private readonly ILogger<BedroomLighting> logger;
     
     /// <summary>
     /// Sets up automations.
     /// </summary>
-    public BedroomLighting(IHaContext context, ILogger<BedroomLighting> logger)
+    public BedroomLighting(IHaContext context, IScheduler scheduler, ILogger<BedroomLighting> logger)
     {
         entities = new Entities(context);
+        this.scheduler = scheduler;
         this.logger = logger;
 
         context.Events.Filter<ZhaEvent>(EventTypes.ZhaEvent)
@@ -77,7 +80,7 @@ public class BedroomLighting
     /// <summary>
     /// Returns if it's between 9PM and midnight.
     /// </summary>
-    private static bool IsLate()
-        => DateTimeOffset.Now.IsBetween(new TimeOnly(21, 00), new TimeOnly(23, 59, 59));
+    private bool IsLate()
+        => scheduler.Now.IsBetween(new TimeOnly(21, 00), new TimeOnly(23, 59, 59));
     
 }

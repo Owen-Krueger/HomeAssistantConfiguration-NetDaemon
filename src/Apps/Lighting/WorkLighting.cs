@@ -1,4 +1,5 @@
-﻿using NetDaemon.HassModel.Entities;
+﻿using System.Reactive.Concurrency;
+using NetDaemon.HassModel.Entities;
 using NetDaemon.Utilities;
 
 namespace NetDaemon.Apps.Lighting;
@@ -10,14 +11,16 @@ namespace NetDaemon.Apps.Lighting;
 public class WorkLighting
 {
     private readonly IEntities entities;
+    private readonly IScheduler scheduler;
     private readonly ILogger<WorkLighting> logger;
 
     /// <summary>
     /// Sets up automations.
     /// </summary>
-    public WorkLighting(IHaContext context, ILogger<WorkLighting> logger)
+    public WorkLighting(IHaContext context, IScheduler scheduler, ILogger<WorkLighting> logger)
     {
         entities = new Entities(context);
+        this.scheduler = scheduler;
         this.logger = logger;
 
         entities.Switch.OfficeLights
@@ -35,7 +38,7 @@ public class WorkLighting
             entities.InputBoolean.ModeGuest.IsOn() ||
             !entities.Person.Owen.IsHome() ||
             entities.BinarySensor.WorkdaySensor.IsOff() ||
-            !DateTimeOffset.Now.IsBetween(new TimeOnly(11, 0), new TimeOnly(13, 30)))
+            !scheduler.Now.IsBetween(new TimeOnly(11, 0), new TimeOnly(13, 30)))
         {
             return;
         }

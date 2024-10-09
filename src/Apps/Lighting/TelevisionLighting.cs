@@ -12,6 +12,7 @@ public class TelevisionLighting
 {
     private readonly IEntities entities;
     private readonly IServices services;
+    private readonly IScheduler scheduler;
     private readonly ILogger<TelevisionLighting> logger;
 
     /// <summary>
@@ -21,6 +22,7 @@ public class TelevisionLighting
     {
         entities = new Entities(context);
         services = new Services(context);
+        this.scheduler = scheduler;
         this.logger = logger;
 
         entities.BinarySensor.UpstairsTvOn
@@ -43,7 +45,7 @@ public class TelevisionLighting
     private void TurnOnLights(bool upstairs)
     {
         var entityString = upstairs ? "Upstairs TV" : "Downstairs TV";
-        if (!DateTimeOffset.Now.IsBetween(new TimeOnly(5, 30), new TimeOnly(21, 0)))
+        if (!scheduler.Now.IsBetween(new TimeOnly(5, 30), new TimeOnly(21, 0)))
         {
             logger.LogInformation("{Entity} is on, but it's late. Not turning on the lights.", entityString);
             return;
