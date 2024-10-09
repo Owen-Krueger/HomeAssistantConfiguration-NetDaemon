@@ -1261,7 +1261,7 @@
         },
         {
           "id": "binary_sensor.secondary_pi_hole",
-          "friendlyName": "Status",
+          "friendlyName": "Secondary Pi-Hole Status",
           "cSharpName": "SecondaryPiHole"
         },
         {
@@ -1573,7 +1573,7 @@
         },
         {
           "id": "button.deck_string_lights_identify",
-          "friendlyName": "Deck String Lights Identify",
+          "friendlyName": "Identify",
           "cSharpName": "DeckStringLightsIdentify"
         },
         {
@@ -2858,6 +2858,11 @@
           "cSharpName": "LaundryStartWasherAutomatically"
         },
         {
+          "id": "input_boolean.light_automatically_dim_downstairs_lights",
+          "friendlyName": "Automatically Dim Downstairs Lights",
+          "cSharpName": "LightAutomaticallyDimDownstairsLights"
+        },
+        {
           "id": "input_boolean.light_close_to_home",
           "friendlyName": "Clo",
           "cSharpName": "LightCloseToHome"
@@ -2906,6 +2911,21 @@
           "id": "input_boolean.netdaemon_net_daemon_apps_cameras_cat_cameras",
           "friendlyName": "netdaemon_net_daemon_apps_cameras_cat_cameras",
           "cSharpName": "NetdaemonNetDaemonAppsCamerasCatCameras"
+        },
+        {
+          "id": "input_boolean.netdaemon_net_daemon_apps_climate_climate_away",
+          "friendlyName": "netdaemon_net_daemon_apps_climate_climate_away",
+          "cSharpName": "NetdaemonNetDaemonAppsClimateClimateAway"
+        },
+        {
+          "id": "input_boolean.netdaemon_net_daemon_apps_climate_climate_home",
+          "friendlyName": "netdaemon_net_daemon_apps_climate_climate_home",
+          "cSharpName": "NetdaemonNetDaemonAppsClimateClimateHome"
+        },
+        {
+          "id": "input_boolean.netdaemon_net_daemon_apps_climate_climate_state",
+          "friendlyName": "netdaemon_net_daemon_apps_climate_climate_state",
+          "cSharpName": "NetdaemonNetDaemonAppsClimateClimateState"
         },
         {
           "id": "input_boolean.netdaemon_net_daemon_apps_devices_unavailable_devices",
@@ -3296,7 +3316,7 @@
         },
         {
           "id": "number.deck_string_lights_indicator_value",
-          "friendlyName": "Deck String Lights Indicator value",
+          "friendlyName": "Indicator value",
           "cSharpName": "DeckStringLightsIndicatorValue"
         },
         {
@@ -5751,47 +5771,47 @@
         },
         {
           "id": "sensor.secondary_pi_hole_ads_blocked_today",
-          "friendlyName": "Ads blocked today",
+          "friendlyName": "Secondary Pi-Hole Ads blocked today",
           "cSharpName": "SecondaryPiHoleAdsBlockedToday"
         },
         {
           "id": "sensor.secondary_pi_hole_ads_percentage_blocked_today",
-          "friendlyName": "Ads percentage blocked today",
+          "friendlyName": "Secondary Pi-Hole Ads percentage blocked today",
           "cSharpName": "SecondaryPiHoleAdsPercentageBlockedToday"
         },
         {
           "id": "sensor.secondary_pi_hole_dns_queries_cached",
-          "friendlyName": "DNS queries cached",
+          "friendlyName": "Secondary Pi-Hole DNS queries cached",
           "cSharpName": "SecondaryPiHoleDnsQueriesCached"
         },
         {
           "id": "sensor.secondary_pi_hole_dns_queries_forwarded",
-          "friendlyName": "DNS queries forwarded",
+          "friendlyName": "Secondary Pi-Hole DNS queries forwarded",
           "cSharpName": "SecondaryPiHoleDnsQueriesForwarded"
         },
         {
           "id": "sensor.secondary_pi_hole_dns_queries_today",
-          "friendlyName": "DNS queries today",
+          "friendlyName": "Secondary Pi-Hole DNS queries today",
           "cSharpName": "SecondaryPiHoleDnsQueriesToday"
         },
         {
           "id": "sensor.secondary_pi_hole_dns_unique_clients",
-          "friendlyName": "DNS unique clients",
+          "friendlyName": "Secondary Pi-Hole DNS unique clients",
           "cSharpName": "SecondaryPiHoleDnsUniqueClients"
         },
         {
           "id": "sensor.secondary_pi_hole_dns_unique_domains",
-          "friendlyName": "DNS unique domains",
+          "friendlyName": "Secondary Pi-Hole DNS unique domains",
           "cSharpName": "SecondaryPiHoleDnsUniqueDomains"
         },
         {
           "id": "sensor.secondary_pi_hole_domains_blocked",
-          "friendlyName": "Domains blocked",
+          "friendlyName": "Secondary Pi-Hole Domains blocked",
           "cSharpName": "SecondaryPiHoleDomainsBlocked"
         },
         {
           "id": "sensor.secondary_pi_hole_seen_clients",
-          "friendlyName": "Seen clients",
+          "friendlyName": "Secondary Pi-Hole Seen clients",
           "cSharpName": "SecondaryPiHoleSeenClients"
         },
         {
@@ -6812,7 +6832,7 @@
         },
         {
           "id": "switch.deck_string_lights",
-          "friendlyName": "Deck String Lights ",
+          "friendlyName": "",
           "cSharpName": "DeckStringLights"
         },
         {
@@ -7375,7 +7395,7 @@
         },
         {
           "id": "update.deck_string_lights_firmware",
-          "friendlyName": "Deck String Lights Firmware",
+          "friendlyName": "Firmware",
           "cSharpName": "DeckStringLightsFirmware"
         },
         {
@@ -7550,17 +7570,17 @@
         },
         {
           "id": "update.secondary_pi_hole_core_update_available",
-          "friendlyName": "Core update available",
+          "friendlyName": "Secondary Pi-Hole Core update available",
           "cSharpName": "SecondaryPiHoleCoreUpdateAvailable"
         },
         {
           "id": "update.secondary_pi_hole_ftl_update_available",
-          "friendlyName": "FTL update available",
+          "friendlyName": "Secondary Pi-Hole FTL update available",
           "cSharpName": "SecondaryPiHoleFtlUpdateAvailable"
         },
         {
           "id": "update.secondary_pi_hole_web_update_available",
-          "friendlyName": "Web update available",
+          "friendlyName": "Secondary Pi-Hole Web update available",
           "cSharpName": "SecondaryPiHoleWebUpdateAvailable"
         },
         {

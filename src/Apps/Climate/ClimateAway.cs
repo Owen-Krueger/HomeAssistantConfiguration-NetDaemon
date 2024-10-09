@@ -116,7 +116,7 @@ public class ClimateAway
     private void SetTemperature(double temperature)
     {
         var currentTemperature = GetSetTemperature();
-        if (Math.Abs(currentTemperature - temperature) < 1)
+        if (currentTemperature.Equals(temperature))
         {
             return;
         }

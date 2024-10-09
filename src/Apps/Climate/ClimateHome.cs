@@ -48,7 +48,7 @@ public class ClimateHome
                 logger.LogInformation("Climate Home automations enabled.");
                 automationTriggers.Add(scheduler.ScheduleCron("0 6 * * *", SetDayTemperature));
                 automationTriggers.Add(scheduler.ScheduleCron("0 21 * * *", SetNightTemperature));
-                SetTemperature(DateTimeOffset.Now.IsBetween(new TimeOnly(6, 0), new TimeOnly(21, 0)));
+                UpdateSetTemperature(DateTimeOffset.Now.IsBetween(new TimeOnly(6, 0), new TimeOnly(21, 0)));
                 break;
             // Removes any existing automation triggers.
             case ThermostatState.Away when automationTriggers.Count > 0:
@@ -62,29 +62,47 @@ public class ClimateHome
     /// Sets thermostat to day temperature.
     /// </summary>
     private void SetDayTemperature()
-        => SetTemperature(true);
+        => UpdateSetTemperature(true);
 
     /// <summary>
     /// Sets thermostat to night temperature.
     /// </summary>
     private void SetNightTemperature()
-        => SetTemperature(false);
+        => UpdateSetTemperature(false);
 
     /// <summary>
-    /// Set temperature based on the input. If not day, sets to desired temperature, minus the offset.
+    /// Updates the thermometer's set temperature. 
     /// </summary>
-    private void SetTemperature(bool isDay)
+    private void UpdateSetTemperature(bool isDay)
     {
         // If not home, the away automations will cover setting temp.
         if (entities.InputSelect.ThermostatState.GetEnumFromState<ThermostatState>() != ThermostatState.Home)
         {
             return;
         }
-
+        
         var setTemperature = entities.InputNumber.ClimateDayTemp.State ?? 70;
         if (!isDay)
         {
             setTemperature -= entities.InputNumber.ClimateNightOffset.State ?? 0;
+        }
+
+        SetTemperature(setTemperature);
+        
+        if (!isDay)
+        {
+            TurnOnBedroomFan(setTemperature);
+        }
+    }
+
+    /// <summary>
+    /// Set temperature based on the input. If not day, sets to desired temperature, minus the offset.
+    /// </summary>
+    private void SetTemperature(double setTemperature)
+    {
+        if (setTemperature.Equals(entities.Climate.Main.Attributes?.Temperature))
+        {
+            return;
         }
 
         logger.LogInformation("Setting temperature (Old: {Old}) (New: {New})", 
@@ -92,11 +110,6 @@ public class ClimateHome
         NotifyTemperatureUpdate(setTemperature);
         
         entities.Climate.Main.SetTemperature(setTemperature);
-
-        if (!isDay)
-        {
-            TurnOnBedroomFan(setTemperature);
-        }
     }
 
     /// <summary>

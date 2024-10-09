@@ -47,7 +47,7 @@ public class DownstairsSun
     /// </summary>
     private void SetDownstairsLightLevel()
     {
-        if (entities.Light.DownstairsLights.IsOff())
+        if (entities.InputBoolean.LightAutomaticallyDimDownstairsLights.IsOff() || entities.Light.DownstairsLights.IsOff())
         {
             return;
         }

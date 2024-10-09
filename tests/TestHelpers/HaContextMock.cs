@@ -6,23 +6,52 @@ using NetDaemon.HassModel.Entities;
 
 namespace NetDaemon.Tests.TestHelpers;
 
+/// <summary>
+/// An implementation of <see cref="IHaContext"/> to be used in unit tests.
+/// </summary>
 public class HaContextMockImpl : IHaContext
 {
+    /// <summary>
+    /// Gets entities and their current states.
+    /// </summary>
     public Dictionary<string, EntityState> EntityStates { get; } = new();
 
+    /// <summary>
+    /// Gets subject of all state changes.
+    /// </summary>
     public Subject<StateChange> StateAllChangeSubject { get; } = new();
 
-    public Subject<Event> EventsSubject { get; } = new();
-
+    /// <summary>
+    /// Observable of all state changes (subject).
+    /// </summary>
     public IObservable<StateChange> StateAllChanges()
         => StateAllChangeSubject;
+    
+    /// <summary>
+    /// Gets subject of all events.
+    /// </summary>
+    public Subject<Event> EventsSubject { get; } = new();
+    
+    /// <summary>
+    /// Observable of all events (subject).
+    /// </summary>
+    public IObservable<Event> Events => EventsSubject;
 
+    /// <summary>
+    /// Gets the current state of the provided entity from <see cref="EntityStates"/> or null if not found.
+    /// </summary>
     public EntityState? GetState(string entityId)
         => EntityStates.TryGetValue(entityId, out var result) ? result : null;
 
+    /// <summary>
+    /// Gets all entities currently in <see cref="EntityStates"/>.
+    /// </summary>
     public IReadOnlyList<Entity> GetAllEntities()
         => EntityStates.Keys.Select(x => new Entity(this, x)).ToList();
 
+    /// <summary>
+    /// Calls a service with the provided details.
+    /// </summary>
     public virtual void CallService(string domain, string service, ServiceTarget? target = null, object? data = null)
     {
         if (target?.EntityIds is null)
@@ -48,24 +77,31 @@ public class HaContextMockImpl : IHaContext
         }
     }
 
+    /// <summary>
+    /// Currently not implemented.
+    /// </summary>
     public Task<JsonElement?> CallServiceWithResponseAsync(string domain, string service, ServiceTarget? target = null, object? data = null)
     {
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Currently not implemented.
+    /// </summary>
     public Area? GetAreaFromEntityId(string entityId)
     {
         throw new NotImplementedException();
     }
 
+    /// <summary>
+    /// Currently not implemented.
+    /// </summary>
     public EntityRegistration? GetEntityRegistration(string entityId)
     {
         throw new NotImplementedException();
     }
 
     public void SendEvent(string eventType, object? data = null) { }
-
-    public IObservable<Event> Events => EventsSubject;
 
     public void TriggerStateChange(string entityId, string stateValue, object? attributes = null)
     {
