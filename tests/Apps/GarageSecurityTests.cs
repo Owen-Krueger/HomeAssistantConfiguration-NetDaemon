@@ -1,4 +1,5 @@
-﻿using HomeAssistantGenerated;
+﻿using System.Text.Json;
+using HomeAssistantGenerated;
 using Moq;
 using NetDaemon.Apps.Security;
 using NetDaemon.Constants;
@@ -28,7 +29,7 @@ public class GarageSecurityTests : TestBase
         var mobileNotificationEvent = new Event
         {
             EventType = EventTypes.MobileAppNotificationActionEvent,
-            DataElement = System.Text.Json.JsonSerializer.SerializeToElement(new MobileNotificationActionEvent { Action = "CLOSE_GARAGE_DOOR" })
+            DataElement = JsonSerializer.SerializeToElement(new MobileNotificationActionEvent { Action = "CLOSE_GARAGE_DOOR" })
         };
         HaMock.TriggerEvent(mobileNotificationEvent);
         HaMock.Verify(x => x.CallService("cover", "close_cover", It.IsAny<ServiceTarget>(),

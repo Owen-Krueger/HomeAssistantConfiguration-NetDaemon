@@ -73,8 +73,15 @@ public class BedroomLighting
         }
 
         logger.LogInformation("Turning on lamps and turning off lights, due to it being night-time.");
-        entities.Light.BedroomLamps.TurnOn();
-        entities.Switch.BedroomLights.TurnOff();
+        if (entities.Light.BedroomLamps.IsOff())
+        {
+            entities.Light.BedroomLamps.TurnOn();
+        }
+
+        if (entities.Switch.BedroomLights.IsOn())
+        {
+            entities.Switch.BedroomLights.TurnOff();
+        }
     }
 
     /// <summary>
@@ -82,5 +89,4 @@ public class BedroomLighting
     /// </summary>
     private bool IsLate()
         => scheduler.Now.IsBetween(new TimeOnly(21, 00), new TimeOnly(23, 59, 59));
-    
 }
