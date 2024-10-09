@@ -4,7 +4,7 @@ using NetDaemon.Apps.Security;
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Tests.TestHelpers;
 
-namespace NetDaemon.Tests.Apps;
+namespace NetDaemon.Tests.Apps.Security;
 
 public class FrontDoorSecurityTests : TestBase
 {

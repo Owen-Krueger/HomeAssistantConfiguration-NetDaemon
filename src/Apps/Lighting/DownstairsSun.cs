@@ -56,7 +56,7 @@ public class DownstairsSun
         var elevation = entities.Sun.Sun.Attributes?.Elevation ?? 0;
         
         var brightness = 0;
-        if (brightnessAttribute is not null && !int.TryParse(brightnessAttribute?.ToString(), out brightness))
+        if (brightnessAttribute is not null && !int.TryParse(brightnessAttribute.ToString(), out brightness))
         {
             // Unable to pull brightness or elevation.
             logger.LogError("Unable to parse brightness integer: {Brightness}.", brightnessAttribute);

@@ -2,7 +2,7 @@
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Tests.TestHelpers;
 
-namespace NetDaemon.Tests.Apps;
+namespace NetDaemon.Tests.Apps.Lights;
 
 public class GarageLightingTests : TestBase
 {

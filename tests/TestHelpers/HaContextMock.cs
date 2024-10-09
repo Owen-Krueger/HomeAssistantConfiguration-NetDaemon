@@ -73,7 +73,7 @@ public class HaContextMockImpl : IHaContext
 
         foreach (var entityId in target.EntityIds)
         {
-            TriggerStateChange(entityId, state);
+            TriggerStateChange(entityId, state, data);
         }
     }
 

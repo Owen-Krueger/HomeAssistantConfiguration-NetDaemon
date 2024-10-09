@@ -8,7 +8,7 @@ using NetDaemon.HassModel;
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Tests.TestHelpers;
 
-namespace NetDaemon.Tests.Apps;
+namespace NetDaemon.Tests.Apps.Security;
 
 public class GarageSecurityTests : TestBase
 {
