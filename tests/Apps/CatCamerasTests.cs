@@ -1,5 +1,4 @@
-﻿using Moq;
-using NetDaemon.Apps.Cameras;
+﻿using NetDaemon.Apps.Cameras;
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Tests.TestHelpers;
 
@@ -23,7 +22,6 @@ public class CatCamerasTests : TestBase
             Assert.That(Entities.Switch.CatCameraUpSmartPlug.IsOn(), Is.True);
             Assert.That(Entities.Switch.CatCameraDownSmartPlug.IsOn(), Is.True);
         });
-        HaMock.Reset();
     }
     
     [Test]
@@ -42,7 +40,6 @@ public class CatCamerasTests : TestBase
             Assert.That(Entities.Switch.CatCameraUpSmartPlug.IsOn(), Is.False);
             Assert.That(Entities.Switch.CatCameraDownSmartPlug.IsOn(), Is.False);
         });
-        HaMock.Reset();
     }
 
     [TestCase("person.allison")]
@@ -62,6 +59,5 @@ public class CatCamerasTests : TestBase
             Assert.That(Entities.Switch.CatCameraUpSmartPlug.IsOn(), Is.False);
             Assert.That(Entities.Switch.CatCameraDownSmartPlug.IsOn(), Is.False);
         });
-        HaMock.Reset();
     }
 }

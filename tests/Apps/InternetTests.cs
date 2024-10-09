@@ -30,7 +30,6 @@ public class InternetTests : TestBase
         
         HaMock.Verify(x => x.CallService("notify", "owen", null,
             It.Is<NotifyOwenParameters>(y => y.Message!.Contains("Internet still down"))), Times.Never);
-        HaMock.Reset();
     }
     
     [Test]
@@ -52,6 +51,5 @@ public class InternetTests : TestBase
         
         HaMock.Verify(x => x.CallService("notify", "owen", null,
             It.Is<NotifyOwenParameters>(y => y.Message!.Contains("Internet still down"))), Times.Once);
-        HaMock.Reset();
     }
 }
