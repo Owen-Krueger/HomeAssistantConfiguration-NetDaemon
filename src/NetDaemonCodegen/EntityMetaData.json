@@ -3013,6 +3013,11 @@
           "cSharpName": "NightAutomations"
         },
         {
+          "id": "input_boolean.owen_on_morning_walk",
+          "friendlyName": "Owen on Morning Walk",
+          "cSharpName": "OwenOnMorningWalk"
+        },
+        {
           "id": "input_boolean.vacation_lighting_automation",
           "friendlyName": "Automate lights while on vacation",
           "cSharpName": "VacationLightingAutomation"

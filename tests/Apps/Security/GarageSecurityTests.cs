@@ -15,7 +15,7 @@ public class GarageSecurityTests : TestBase
     [Test]
     public void GarageSecurity_NobodyHome_NotificationSent()
     {
-        TestScheduler.AdvanceTo(DateTimeOffset.Now.Ticks);
+        TestScheduler.AdvanceToNow();
         HaMock.TriggerStateChange(Entities.Person.Allison, "home");
         HaMock.TriggerStateChange(Entities.Person.Owen, "away");
         HaMock.TriggerStateChange(Entities.Cover.PrimaryGarageDoor, "open");
@@ -39,7 +39,7 @@ public class GarageSecurityTests : TestBase
     [Test]
     public void GarageSecurity_GarageDoorShut_NoNotificationSent()
     {
-        TestScheduler.AdvanceTo(DateTimeOffset.Now.Ticks);
+        TestScheduler.AdvanceToNow();
         HaMock.TriggerStateChange(Entities.Person.Allison, "home");
         HaMock.TriggerStateChange(Entities.Person.Owen, "away");
         HaMock.TriggerStateChange(Entities.Cover.PrimaryGarageDoor, "closed");

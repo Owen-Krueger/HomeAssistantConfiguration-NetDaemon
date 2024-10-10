@@ -10,7 +10,7 @@ public class DownstairsSunTests : TestBase
     [Test]
     public void DownstairsLights_DownstairsLightsTurnedOn_BrightnessSet()
     {
-        TestScheduler.AdvanceTo(DateTimeOffset.Now.Ticks);
+        TestScheduler.AdvanceToNow();
         HaMock.TriggerStateChange(Entities.InputBoolean.LightAutomaticallyDimDownstairsLights, "on");
         HaMock.TriggerStateChange(Entities.Light.DownstairsLights, "off");
         HaMock.TriggerStateChange(Entities.Sun.Sun, "", new SunAttributes { Elevation = 5 });
@@ -38,7 +38,7 @@ public class DownstairsSunTests : TestBase
     [Test]
     public void DownstairsLights_AutomationsTurnedOff_BrightnessNotSet()
     {
-        TestScheduler.AdvanceTo(DateTimeOffset.Now.Ticks);
+        TestScheduler.AdvanceToNow();
         HaMock.TriggerStateChange(Entities.InputBoolean.LightAutomaticallyDimDownstairsLights, "off");
         HaMock.TriggerStateChange(Entities.Light.DownstairsLights, "off");
         HaMock.TriggerStateChange(Entities.Sun.Sun, "", new SunAttributes { Elevation = 5 });
@@ -56,7 +56,7 @@ public class DownstairsSunTests : TestBase
     // [Test]
     // public void DownstairsLights_SunElevationChanged_BrightnessSet()
     // {
-    //     TestScheduler.AdvanceTo(DateTimeOffset.Now.Ticks);
+    //     TestScheduler.AdvanceToNow();
     //     HaMock.TriggerStateChange(Entities.InputBoolean.LightAutomaticallyDimDownstairsLights, "on");
     //     HaMock.TriggerStateChange(Entities.Light.DownstairsLights, "on", new LightTurnOnParameters { Brightness = 255});
     //     HaMock.TriggerStateChange(Entities.Sun.Sun, "", new SunAttributes { Elevation = 10 });

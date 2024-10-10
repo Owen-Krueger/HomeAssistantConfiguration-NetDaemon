@@ -25,9 +25,9 @@ public class Work
         this.scheduler = scheduler;
         this.logger = logger;
 
-        entities.Person.Owen
+        entities.InputBoolean.OwenOnMorningWalk
             .StateChanges()
-            .WhenStateIsFor(x => x.IsHome(), TimeSpan.FromMinutes(1), scheduler)
+            .Where(x => x.New.IsOff())
             .Subscribe(_ => TurnOnComputer());
     }
 
@@ -38,7 +38,6 @@ public class Work
     {
         if (entities.BinarySensor.OwenComputerActive.IsOn() ||
             entities.BinarySensor.WorkdaySensor.IsOff() ||
-            !entities.Person.Owen.IsHome() ||
             !scheduler.Now.IsBetween(new TimeOnly(7, 30), new TimeOnly(8, 30)))
         {
             return;

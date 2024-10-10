@@ -11,7 +11,7 @@ public class FrontDoorSecurityTests : TestBase
     [Test]
     public void FrontDoorSecurity_NobodyHome_DoorLocked()
     {
-        TestScheduler.AdvanceTo(DateTimeOffset.Now.Ticks);
+        TestScheduler.AdvanceToNow();
         HaMock.TriggerStateChange(Entities.Person.Allison, "home");
         HaMock.TriggerStateChange(Entities.Person.Owen, "away");
         HaMock.TriggerStateChange(Entities.Lock.FrontDoorLock, "unlocked");
@@ -31,7 +31,7 @@ public class FrontDoorSecurityTests : TestBase
     [Test]
     public void FrontDoorSecurity_FailedToLockDoor_FamilyNotified()
     {
-        TestScheduler.AdvanceTo(DateTimeOffset.Now.Ticks);
+        TestScheduler.AdvanceToNow();
         HaMock.TriggerStateChange(Entities.Person.Allison, "home");
         HaMock.TriggerStateChange(Entities.Person.Owen, "away");
         HaMock.TriggerStateChange(Entities.Lock.FrontDoorLock, "unlocked");
@@ -50,7 +50,7 @@ public class FrontDoorSecurityTests : TestBase
     [Test]
     public void FrontDoorSecurity_DoorAlreadyLocked_NobodyNotified()
     {
-        TestScheduler.AdvanceTo(DateTimeOffset.Now.Ticks);
+        TestScheduler.AdvanceToNow();
         HaMock.TriggerStateChange(Entities.Person.Allison, "home");
         HaMock.TriggerStateChange(Entities.Person.Owen, "away");
         HaMock.TriggerStateChange(Entities.Lock.FrontDoorLock, "locked");

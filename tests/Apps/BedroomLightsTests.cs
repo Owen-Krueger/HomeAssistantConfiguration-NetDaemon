@@ -7,18 +7,18 @@ using NetDaemon.Events;
 using NetDaemon.HassModel;
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Tests.TestHelpers;
+using DateTime = System.DateTime;
 
 namespace NetDaemon.Tests.Apps;
 
 public class BedroomLightsTests : TestBase
 {
-    // 10 PM Central
-    private readonly DateTimeOffset lateTime = new(2024, 01, 02, 4, 0, 0, TimeSpan.Zero);
+    private readonly DateTime lateTime = new(2024, 01, 01, 22, 0, 0);
     
     [Test]
     public void BedroomLighting_BedroomLampsTurnOn_BedroomLightsTurnedOff()
     {
-        TestScheduler.AdvanceTo(lateTime.Ticks);
+        TestScheduler.AdvanceTo(lateTime);
         HaMock.TriggerStateChange(Entities.Switch.BedroomLights, "on");
         HaMock.TriggerStateChange(Entities.Light.BedroomLamps, "off");
 
@@ -31,7 +31,7 @@ public class BedroomLightsTests : TestBase
     public void BedroomLighting_BedroomLightsTurnOff_BedroomLampsTurnedOn()
     {
         // 10 PM central
-        TestScheduler.AdvanceTo(lateTime.Ticks);
+        TestScheduler.AdvanceTo(lateTime);
         HaMock.TriggerStateChange(Entities.Switch.BedroomLights, "on");
         HaMock.TriggerStateChange(Entities.Light.BedroomLamps, "off");
 
@@ -43,7 +43,7 @@ public class BedroomLightsTests : TestBase
     [Test]
     public void BedroomLighting_NotLate_NightLightingNotActivated()
     {
-        TestScheduler.AdvanceTo(new DateTimeOffset(2024, 01, 02, 0, 0, 0, TimeSpan.Zero).Ticks);
+        TestScheduler.AdvanceTo(new DateTime(2024, 01, 01, 12, 0, 0));
         HaMock.TriggerStateChange(Entities.Switch.BedroomLights, "on");
         HaMock.TriggerStateChange(Entities.Light.BedroomLamps, "off");
 
@@ -59,7 +59,7 @@ public class BedroomLightsTests : TestBase
     [Test]
     public void BedroomLighting_BedsideButtonPressed_LampsToggled()
     {
-        TestScheduler.AdvanceTo(lateTime.Ticks);
+        TestScheduler.AdvanceTo(lateTime);
         HaMock.TriggerStateChange(Entities.Switch.BedroomLights, "on");
         HaMock.TriggerStateChange(Entities.Light.BedroomLamps, "on");
         Context.GetApp<BedroomLighting>();
@@ -82,7 +82,7 @@ public class BedroomLightsTests : TestBase
     [Test]
     public void BedroomLighting_BedsideButtonPressedNotLate_LightsRemainOn()
     {
-        TestScheduler.AdvanceTo(new DateTimeOffset(2024, 01, 02, 0, 0, 0, TimeSpan.Zero).Ticks);
+        TestScheduler.AdvanceTo(new DateTime(2024, 01, 01, 12, 0, 0));
         HaMock.TriggerStateChange(Entities.Switch.BedroomLights, "on");
         HaMock.TriggerStateChange(Entities.Light.BedroomLamps, "on");
         Context.GetApp<BedroomLighting>();
@@ -104,7 +104,7 @@ public class BedroomLightsTests : TestBase
     [TestCase("on", "off")]
     public void BedroomLighting_BedsideButtonPressed_LightsRemainOn(string lightsState, string lampsState)
     {
-        TestScheduler.AdvanceTo(lateTime.Ticks);
+        TestScheduler.AdvanceTo(lateTime);
         HaMock.TriggerStateChange(Entities.Switch.BedroomLights, lightsState);
         HaMock.TriggerStateChange(Entities.Light.BedroomLamps, lampsState);
         Context.GetApp<BedroomLighting>();

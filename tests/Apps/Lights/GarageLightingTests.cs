@@ -9,7 +9,7 @@ public class GarageLightingTests : TestBase
     [Test]
     public void GarageLighting_GarageDoorState_LightsTurnedOnAndOff()
     {
-        TestScheduler.AdvanceTo(DateTimeOffset.Now.Ticks);
+        TestScheduler.AdvanceToNow();
         HaMock.TriggerStateChange(Entities.Cover.PrimaryGarageDoor, "closed");
         HaMock.TriggerStateChange(Entities.Switch.GarageLights, "off");
         HaMock.TriggerStateChange(Entities.BinarySensor.GarageLightsMotionDetection, "off");
@@ -26,7 +26,7 @@ public class GarageLightingTests : TestBase
     [Test]
     public void GarageLighting_MotionDetected_LightsTurnedOnAndOff()
     {
-        TestScheduler.AdvanceTo(DateTimeOffset.Now.Ticks);
+        TestScheduler.AdvanceToNow();
         HaMock.TriggerStateChange(Entities.Cover.PrimaryGarageDoor, "closed");
         HaMock.TriggerStateChange(Entities.Switch.GarageLights, "off");
         HaMock.TriggerStateChange(Entities.BinarySensor.GarageLightsMotionDetection, "off");
@@ -43,7 +43,7 @@ public class GarageLightingTests : TestBase
     [Test]
     public void GarageLighting_GarageLightsAlreadyOn_LightsUnchanged()
     {
-        TestScheduler.AdvanceTo(DateTimeOffset.Now.Ticks);
+        TestScheduler.AdvanceToNow();
         HaMock.TriggerStateChange(Entities.Cover.PrimaryGarageDoor, "closed");
         HaMock.TriggerStateChange(Entities.Switch.GarageLights, "on");
         HaMock.TriggerStateChange(Entities.BinarySensor.GarageLightsMotionDetection, "off");
