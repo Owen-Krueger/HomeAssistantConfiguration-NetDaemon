@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Reactive.Concurrency;
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Utilities;
 
@@ -18,7 +19,7 @@ public class CatCameras
     /// <summary>
     /// Sets up automations.
     /// </summary>
-    public CatCameras(IHaContext context, ILogger<CatCameras> logger)
+    public CatCameras(IHaContext context, IScheduler scheduler, ILogger<CatCameras> logger)
     {
         entities = new Entities(context);
         services = new Services(context);
@@ -31,16 +32,20 @@ public class CatCameras
 
         entities.Person.Allison
             .StateChanges()
+            .WhenStateIsFor(x => !x.IsHome(), TimeSpan.FromMinutes(15), scheduler)
+            .Subscribe(_ => TurnOnCameras());
+        entities.Person.Owen
+            .StateChanges()
+            .WhenStateIsFor(x => !x.IsHome(), TimeSpan.FromMinutes(15), scheduler)
+            .Subscribe(_ => TurnOnCameras());
+        entities.Person.Allison
+            .StateChanges()
             .Where(x => x.New.IsHome())
             .Subscribe(_ => TurnOffCameras());
         entities.Person.Owen
             .StateChanges()
             .Where(x => x.New.IsHome())
             .Subscribe(_ => TurnOffCameras());
-        entities.InputBoolean.CatCamerasOn
-            .StateChanges()
-            .Where(x => x.New.IsOn())
-            .Subscribe(_ => TurnOnCameras());
     }
 
     /// <summary>
@@ -67,11 +72,6 @@ public class CatCameras
         }
         
         SetCamerasState(false);
-
-        if (entities.InputBoolean.CatCamerasOn.IsOn())
-        {
-            entities.InputBoolean.CatCamerasOn.TurnOff();
-        }
     }
 
     /// <summary>

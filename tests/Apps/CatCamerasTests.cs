@@ -7,16 +7,17 @@ namespace NetDaemon.Tests.Apps;
 public class CatCamerasTests : TestBase
 {
     [Test]
-    public void CatCameras_CamerasBooleanTurnedOn_CamerasTurnedOn()
+    public void CatCameras_EveryoneAway_CamerasTurnedOn()
     {
-        HaMock.TriggerStateChange(Entities.InputBoolean.CatCamerasOn, "off");
-        HaMock.TriggerStateChange(Entities.Person.Allison, "away");
+        TestScheduler.AdvanceToNow();
+        HaMock.TriggerStateChange(Entities.Person.Allison, "home");
         HaMock.TriggerStateChange(Entities.Person.Owen, "away");
         HaMock.TriggerStateChange(Entities.Switch.CatCameraUpSmartPlug, "off");
         HaMock.TriggerStateChange(Entities.Switch.CatCameraDownSmartPlug, "off");
         Context.GetApp<CatCameras>();
         
-        HaMock.TriggerStateChange(Entities.InputBoolean.CatCamerasOn, "on");
+        HaMock.TriggerStateChange(Entities.Person.Allison, "away");
+        TestScheduler.AdvanceBy(TimeSpan.FromMinutes(15).Ticks);
         Assert.Multiple(() =>
         {
             Assert.That(Entities.Switch.CatCameraUpSmartPlug.IsOn(), Is.True);
@@ -25,16 +26,17 @@ public class CatCamerasTests : TestBase
     }
     
     [Test]
-    public void CatCameras_CamerasBooleanTurnedOnSomeoneHome_CamerasNotTurnedOn()
+    public void CatCameras_NotEveryoneAway_CamerasNotTurnedOn()
     {
-        HaMock.TriggerStateChange(Entities.InputBoolean.CatCamerasOn, "off");
-        HaMock.TriggerStateChange(Entities.Person.Allison, "away");
+        TestScheduler.AdvanceToNow();
+        HaMock.TriggerStateChange(Entities.Person.Allison, "home");
         HaMock.TriggerStateChange(Entities.Person.Owen, "home");
         HaMock.TriggerStateChange(Entities.Switch.CatCameraUpSmartPlug, "off");
         HaMock.TriggerStateChange(Entities.Switch.CatCameraDownSmartPlug, "off");
         Context.GetApp<CatCameras>();
         
-        HaMock.TriggerStateChange(Entities.InputBoolean.CatCamerasOn, "on");
+        HaMock.TriggerStateChange(Entities.Person.Allison, "away");
+        TestScheduler.AdvanceBy(TimeSpan.FromMinutes(15).Ticks);
         Assert.Multiple(() =>
         {
             Assert.That(Entities.Switch.CatCameraUpSmartPlug.IsOn(), Is.False);
@@ -46,7 +48,6 @@ public class CatCamerasTests : TestBase
     [TestCase("person.owen")]
     public void CatCameras_EveryoneHome_CamerasTurnedOff(string personId)
     {
-        HaMock.TriggerStateChange(Entities.InputBoolean.CatCamerasOn, "on");
         HaMock.TriggerStateChange(Entities.Person.Allison, "away");
         HaMock.TriggerStateChange(Entities.Person.Owen, "away");
         HaMock.TriggerStateChange(Entities.Switch.CatCameraUpSmartPlug, "on");
