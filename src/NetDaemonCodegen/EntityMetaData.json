@@ -1542,6 +1542,11 @@
           "cSharpName": "DeckLightsPing"
         },
         {
+          "id": "button.deck_string_lights_identify",
+          "friendlyName": "Deck String Lights Identify",
+          "cSharpName": "DeckStringLightsIdentify"
+        },
+        {
           "id": "button.default_restart",
           "friendlyName": "Restart",
           "cSharpName": "DefaultRestart"
@@ -1638,7 +1643,7 @@
         },
         {
           "id": "button.node_20_ping",
-          "friendlyName": "Node 20 Ping",
+          "friendlyName": "Deck String Lights Ping",
           "cSharpName": "Node20Ping"
         },
         {
@@ -3305,6 +3310,11 @@
           "cSharpName": "ClimateMainIndicatorValue"
         },
         {
+          "id": "number.deck_string_lights_indicator_value",
+          "friendlyName": "Deck String Lights Indicator value",
+          "cSharpName": "DeckStringLightsIndicatorValue"
+        },
+        {
           "id": "number.front_door_lock_indicator_value",
           "friendlyName": "Front Door Lock Indicator value",
           "cSharpName": "FrontDoorLockIndicatorValue"
@@ -4198,12 +4208,12 @@
         },
         {
           "id": "sensor.node_20_last_seen",
-          "friendlyName": "Node 20 Last seen",
+          "friendlyName": "Deck String Lights Last seen",
           "cSharpName": "Node20LastSeen"
         },
         {
           "id": "sensor.node_20_node_status",
-          "friendlyName": "Node 20 Node status",
+          "friendlyName": "Deck String Lights Node status",
           "cSharpName": "Node20NodeStatus"
         },
         {
@@ -6786,6 +6796,11 @@
           "cSharpName": "DeckLights"
         },
         {
+          "id": "switch.deck_string_lights",
+          "friendlyName": "Deck String Lights ",
+          "cSharpName": "DeckStringLights"
+        },
+        {
           "id": "switch.dining_room_lights",
           "friendlyName": "Dining Room Lights ",
           "cSharpName": "DiningRoomLights"
@@ -7339,6 +7354,11 @@
           "cSharpName": "DeckLightsFirmware"
         },
         {
+          "id": "update.deck_string_lights_firmware",
+          "friendlyName": "Deck String Lights Firmware",
+          "cSharpName": "DeckStringLightsFirmware"
+        },
+        {
           "id": "update.dining_room_lights_firmware",
           "friendlyName": "Dining Room Lights Firmware",
           "cSharpName": "DiningRoomLightsFirmware"
@@ -7761,6 +7781,11 @@
           "id": "zone.thief_river_falls",
           "friendlyName": "Thief River Falls",
           "cSharpName": "ThiefRiverFalls"
+        },
+        {
+          "id": "zone.walking",
+          "friendlyName": "Walking",
+          "cSharpName": "Walking"
         }
       ],
       "attributes": [

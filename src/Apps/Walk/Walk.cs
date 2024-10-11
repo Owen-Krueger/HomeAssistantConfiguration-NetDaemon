@@ -23,11 +23,7 @@ public class Walk
         entities = new Entities(context);
         this.scheduler = scheduler;
         this.logger = logger;
-
-        entities.Person.Owen
-            .StateChanges()
-            .WhenStateIsFor(x => !x.IsHome(), TimeSpan.FromMinutes(5), scheduler)
-            .Subscribe(_ => TurnOnWalkBoolean());
+        
         entities.Person.Owen
             .StateChanges()
             .WhenStateIsFor(x => x.IsHome(), TimeSpan.FromMinutes(5), scheduler)
@@ -41,22 +37,7 @@ public class Walk
             .Where(x => x.New?.State == "closed")
             .Subscribe(_ => TurnOffWalkBoolean());
         // I shouldn't be on a walk after 9, so turn off the boolean if it wasn't already turned off.
-        this.scheduler.ScheduleCron("0 9 * * *", () => SetWalkBooleanState(false));
-    }
-
-    /// <summary>
-    /// Turn on walk boolean, if it's about the time to be on a walk, and it's a workday.
-    /// </summary>
-    private void TurnOnWalkBoolean()
-    {
-        if (entities.BinarySensor.WorkdaySensor.IsOff() ||
-            entities.Sensor.OwenPhoneNetworkType.State != "cellular" ||
-            !IsMorningWalkTime())
-        {
-            return;
-        }
-
-        SetWalkBooleanState(true);
+        this.scheduler.ScheduleCron("0 9 * * *", TurnOffWalkBoolean);
     }
 
     /// <summary>
@@ -65,31 +46,13 @@ public class Walk
     private void TurnOffWalkBoolean()
     {
         if (!IsMorningWalkTime() ||
-            entities.Sensor.OwenDistanceMiles.State > 0)
+            entities.Sensor.OwenDistanceMiles.State > 0 ||
+            entities.InputBoolean.OwenOnMorningWalk.IsOff())
         {
             return;
         }
         
-        SetWalkBooleanState(false);
-    }
-
-    /// <summary>
-    /// Updates the walk boolean to the requested value.
-    /// </summary>
-    private void SetWalkBooleanState(bool isOnWalk)
-    {
-        if (entities.InputBoolean.OwenOnMorningWalk.IsOn() == isOnWalk)
-        {
-            return;
-        }
-        
-        logger.LogInformation("Setting morning walk boolean to {state}", isOnWalk.GetOnOffString());
-        if (isOnWalk)
-        {
-            entities.InputBoolean.OwenOnMorningWalk.TurnOn();
-            return;
-        }
-        
+        logger.LogInformation("Turning off morning walk boolean.");
         entities.InputBoolean.OwenOnMorningWalk.TurnOff();
     }
 

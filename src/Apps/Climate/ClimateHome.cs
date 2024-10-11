@@ -100,7 +100,8 @@ public class ClimateHome
     /// </summary>
     private void SetTemperature(double setTemperature)
     {
-        if (setTemperature.Equals(entities.Climate.Main.Attributes?.Temperature))
+        var currentSetTemperature = entities.Climate.Main.Attributes?.Temperature;
+        if (currentSetTemperature is null || setTemperature.Equals(currentSetTemperature))
         {
             return;
         }
