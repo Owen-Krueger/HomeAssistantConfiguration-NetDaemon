@@ -738,6 +738,11 @@
           "cSharpName": "VacationTurnOnLivingRoomLampsInEveningDuringVacation"
         },
         {
+          "id": "automation.zone_owen_on_walk",
+          "friendlyName": "Zone - Owen on Walk",
+          "cSharpName": "ZoneOwenOnWalk"
+        },
+        {
           "id": "automation.zone_people_gone",
           "friendlyName": "Zone - People Gone",
           "cSharpName": "ZonePeopleGone"
@@ -1160,6 +1165,36 @@
           "cSharpName": "PrimaryPiHoleWebUpdateAvailable"
         },
         {
+          "id": "binary_sensor.pve_cloudflared",
+          "friendlyName": "pve_cloudflared",
+          "cSharpName": "PveCloudflared"
+        },
+        {
+          "id": "binary_sensor.pve_dockge",
+          "friendlyName": "pve_dockge",
+          "cSharpName": "PveDockge"
+        },
+        {
+          "id": "binary_sensor.pve_homeassistant",
+          "friendlyName": "pve_HomeAssistant",
+          "cSharpName": "PveHomeassistant"
+        },
+        {
+          "id": "binary_sensor.pve_nextcloud",
+          "friendlyName": "pve_nextcloud",
+          "cSharpName": "PveNextcloud"
+        },
+        {
+          "id": "binary_sensor.pve_pihole",
+          "friendlyName": "pve_pihole",
+          "cSharpName": "PvePihole"
+        },
+        {
+          "id": "binary_sensor.pve_plex",
+          "friendlyName": "pve_plex",
+          "cSharpName": "PvePlex"
+        },
+        {
           "id": "binary_sensor.remote_ui",
           "friendlyName": "Remote UI",
           "cSharpName": "RemoteUi"
@@ -1291,37 +1326,37 @@
         },
         {
           "id": "binary_sensor.z_wave_plus_gold_plated_reliability_garage_door_tilt_sensor_low_battery_level",
-          "friendlyName": "Z-Wave Plus Gold Plated Reliability Garage Door Tilt Sensor Low battery level",
+          "friendlyName": "Garage Door Tilt Sensor Low battery level",
           "cSharpName": "ZWavePlusGoldPlatedReliabilityGarageDoorTiltSensorLowBatteryLevel"
         },
         {
           "id": "binary_sensor.z_wave_plus_gold_plated_reliability_garage_door_tilt_sensor_replace_battery_now",
-          "friendlyName": "Z-Wave Plus Gold Plated Reliability Garage Door Tilt Sensor Replace battery now",
+          "friendlyName": "Garage Door Tilt Sensor Replace battery now",
           "cSharpName": "ZWavePlusGoldPlatedReliabilityGarageDoorTiltSensorReplaceBatteryNow"
         },
         {
           "id": "binary_sensor.z_wave_plus_gold_plated_reliability_garage_door_tilt_sensor_tampering_product_cover_removed",
-          "friendlyName": "Z-Wave Plus Gold Plated Reliability Garage Door Tilt Sensor Tampering, product cover removed",
+          "friendlyName": "Garage Door Tilt Sensor Tampering, product cover removed",
           "cSharpName": "ZWavePlusGoldPlatedReliabilityGarageDoorTiltSensorTamperingProductCoverRemoved"
         },
         {
           "id": "binary_sensor.z_wave_plus_gold_plated_reliability_garage_door_tilt_sensor_window_door_is_open",
-          "friendlyName": "Z-Wave Plus Gold Plated Reliability Garage Door Tilt Sensor Window/door is open",
+          "friendlyName": "Garage Door Tilt Sensor Window/door is open",
           "cSharpName": "ZWavePlusGoldPlatedReliabilityGarageDoorTiltSensorWindowDoorIsOpen"
         },
         {
           "id": "binary_sensor.z_wave_plus_gold_plated_reliability_garage_door_tilt_sensor_window_door_is_open_2",
-          "friendlyName": "Z-Wave Plus Gold Plated Reliability Garage Door Tilt Sensor Window/door is open",
+          "friendlyName": "Garage Door Tilt Sensor Window/door is open",
           "cSharpName": "ZWavePlusGoldPlatedReliabilityGarageDoorTiltSensorWindowDoorIsOpen2"
         },
         {
           "id": "binary_sensor.z_wave_plus_gold_plated_reliability_garage_door_tilt_sensor_window_door_is_open_in_regular_position",
-          "friendlyName": "Z-Wave Plus Gold Plated Reliability Garage Door Tilt Sensor Window/door is open in regular position",
+          "friendlyName": "Garage Door Tilt Sensor Window/door is open in regular position",
           "cSharpName": "ZWavePlusGoldPlatedReliabilityGarageDoorTiltSensorWindowDoorIsOpenInRegularPosition"
         },
         {
           "id": "binary_sensor.z_wave_plus_gold_plated_reliability_garage_door_tilt_sensor_window_door_is_open_in_tilt_position",
-          "friendlyName": "Z-Wave Plus Gold Plated Reliability Garage Door Tilt Sensor Window/door is open in tilt position",
+          "friendlyName": "Garage Door Tilt Sensor Window/door is open in tilt position",
           "cSharpName": "ZWavePlusGoldPlatedReliabilityGarageDoorTiltSensorWindowDoorIsOpenInTiltPosition"
         }
       ],
@@ -1567,6 +1602,11 @@
           "cSharpName": "ElgatoKeyLightRightRestart"
         },
         {
+          "id": "button.entry_lights_ping",
+          "friendlyName": "Entry Lights Ping",
+          "cSharpName": "EntryLightsPing"
+        },
+        {
           "id": "button.front_door_lock_idle_access_control_keypad_state",
           "friendlyName": "Front Door Lock Idle Access Control Keypad state",
           "cSharpName": "FrontDoorLockIdleAccessControlKeypadState"
@@ -1607,6 +1647,11 @@
           "cSharpName": "GarageLightsPing"
         },
         {
+          "id": "button.hallway_lights_ping",
+          "friendlyName": "Hallway Lights Ping",
+          "cSharpName": "HallwayLightsPing"
+        },
+        {
           "id": "button.identify",
           "friendlyName": "Elgato Key Light Left Identify",
           "cSharpName": "Identify"
@@ -1627,6 +1672,16 @@
           "cSharpName": "LaundryRoomLightsPing"
         },
         {
+          "id": "button.living_room_lamp_1_identify",
+          "friendlyName": "Living Room Lamp 1 Identify",
+          "cSharpName": "LivingRoomLamp1Identify"
+        },
+        {
+          "id": "button.living_room_lamp_1_ping",
+          "friendlyName": "Living Room Lamp 1 Ping",
+          "cSharpName": "LivingRoomLamp1Ping"
+        },
+        {
           "id": "button.main_identify",
           "friendlyName": "Main Identify",
           "cSharpName": "MainIdentify"
@@ -1637,19 +1692,9 @@
           "cSharpName": "Node10Ping"
         },
         {
-          "id": "button.node_15_ping",
-          "friendlyName": "Node 15 Ping",
-          "cSharpName": "Node15Ping"
-        },
-        {
           "id": "button.node_20_ping",
           "friendlyName": "Deck String Lights Ping",
           "cSharpName": "Node20Ping"
-        },
-        {
-          "id": "button.node_21_ping",
-          "friendlyName": "Node 21 Ping",
-          "cSharpName": "Node21Ping"
         },
         {
           "id": "button.node_26_ping",
@@ -1658,7 +1703,7 @@
         },
         {
           "id": "button.node_4_ping",
-          "friendlyName": "Z-Wave Plus Gold Plated Reliability Garage Door Tilt Sensor Ping",
+          "friendlyName": "Garage Door Tilt Sensor Ping",
           "cSharpName": "Node4Ping"
         },
         {
@@ -1868,12 +1913,12 @@
         },
         {
           "id": "button.z_wave_plus_gold_plated_reliability_garage_door_tilt_sensor_idle_home_security_cover_status",
-          "friendlyName": "Z-Wave Plus Gold Plated Reliability Garage Door Tilt Sensor Idle Home Security Cover status",
+          "friendlyName": "Garage Door Tilt Sensor Idle Home Security Cover status",
           "cSharpName": "ZWavePlusGoldPlatedReliabilityGarageDoorTiltSensorIdleHomeSecurityCoverStatus"
         },
         {
           "id": "button.z_wave_plus_gold_plated_reliability_garage_door_tilt_sensor_idle_power_management_battery_maintenance_status",
-          "friendlyName": "Z-Wave Plus Gold Plated Reliability Garage Door Tilt Sensor Idle Power Management Battery maintenance status",
+          "friendlyName": "Garage Door Tilt Sensor Idle Power Management Battery maintenance status",
           "cSharpName": "ZWavePlusGoldPlatedReliabilityGarageDoorTiltSensorIdlePowerManagementBatteryMaintenanceStatus"
         }
       ],
@@ -2584,6 +2629,16 @@
           "cSharpName": "DownstairsLightsScene002"
         },
         {
+          "id": "event.entry_lights_event_value",
+          "friendlyName": "Entry Lights Event value",
+          "cSharpName": "EntryLightsEventValue"
+        },
+        {
+          "id": "event.entry_lights_scene_id",
+          "friendlyName": "Entry Lights Scene ID",
+          "cSharpName": "EntryLightsSceneId"
+        },
+        {
           "id": "event.front_porch_lights_event_value",
           "friendlyName": "Front Porch Lights Event value",
           "cSharpName": "FrontPorchLightsEventValue"
@@ -2617,6 +2672,26 @@
           "id": "event.garage_lights_scene_id",
           "friendlyName": "Garage Lights Scene ID",
           "cSharpName": "GarageLightsSceneId"
+        },
+        {
+          "id": "event.hallway_lights_event_value",
+          "friendlyName": "Hallway Lights Event value",
+          "cSharpName": "HallwayLightsEventValue"
+        },
+        {
+          "id": "event.hallway_lights_scene_001",
+          "friendlyName": "Hallway Lights Scene 001",
+          "cSharpName": "HallwayLightsScene001"
+        },
+        {
+          "id": "event.hallway_lights_scene_002",
+          "friendlyName": "Hallway Lights Scene 002",
+          "cSharpName": "HallwayLightsScene002"
+        },
+        {
+          "id": "event.hallway_lights_scene_id",
+          "friendlyName": "Hallway Lights Scene ID",
+          "cSharpName": "HallwayLightsSceneId"
         },
         {
           "id": "event.kitchen_lights_event_value",
@@ -2654,6 +2729,26 @@
           "cSharpName": "LaundryRoomLightsSceneId"
         },
         {
+          "id": "event.living_room_lamp_1_event_value",
+          "friendlyName": "Living Room Lamp 1 Event value",
+          "cSharpName": "LivingRoomLamp1EventValue"
+        },
+        {
+          "id": "event.living_room_lamp_1_scene_001",
+          "friendlyName": "Living Room Lamp 1 Scene 001",
+          "cSharpName": "LivingRoomLamp1Scene001"
+        },
+        {
+          "id": "event.living_room_lamp_1_scene_002",
+          "friendlyName": "Living Room Lamp 1 Scene 002",
+          "cSharpName": "LivingRoomLamp1Scene002"
+        },
+        {
+          "id": "event.living_room_lamp_1_scene_id",
+          "friendlyName": "Living Room Lamp 1 Scene ID",
+          "cSharpName": "LivingRoomLamp1SceneId"
+        },
+        {
           "id": "event.node_5_scene_002",
           "friendlyName": "Laundry Room Lights Scene 002",
           "cSharpName": "Node5Scene002"
@@ -2680,7 +2775,7 @@
         },
         {
           "id": "event.owen_living_room_lamp_scene_id",
-          "friendlyName": "Owen Living Room Lamp Scene ID",
+          "friendlyName": "Scene ID",
           "cSharpName": "OwenLivingRoomLampSceneId"
         },
         {
@@ -3340,6 +3435,11 @@
           "cSharpName": "G4DoorbellProWideDynamicRange"
         },
         {
+          "id": "number.living_room_lamp_1_indicator_value",
+          "friendlyName": "Living Room Lamp 1 Indicator value",
+          "cSharpName": "LivingRoomLamp1IndicatorValue"
+        },
+        {
           "id": "number.main_0x03_ready",
           "friendlyName": "Main 0x03 (Ready)",
           "cSharpName": "Main0x03Ready"
@@ -3997,6 +4097,16 @@
           "cSharpName": "DryerDryerMachineState"
         },
         {
+          "id": "sensor.entry_lights_last_seen",
+          "friendlyName": "Entry Lights Last seen",
+          "cSharpName": "EntryLightsLastSeen"
+        },
+        {
+          "id": "sensor.entry_lights_node_status",
+          "friendlyName": "Entry Lights Node status",
+          "cSharpName": "EntryLightsNodeStatus"
+        },
+        {
           "id": "sensor.epson_et_3760_series",
           "friendlyName": "EPSON ET-3760 Series",
           "cSharpName": "EpsonEt3760Series"
@@ -4107,6 +4217,16 @@
           "cSharpName": "HallwayEchoDotNextTimer"
         },
         {
+          "id": "sensor.hallway_lights_last_seen",
+          "friendlyName": "Hallway Lights Last seen",
+          "cSharpName": "HallwayLightsLastSeen"
+        },
+        {
+          "id": "sensor.hallway_lights_node_status",
+          "friendlyName": "Hallway Lights Node status",
+          "cSharpName": "HallwayLightsNodeStatus"
+        },
+        {
           "id": "sensor.home_allison_direction_of_travel",
           "friendlyName": "Home Allison Direction of travel",
           "cSharpName": "HomeAllisonDirectionOfTravel"
@@ -4182,6 +4302,16 @@
           "cSharpName": "LivingRoomEchoNextTimer"
         },
         {
+          "id": "sensor.living_room_lamp_1_last_seen",
+          "friendlyName": "Living Room Lamp 1 Last seen",
+          "cSharpName": "LivingRoomLamp1LastSeen"
+        },
+        {
+          "id": "sensor.living_room_lamp_1_node_status",
+          "friendlyName": "Living Room Lamp 1 Node status",
+          "cSharpName": "LivingRoomLamp1NodeStatus"
+        },
+        {
           "id": "sensor.neptune",
           "friendlyName": null,
           "cSharpName": "Neptune"
@@ -4197,16 +4327,6 @@
           "cSharpName": "Node10NodeStatus"
         },
         {
-          "id": "sensor.node_15_last_seen",
-          "friendlyName": "Node 15 Last seen",
-          "cSharpName": "Node15LastSeen"
-        },
-        {
-          "id": "sensor.node_15_node_status",
-          "friendlyName": "Node 15 Node status",
-          "cSharpName": "Node15NodeStatus"
-        },
-        {
           "id": "sensor.node_20_last_seen",
           "friendlyName": "Deck String Lights Last seen",
           "cSharpName": "Node20LastSeen"
@@ -4215,16 +4335,6 @@
           "id": "sensor.node_20_node_status",
           "friendlyName": "Deck String Lights Node status",
           "cSharpName": "Node20NodeStatus"
-        },
-        {
-          "id": "sensor.node_21_last_seen",
-          "friendlyName": "Node 21 Last seen",
-          "cSharpName": "Node21LastSeen"
-        },
-        {
-          "id": "sensor.node_21_node_status",
-          "friendlyName": "Node 21 Node status",
-          "cSharpName": "Node21NodeStatus"
         },
         {
           "id": "sensor.node_26_last_seen",
@@ -4238,12 +4348,12 @@
         },
         {
           "id": "sensor.node_4_last_seen",
-          "friendlyName": "Z-Wave Plus Gold Plated Reliability Garage Door Tilt Sensor Last seen",
+          "friendlyName": "Garage Door Tilt Sensor Last seen",
           "cSharpName": "Node4LastSeen"
         },
         {
           "id": "sensor.node_4_node_status",
-          "friendlyName": "Z-Wave Plus Gold Plated Reliability Garage Door Tilt Sensor Node status",
+          "friendlyName": "Garage Door Tilt Sensor Node status",
           "cSharpName": "Node4NodeStatus"
         },
         {
@@ -4483,7 +4593,7 @@
         },
         {
           "id": "sensor.usb_controller_status",
-          "friendlyName": "USB Controller Status",
+          "friendlyName": "Controller Status",
           "cSharpName": "UsbControllerStatus"
         },
         {
@@ -6176,7 +6286,7 @@
         },
         {
           "id": "sensor.z_wave_plus_gold_plated_reliability_garage_door_tilt_sensor_battery_level",
-          "friendlyName": "Z-Wave Plus Gold Plated Reliability Garage Door Tilt Sensor Battery level",
+          "friendlyName": "Garage Door Tilt Sensor Battery level",
           "cSharpName": "ZWavePlusGoldPlatedReliabilityGarageDoorTiltSensorBatteryLevel"
         }
       ],
@@ -6816,6 +6926,11 @@
           "cSharpName": "Dryer"
         },
         {
+          "id": "switch.entry_lights",
+          "friendlyName": "Entry Lights ",
+          "cSharpName": "EntryLights"
+        },
+        {
           "id": "switch.everywhere_do_not_disturb_switch",
           "friendlyName": "Everywhere do not disturb switch",
           "cSharpName": "EverywhereDoNotDisturbSwitch"
@@ -6936,6 +7051,11 @@
           "cSharpName": "HallwayEchoDotShuffleSwitch"
         },
         {
+          "id": "switch.hallway_lights",
+          "friendlyName": "Hallway Lights ",
+          "cSharpName": "HallwayLights"
+        },
+        {
           "id": "switch.internet_modem_smart_plug",
           "friendlyName": "Internet Modem Smart Plug",
           "cSharpName": "InternetModemSmartPlug"
@@ -6989,6 +7109,11 @@
           "id": "switch.living_room_echo_shuffle_switch",
           "friendlyName": "Living Room Echo shuffle switch",
           "cSharpName": "LivingRoomEchoShuffleSwitch"
+        },
+        {
+          "id": "switch.living_room_lamp_1",
+          "friendlyName": "Living Room Lamp 1 ",
+          "cSharpName": "LivingRoomLamp1"
         },
         {
           "id": "switch.main_0x50_node_identify_binary",
@@ -7369,6 +7494,11 @@
           "cSharpName": "DownstairsLightsFirmware"
         },
         {
+          "id": "update.entry_lights_firmware",
+          "friendlyName": "Entry Lights Firmware",
+          "cSharpName": "EntryLightsFirmware"
+        },
+        {
           "id": "update.esphome_update",
           "friendlyName": "ESPHome Update",
           "cSharpName": "EsphomeUpdate"
@@ -7397,6 +7527,11 @@
           "id": "update.hacs_update",
           "friendlyName": "HACS update",
           "cSharpName": "HacsUpdate"
+        },
+        {
+          "id": "update.hallway_lights_firmware",
+          "friendlyName": "Hallway Lights Firmware",
+          "cSharpName": "HallwayLightsFirmware"
         },
         {
           "id": "update.home_assistant_core_update",
@@ -7432,6 +7567,11 @@
           "id": "update.laundry_room_lights_firmware",
           "friendlyName": "Laundry Room Lights Firmware",
           "cSharpName": "LaundryRoomLightsFirmware"
+        },
+        {
+          "id": "update.living_room_lamp_1_firmware",
+          "friendlyName": "Living Room Lamp 1 Firmware",
+          "cSharpName": "LivingRoomLamp1Firmware"
         },
         {
           "id": "update.mini_media_player_update",
@@ -7470,7 +7610,7 @@
         },
         {
           "id": "update.owen_living_room_lamp_firmware",
-          "friendlyName": "Owen Living Room Lamp Firmware",
+          "friendlyName": "Firmware",
           "cSharpName": "OwenLivingRoomLampFirmware"
         },
         {
@@ -7740,6 +7880,11 @@
         {
           "jsonName": "supported_features",
           "cSharpName": "SupportedFeatures",
+          "clrType": "System.Double"
+        },
+        {
+          "jsonName": "uv_index",
+          "cSharpName": "UvIndex",
           "clrType": "System.Double"
         }
       ]

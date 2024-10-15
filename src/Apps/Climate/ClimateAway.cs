@@ -73,7 +73,10 @@ public class ClimateAway
     /// </summary>
     private void UpdateTimingThresholds()
     {
-        timingThresholds = GetTimingThresholds();
+        var desiredTemperature = entities.InputNumber.ClimateDayTemp.State ?? 70;
+        var isHeatMode = entities.Climate.Main.IsHeatMode();
+        
+        timingThresholds = ClimateUtilities.GetTimingThresholds(desiredTemperature, isHeatMode);
 
         if (GetThermostatState() == ThermostatState.Away)
         {
@@ -126,54 +129,6 @@ public class ClimateAway
         NotifyTemperatureUpdate(temperature);
     }
     
-    /// <summary>
-    /// Gets the thresholds
-    /// </summary>
-    private List<TimingThreshold> GetTimingThresholds()
-    {
-        List<TimingThreshold> temperatureTimes = [];
-        var desiredTemperature = entities.InputNumber.ClimateDayTemp.State ?? 70;
-        var factor = entities.Climate.Main.IsHeatMode() ? -1 : 1;
-
-        temperatureTimes.Add(new TimingThreshold(desiredTemperature, 0));
-        for (var i = 1; i <= 8; i++)
-        {
-            var temperature = desiredTemperature + factor * i;
-            temperatureTimes.Add(GetTemperatureTiming(temperature));
-        }
-
-        // These should already be in order, but I'm paranoid.
-        temperatureTimes = temperatureTimes.OrderBy(x => x.MinutesToDesired).ToList();
-        
-        logger.LogInformation("Temperature timings updated: {Timings}", 
-            string.Join(',', temperatureTimes.Select(x => x.ToString())));
-
-        return temperatureTimes;
-    }
-    
-    /// <summary>
-    /// Gets amount of time to arrive at the desired temperature based on how far away the temperature currently is
-    /// (the offset).
-    /// </summary>
-    private TimingThreshold GetTemperatureTiming(double temperature)
-    {
-        var desiredTemperature = entities.InputNumber.ClimateDayTemp.State ?? 70;
-        const int houseVolume = 23_562; // 2,618 liveable x 9 ft ceilings
-        const double airDensity = 0.075;
-        const double heatOfAir = 0.24;
-
-        if (entities.Climate.Main.IsHeatMode())
-        {
-            const int heatingCapacity = 60_000;
-            return new TimingThreshold(temperature, 
-                houseVolume * (desiredTemperature - temperature) * airDensity * heatOfAir / heatingCapacity);
-        }
-        
-        const int coolingCapacity = 24_000;
-        return new TimingThreshold(temperature, 
-            houseVolume * (temperature - desiredTemperature) * airDensity * heatOfAir / coolingCapacity);
-    }
-
     /// <summary>
     /// Gets the currently set temperature on the thermostat.
     /// </summary>
