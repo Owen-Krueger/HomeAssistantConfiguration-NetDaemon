@@ -75,6 +75,9 @@ public class ClimateAway
     {
         var desiredTemperature = entities.InputNumber.ClimateDayTemp.State ?? 70;
         var isHeatMode = entities.Climate.Main.IsHeatMode();
+
+        logger.LogInformation("Updating timing thresholds. Desired temperature: {Temperature} Is Heat Mode: {IsHeatMode}",
+            desiredTemperature, isHeatMode);
         
         timingThresholds = ClimateUtilities.GetTimingThresholds(desiredTemperature, isHeatMode);
 

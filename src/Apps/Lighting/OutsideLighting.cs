@@ -37,21 +37,31 @@ public class OutsideLighting
             .Where(x =>
                     x.Old?.State > 5 &&
                     x.New?.State <= 5)
-            .Subscribe(_ => SetPorchLightingStateFromLocation(true));
+            .Subscribe(_ => SetPorchLightingStateLate(true));
         entities.Sensor.OwenDistanceMiles
             .StateChanges()
             .Where(x =>
                 x.Old?.State > 5 &&
                 x.New?.State <= 5)
-            .Subscribe(_ => SetPorchLightingStateFromLocation(true));
+            .Subscribe(_ => SetPorchLightingStateLate(true));
         entities.Person.Allison
             .StateChanges()
-            .WhenStateIsFor(x => x?.State == "home", TimeSpan.FromMinutes(5), scheduler)
-            .Subscribe(_ => SetPorchLightingStateFromLocation(false));
+            .WhenStateIsFor(x => x.IsHome(), TimeSpan.FromMinutes(5), scheduler)
+            .Subscribe(_ => SetPorchLightingStateLate(false));
         entities.Person.Owen
             .StateChanges()
-            .WhenStateIsFor(x => x?.State == "home", TimeSpan.FromMinutes(5), scheduler)
-            .Subscribe(_ => SetPorchLightingStateFromLocation(false));
+            .WhenStateIsFor(x => x.IsHome(), TimeSpan.FromMinutes(5), scheduler)
+            .Subscribe(_ => SetPorchLightingStateLate(false));
+
+        // State-based automations
+        entities.BinarySensor.G4DoorbellProPersonDetected
+            .StateChanges()
+            .Where(x => x.New.IsOn())
+            .Subscribe(_ => SetPorchLightingStateLate(true));
+        entities.BinarySensor.G4DoorbellProPersonDetected
+            .StateChanges()
+            .WhenStateIsFor(x => x.IsOff(), TimeSpan.FromMinutes(5), scheduler)
+            .Subscribe(_ => SetPorchLightingStateLate(false));
     }
 
     /// <summary>
@@ -61,7 +71,7 @@ public class OutsideLighting
     /// </summary>
     private void SetUpSunsetTriggers()
     {
-        var nextSunset = GetSunsetTime();
+        var nextSunset = GetNextTimeFromSensor(entities.Sensor.SunNextSetting, DateTime.Today.AddHours(17));
         var nextTrigger = nextSunset.AddMinutes(-15);
         logger.LogInformation("Next time to turn on porch set to {Date}", nextTrigger.ToUsCentralTime());
         
@@ -70,11 +80,13 @@ public class OutsideLighting
     }
 
     /// <summary>
-    /// Turns on the porch lights if it's late and the lights are off.
+    /// Turns on/off porch lights if it's late.
     /// </summary>
-    private void SetPorchLightingStateFromLocation(bool isOn)
+    private void SetPorchLightingStateLate(bool isOn)
     {
-        if (DateTime.Now.TimeOfDay > TimeSpan.FromHours(22))
+        var nextSunrise = GetNextTimeFromSensor(entities.Sensor.SunNextRising, DateTime.Today.AddHours(6));
+        if (scheduler.Now.IsBetween(new TimeOnly(22, 0), new TimeOnly(nextSunrise.Ticks)) ||
+            entities.Switch.FrontPorchLights.IsOn() && !isOn)
         {
             SetPorchLightingState(isOn);
         }
@@ -140,18 +152,18 @@ public class OutsideLighting
     }
 
     /// <summary>
-    /// Gets the time of the next sunset.
+    /// Gets the time of the next sunset/sunrise (depending on the sensor).
     /// </summary>
-    private DateTimeOffset GetSunsetTime()
+    private DateTimeOffset GetNextTimeFromSensor(SensorEntity sensor, DateTimeOffset defaultTime)
     {
-        if (DateTimeOffset.TryParse(entities.Sensor.SunNextSetting.EntityState?.State ?? string.Empty,
+        if (DateTimeOffset.TryParse(sensor.EntityState?.State ?? string.Empty,
                 out var date))
         {
             return date;
         }
-        
-        logger.LogWarning("Failed to get sunset time from state. Defaulting to 5PM.");
-        // Default to 5 PM if we can't pull the date from state.
-        return new DateTimeOffset(DateTime.Today.AddHours(17));
+
+        logger.LogWarning("Failed to get sunset time from state. Defaulting to {Time}.",
+            defaultTime.ToUsCentralTime().TimeOfDay);
+        return defaultTime;
     }
 }
