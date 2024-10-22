@@ -1,4 +1,5 @@
 ﻿using Microsoft.Reactive.Testing;
+using NetDaemon.Extensions;
 using NetDaemon.Utilities;
 
 namespace NetDaemon.Tests.TestHelpers;

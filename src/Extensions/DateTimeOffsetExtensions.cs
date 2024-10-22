@@ -1,6 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 
-namespace NetDaemon.Utilities;
+namespace NetDaemon.Extensions;
 
 /// <summary>
 /// Extension methods for working with DateTimeOffsets.

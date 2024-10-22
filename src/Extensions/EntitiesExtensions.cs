@@ -1,4 +1,6 @@
-﻿namespace NetDaemon.Utilities;
+﻿using NetDaemon.Utilities;
+
+namespace NetDaemon.Extensions;
 
 /// <summary>
 /// Extensions for <see cref="IEntities"/>.

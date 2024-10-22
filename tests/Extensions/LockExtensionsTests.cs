@@ -1,11 +1,11 @@
 ﻿using HomeAssistantGenerated;
+using NetDaemon.Extensions;
 using NetDaemon.HassModel;
 using NetDaemon.HassModel.Entities;
-using NetDaemon.Utilities;
 
-namespace NetDaemon.Tests.Utilities;
+namespace NetDaemon.Tests.Extensions;
 
-public class PersonExtensionsTests
+public class LockExtensionsTests
 {
     private IFixture fixture;
 
@@ -15,27 +15,27 @@ public class PersonExtensionsTests
         fixture = new Fixture().Customize(new AutoMoqCustomization());
     }
     
-    [TestCase("home", true)]
-    [TestCase("not_home", false)]
-    public void IsHome_PersonEntityVariousStates_ExpectedResult(string state, bool expectedResult)
+    [TestCase("locked", true)]
+    [TestCase("unlocked", false)]
+    public void IsLocked_LockEntityVariousStates_ExpectedResult(string state, bool expectedResult)
     {
         var mock = new AutoMocker();
         var entityId = fixture.Create<string>();
         var contextMock = mock.GetMock<IHaContext>();
         contextMock.Setup(x => x.GetState(entityId)).Returns(new EntityState { State = state });
-        var person = new PersonEntity(contextMock.Object, entityId);
-        var result = person.IsHome();
+        var lockEntity = new LockEntity(contextMock.Object, entityId);
+        var result = lockEntity.IsLocked();
         
         Assert.That(result, Is.EqualTo(expectedResult));
     }
     
-    [TestCase("home", true)]
-    [TestCase("not_home", false)]
-    public void IsHome_PersonAttributesVariousStates_ExpectedResult(string state, bool expectedResult)
+    [TestCase("locked", true)]
+    [TestCase("unlocked", false)]
+    public void IsHome_LockAttributesVariousStates_ExpectedResult(string state, bool expectedResult)
     {
         var entityState = new EntityState { State = state };
-        var personEntityState = new EntityState<PersonAttributes>(entityState);
-        var result = personEntityState.IsHome();
+        var lockEntityState = new EntityState<LockAttributes>(entityState);
+        var result = lockEntityState.IsLocked();
         
         Assert.That(result, Is.EqualTo(expectedResult));
     }

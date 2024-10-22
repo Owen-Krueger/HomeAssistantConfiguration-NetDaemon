@@ -1,6 +1,6 @@
 ﻿using NetDaemon.HassModel.Entities;
 
-namespace NetDaemon.Utilities;
+namespace NetDaemon.Extensions;
 
 /// <summary>
 /// Extensions for <see cref="PersonEntity"/>.

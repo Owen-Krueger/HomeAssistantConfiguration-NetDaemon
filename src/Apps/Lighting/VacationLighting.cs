@@ -15,7 +15,7 @@ public class VacationLighting
     private readonly IEntities entities;
     private readonly IScheduler scheduler;
     private readonly ILogger<VacationLighting> logger;
-    private List<IDisposable> automationTriggers = [];
+    private readonly List<IDisposable> automationTriggers = [];
 
     /// <summary>
     /// Sets up automations.
@@ -25,35 +25,29 @@ public class VacationLighting
         entities = new Entities(context);
         this.scheduler = scheduler;
         this.logger = logger;
-        UpdateAutomationTriggers();
+        TriggerUtilities.UpdateAutomationTriggers(automationTriggers,
+            entities.InputBoolean.ModeVacation.IsOn(),
+            SetupAutomationTriggers);
 
         entities.InputBoolean.ModeVacation
             .StateChanges()
-            .Subscribe(_ => UpdateAutomationTriggers());
+            .Subscribe(x => 
+                TriggerUtilities.UpdateAutomationTriggers(automationTriggers,
+                    x.New.IsOn(), SetupAutomationTriggers));
     }
 
     /// <summary>
-    /// Updates the automation triggers. If vacation mode is on, sets up triggers if they're not actively on.
-    /// If vacation mode is off, removes any triggers that are actively on.
+    /// Sets up all automation triggers.
     /// </summary>
-    private void UpdateAutomationTriggers()
-    {
-        switch (entities.InputBoolean.ModeVacation.IsOn())
-        {
-            case true when automationTriggers.Count == 0:
-                scheduler.ScheduleCron("1 16 * * *", () => SetKitchenLightsState(true)); // 4:01 PM
-                scheduler.ScheduleCron("20 18 * * *", () => SetLightState(entities.Light.DownstairsLights, true)); // 6:20 PM
-                scheduler.ScheduleCron("21 18 * * *", () => SetKitchenLightsState(true)); // 6:21 PM
-                scheduler.ScheduleCron("6 21 * * *", () => SetLightState(entities.Light.BedroomLamps, true)); // 9:06 PM
-                scheduler.ScheduleCron("10 21 * * *", () => SetLightState(entities.Light.DownstairsLights, true)); // 9:10 PM
-                scheduler.ScheduleCron("3 23 * * *", () => SetLightState(entities.Light.BedroomLamps, false)); // 11:03 PM
-                break;
-            // Remove any existing automation triggers.
-            case false when automationTriggers.Count > 0:
-                automationTriggers = automationTriggers.DisposeTriggers();
-                break;
-        }
-    }
+    private List<IDisposable> SetupAutomationTriggers() =>
+        [
+            scheduler.ScheduleCron("1 16 * * *", () => SetKitchenLightsState(true)), // 4:01 PM
+            scheduler.ScheduleCron("20 18 * * *", () => SetLightState(entities.Light.DownstairsLights, true)), // 6:20 PM
+            scheduler.ScheduleCron("21 18 * * *", () => SetKitchenLightsState(true)), // 6:21 PM
+            scheduler.ScheduleCron("6 21 * * *", () => SetLightState(entities.Light.BedroomLamps, true)), // 9:06 PM
+            scheduler.ScheduleCron("10 21 * * *", () => SetLightState(entities.Light.DownstairsLights, true)), // 9:10 PM
+            scheduler.ScheduleCron("3 23 * * *", () => SetLightState(entities.Light.BedroomLamps, false)) // 11:03 PM
+        ];
     
     /// <summary>
     /// Turns on/off kitchen light switch.

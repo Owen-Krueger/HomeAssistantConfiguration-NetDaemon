@@ -1,4 +1,5 @@
 ﻿using System.Reactive.Concurrency;
+using NetDaemon.Extensions;
 using NetDaemon.Utilities;
 
 namespace NetDaemon.Apps.Internet;

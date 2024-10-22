@@ -1,6 +1,6 @@
-﻿using NetDaemon.Utilities;
+﻿using NetDaemon.Extensions;
 
-namespace NetDaemon.Tests.Utilities;
+namespace NetDaemon.Tests.Extensions;
 
 public class BooleanExtensionsTests
 {

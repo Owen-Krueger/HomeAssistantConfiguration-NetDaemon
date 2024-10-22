@@ -2,6 +2,7 @@
 using System.Linq;
 using NetDaemon.Constants;
 using NetDaemon.Events;
+using NetDaemon.Extensions;
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Utilities;
 

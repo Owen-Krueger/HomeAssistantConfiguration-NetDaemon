@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reactive.Concurrency;
+using NetDaemon.Extensions;
 using NetDaemon.Extensions.Scheduler;
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Models;

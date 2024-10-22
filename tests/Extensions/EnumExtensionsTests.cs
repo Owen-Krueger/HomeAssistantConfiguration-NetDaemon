@@ -1,9 +1,9 @@
 ﻿using HomeAssistantGenerated;
+using NetDaemon.Extensions;
 using NetDaemon.HassModel;
 using NetDaemon.HassModel.Entities;
-using NetDaemon.Utilities;
 
-namespace NetDaemon.Tests.Utilities;
+namespace NetDaemon.Tests.Extensions;
 
 public class EnumExtensionsTests
 {

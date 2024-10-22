@@ -1,4 +1,5 @@
 ﻿using System.Reactive.Concurrency;
+using NetDaemon.Extensions;
 using NetDaemon.Extensions.Scheduler;
 using NetDaemon.Utilities;
 

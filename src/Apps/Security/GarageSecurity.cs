@@ -1,6 +1,7 @@
 ﻿using System.Reactive.Concurrency;
 using NetDaemon.Constants;
 using NetDaemon.Events;
+using NetDaemon.Extensions;
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Models;
 using NetDaemon.Utilities;

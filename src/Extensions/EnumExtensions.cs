@@ -1,4 +1,4 @@
-﻿namespace NetDaemon.Utilities;
+﻿namespace NetDaemon.Extensions;
 
 /// <summary>
 /// Extensions for <see cref="Enum"/>.
