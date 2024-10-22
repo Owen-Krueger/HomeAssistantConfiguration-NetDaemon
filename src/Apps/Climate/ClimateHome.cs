@@ -4,7 +4,6 @@ using NetDaemon.Extensions;
 using NetDaemon.Extensions.Scheduler;
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Models;
-using NetDaemon.Models.Climate;
 using NetDaemon.Utilities;
 
 namespace NetDaemon.Apps.Climate;
@@ -19,7 +18,7 @@ public class ClimateHome
     private readonly IServices services;
     private readonly IScheduler scheduler;
     private readonly ILogger<ClimateHome> logger;
-    private List<IDisposable> automationTriggers = [];
+    private readonly List<IDisposable> automationTriggers = [];
 
     /// <summary>
     /// Sets up automations.
@@ -30,34 +29,28 @@ public class ClimateHome
         services = new Services(context);
         this.scheduler = scheduler;
         this.logger = logger;
+        TriggerUtilities.UpdateAutomationTriggers(automationTriggers,
+            entities.InputSelect.HomeState.GetEnumFromState<HomeStateEnum>() == HomeStateEnum.Home,
+            GetAutomationTriggers);
 
-        UpdateAutomationTriggers();
         entities.InputSelect.HomeState
             .StateChanges()
-            .Subscribe(_ => UpdateAutomationTriggers());
+            .Subscribe(x => 
+                TriggerUtilities.UpdateAutomationTriggers(automationTriggers,
+                    x.New?.State == "Home", GetAutomationTriggers));
     }
 
     /// <summary>
-    /// Updates the automation triggers. If state is "Home", ensures that the triggers are active. If state
-    /// is "Away", ensures all triggers are disposed.
+    /// Sets up all automation triggers and sets temperature.
     /// </summary>
-    private void UpdateAutomationTriggers()
+    private List<IDisposable> GetAutomationTriggers()
     {
-        switch (entities.InputSelect.HomeState.GetEnumFromState<HomeStateEnum>())
-        {
-            // Sets up automation triggers.
-            case HomeStateEnum.Home when automationTriggers.Count == 0:
-                logger.LogInformation("Climate Home automations enabled.");
-                automationTriggers.Add(scheduler.ScheduleCron("0 6 * * *", SetDayTemperature));
-                automationTriggers.Add(scheduler.ScheduleCron("0 21 * * *", SetNightTemperature));
-                UpdateSetTemperature(scheduler.Now.IsBetween(new TimeOnly(6, 0), new TimeOnly(21, 0)));
-                break;
-            // Removes any existing automation triggers.
-            case HomeStateEnum.Away when automationTriggers.Count > 0:
-                logger.LogInformation("Climate Home automations disabled.");
-                automationTriggers = automationTriggers.DisposeTriggers();
-                break;
-        }
+        logger.LogInformation("Climate Home automations enabled.");
+        UpdateSetTemperature(scheduler.Now.IsBetween(new TimeOnly(6, 0), new TimeOnly(21, 0)));
+        return [
+            scheduler.ScheduleCron("0 6 * * *", SetDayTemperature),
+            scheduler.ScheduleCron("0 21 * * *", SetNightTemperature)
+        ];
     }
 
     /// <summary>
