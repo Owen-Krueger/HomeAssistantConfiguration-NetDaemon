@@ -1,4 +1,4 @@
-﻿namespace NetDaemon.Models;
+﻿namespace NetDaemon.Models.Enums;
 
 /// <summary>
 /// The state of the house.

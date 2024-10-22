@@ -4,6 +4,7 @@ using NetDaemon.Extensions;
 using NetDaemon.Extensions.Scheduler;
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Models;
+using NetDaemon.Models.Enums;
 using NetDaemon.Utilities;
 
 namespace NetDaemon.Apps.Climate;
@@ -37,7 +38,7 @@ public class ClimateHome
             .StateChanges()
             .Subscribe(x => 
                 TriggerUtilities.UpdateAutomationTriggers(automationTriggers,
-                    x.New?.State == "Home", GetAutomationTriggers));
+                    x.New.GetEnumFromState<HomeStateEnum>() == HomeStateEnum.Home, GetAutomationTriggers));
     }
 
     /// <summary>

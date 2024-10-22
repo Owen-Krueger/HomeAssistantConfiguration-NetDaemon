@@ -4,6 +4,7 @@ using NetDaemon.Apps.State;
 using NetDaemon.Extensions;
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Models;
+using NetDaemon.Models.Enums;
 using NetDaemon.Utilities;
 
 namespace NetDaemon.Apps.Cameras;

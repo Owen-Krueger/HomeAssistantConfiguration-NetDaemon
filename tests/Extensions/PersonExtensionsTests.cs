@@ -2,6 +2,7 @@
 using NetDaemon.Extensions;
 using NetDaemon.HassModel;
 using NetDaemon.HassModel.Entities;
+using NetDaemon.Models.Enums;
 
 namespace NetDaemon.Tests.Extensions;
 
@@ -16,7 +17,8 @@ public class PersonExtensionsTests
     }
     
     [TestCase("home", true)]
-    [TestCase("not_home", false)]
+    [TestCase("away", false)]
+    [TestCase("something", false)]
     public void IsHome_PersonEntityVariousStates_ExpectedResult(string state, bool expectedResult)
     {
         var mock = new AutoMocker();
@@ -30,7 +32,7 @@ public class PersonExtensionsTests
     }
     
     [TestCase("home", true)]
-    [TestCase("not_home", false)]
+    [TestCase("away", false)]
     public void IsHome_PersonAttributesVariousStates_ExpectedResult(string state, bool expectedResult)
     {
         var entityState = new EntityState { State = state };

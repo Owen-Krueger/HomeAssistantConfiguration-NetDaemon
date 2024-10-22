@@ -1,7 +1,9 @@
 ﻿using HomeAssistantGenerated;
 using Moq;
 using NetDaemon.Apps.Security;
+using NetDaemon.Extensions;
 using NetDaemon.HassModel.Entities;
+using NetDaemon.Models.Enums;
 using NetDaemon.Tests.TestHelpers;
 
 namespace NetDaemon.Tests.Apps.Security;
@@ -12,12 +14,12 @@ public class FrontDoorSecurityTests : TestBase
     public void FrontDoorSecurity_NobodyHome_DoorLocked()
     {
         TestScheduler.AdvanceToNow();
-        HaMock.TriggerStateChange(Entities.Person.Allison, "home");
-        HaMock.TriggerStateChange(Entities.Person.Owen, "away");
+        HaMock.TriggerStateChange(Entities.Person.Allison, PersonStateEnum.Home.ToStringLowerCase());
+        HaMock.TriggerStateChange(Entities.Person.Owen, PersonStateEnum.Away.ToStringLowerCase());
         HaMock.TriggerStateChange(Entities.Lock.FrontDoorLock, "unlocked");
 
         Context.GetApp<FrontDoorSecurity>();
-        HaMock.TriggerStateChange(Entities.Person.Allison, "away");
+        HaMock.TriggerStateChange(Entities.Person.Allison, PersonStateEnum.Away.ToStringLowerCase());
         HaMock.Verify(x => x.CallService("lock", "lock", 
             It.IsAny<ServiceTarget>(),
             It.IsAny<LockLockParameters>()), Times.Once);
@@ -32,12 +34,12 @@ public class FrontDoorSecurityTests : TestBase
     public void FrontDoorSecurity_FailedToLockDoor_FamilyNotified()
     {
         TestScheduler.AdvanceToNow();
-        HaMock.TriggerStateChange(Entities.Person.Allison, "home");
-        HaMock.TriggerStateChange(Entities.Person.Owen, "away");
+        HaMock.TriggerStateChange(Entities.Person.Allison, PersonStateEnum.Home.ToStringLowerCase());
+        HaMock.TriggerStateChange(Entities.Person.Owen, PersonStateEnum.Away.ToStringLowerCase());
         HaMock.TriggerStateChange(Entities.Lock.FrontDoorLock, "unlocked");
 
         Context.GetApp<FrontDoorSecurity>();
-        HaMock.TriggerStateChange(Entities.Person.Allison, "away");
+        HaMock.TriggerStateChange(Entities.Person.Allison, PersonStateEnum.Away.ToStringLowerCase());
         HaMock.Verify(x => x.CallService("lock", "lock", 
             It.IsAny<ServiceTarget>(),
             It.IsAny<LockLockParameters>()), Times.Once);
@@ -51,12 +53,12 @@ public class FrontDoorSecurityTests : TestBase
     public void FrontDoorSecurity_DoorAlreadyLocked_NobodyNotified()
     {
         TestScheduler.AdvanceToNow();
-        HaMock.TriggerStateChange(Entities.Person.Allison, "home");
-        HaMock.TriggerStateChange(Entities.Person.Owen, "away");
+        HaMock.TriggerStateChange(Entities.Person.Allison, PersonStateEnum.Home.ToStringLowerCase());
+        HaMock.TriggerStateChange(Entities.Person.Owen, PersonStateEnum.Away.ToStringLowerCase());
         HaMock.TriggerStateChange(Entities.Lock.FrontDoorLock, "locked");
 
         Context.GetApp<FrontDoorSecurity>();
-        HaMock.TriggerStateChange(Entities.Person.Allison, "away");
+        HaMock.TriggerStateChange(Entities.Person.Allison, PersonStateEnum.Away.ToStringLowerCase());
         HaMock.Verify(x => x.CallService("lock", "lock", 
             It.IsAny<ServiceTarget>(),
             It.IsAny<LockLockParameters>()), Times.Never);

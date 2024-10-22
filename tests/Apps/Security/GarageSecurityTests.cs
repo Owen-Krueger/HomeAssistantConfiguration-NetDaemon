@@ -4,8 +4,11 @@ using Moq;
 using NetDaemon.Apps.Security;
 using NetDaemon.Constants;
 using NetDaemon.Events;
+using NetDaemon.Extensions;
 using NetDaemon.HassModel;
 using NetDaemon.HassModel.Entities;
+using NetDaemon.Models;
+using NetDaemon.Models.Enums;
 using NetDaemon.Tests.TestHelpers;
 
 namespace NetDaemon.Tests.Apps.Security;
@@ -16,12 +19,13 @@ public class GarageSecurityTests : TestBase
     public void GarageSecurity_NobodyHome_NotificationSent()
     {
         TestScheduler.AdvanceToNow();
-        HaMock.TriggerStateChange(Entities.Person.Allison, "home");
-        HaMock.TriggerStateChange(Entities.Person.Owen, "away");
+        HaMock.TriggerStateChange(Entities.Person.Allison, PersonStateEnum.Away.ToStringLowerCase());
+        HaMock.TriggerStateChange(Entities.Person.Owen, PersonStateEnum.Away.ToStringLowerCase());
+        HaMock.TriggerStateChange(Entities.InputSelect.HomeState, HomeStateEnum.Home.ToString());
         HaMock.TriggerStateChange(Entities.Cover.PrimaryGarageDoor, "open");
 
         Context.GetApp<GarageSecurity>();
-        HaMock.TriggerStateChange(Entities.Person.Allison, "away");
+        HaMock.TriggerStateChange(Entities.InputSelect.HomeState, HomeStateEnum.Away.ToString());
         TestScheduler.AdvanceBy(TimeSpan.FromMinutes(5).Ticks);
         
         HaMock.Verify(x => x.CallService("notify", "owen", null,
@@ -40,12 +44,12 @@ public class GarageSecurityTests : TestBase
     public void GarageSecurity_GarageDoorShut_NoNotificationSent()
     {
         TestScheduler.AdvanceToNow();
-        HaMock.TriggerStateChange(Entities.Person.Allison, "home");
-        HaMock.TriggerStateChange(Entities.Person.Owen, "away");
+        HaMock.TriggerStateChange(Entities.Person.Allison, PersonStateEnum.Home.ToStringLowerCase());
+        HaMock.TriggerStateChange(Entities.Person.Owen, PersonStateEnum.Away.ToStringLowerCase());
         HaMock.TriggerStateChange(Entities.Cover.PrimaryGarageDoor, "closed");
 
         Context.GetApp<GarageSecurity>();
-        HaMock.TriggerStateChange(Entities.Person.Allison, "away");
+        HaMock.TriggerStateChange(Entities.Person.Allison, PersonStateEnum.Away.ToStringLowerCase());
         TestScheduler.AdvanceBy(TimeSpan.FromMinutes(5).Ticks);
         HaMock.Verify(x => x.CallService("notify", "owen", null,
             It.Is<NotifyOwenParameters>(y => y.Message!.Contains("Garage door is open"))), Times.Never);

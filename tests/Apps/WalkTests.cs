@@ -1,5 +1,7 @@
 ﻿using Moq;
 using NetDaemon.Apps.Walk;
+using NetDaemon.Extensions;
+using NetDaemon.Models.Enums;
 using NetDaemon.Tests.TestHelpers;
 
 namespace NetDaemon.Tests.Apps;
@@ -11,11 +13,11 @@ public class WalkTests : TestBase
     {
         TestScheduler.AdvanceTo(new DateTime(2024, 01, 01, 8, 0, 0));
         HaMock.TriggerStateChange(Entities.InputBoolean.OwenOnMorningWalk, "on");
-        HaMock.TriggerStateChange(Entities.Person.Owen, "away");
+        HaMock.TriggerStateChange(Entities.Person.Owen, PersonStateEnum.Away.ToStringLowerCase());
 
         Context.GetApp<Walk>();
         HaMock.TriggerStateChange(Entities.InputBoolean.OwenOnMorningWalk, "on");
-        HaMock.TriggerStateChange(Entities.Person.Owen, "home");
+        HaMock.TriggerStateChange(Entities.Person.Owen, PersonStateEnum.Home.ToStringLowerCase());
         TestScheduler.AdvanceBy(TimeSpan.FromMinutes(5).Ticks);
         HaMock.VerifyServiceCalled(Entities.InputBoolean.OwenOnMorningWalk, "input_boolean", "turn_off", null, Times.Once());
     }
@@ -25,7 +27,7 @@ public class WalkTests : TestBase
     {
         TestScheduler.AdvanceTo(new DateTime(2024, 01, 01, 11, 0, 0));
         HaMock.TriggerStateChange(Entities.InputBoolean.OwenOnMorningWalk, "on");
-        HaMock.TriggerStateChange(Entities.Person.Owen, "away");
+        HaMock.TriggerStateChange(Entities.Person.Owen, PersonStateEnum.Away.ToStringLowerCase());
         HaMock.TriggerStateChange(Entities.Lock.FrontDoorLock, "locked");
         HaMock.TriggerStateChange(Entities.Cover.PrimaryGarageDoor, "open");
 
@@ -40,7 +42,7 @@ public class WalkTests : TestBase
     {
         TestScheduler.AdvanceTo(new DateTime(2024, 01, 01, 8, 0, 0));
         HaMock.TriggerStateChange(Entities.InputBoolean.OwenOnMorningWalk, "on");
-        HaMock.TriggerStateChange(Entities.Person.Owen, "home");
+        HaMock.TriggerStateChange(Entities.Person.Owen, PersonStateEnum.Home.ToStringLowerCase());
         HaMock.TriggerStateChange(Entities.Sensor.OwenDistanceMiles, "0");
         HaMock.TriggerStateChange(Entities.Lock.FrontDoorLock, "locked");
 
@@ -54,7 +56,7 @@ public class WalkTests : TestBase
     {
         TestScheduler.AdvanceTo(new DateTime(2024, 01, 01, 8, 0, 0));
         HaMock.TriggerStateChange(Entities.InputBoolean.OwenOnMorningWalk, "on");
-        HaMock.TriggerStateChange(Entities.Person.Owen, "home");
+        HaMock.TriggerStateChange(Entities.Person.Owen, PersonStateEnum.Home.ToStringLowerCase());
         HaMock.TriggerStateChange(Entities.Sensor.OwenDistanceMiles, "0");
         HaMock.TriggerStateChange(Entities.Cover.PrimaryGarageDoor, "open");
 
@@ -68,14 +70,14 @@ public class WalkTests : TestBase
     {
         TestScheduler.AdvanceTo(new DateTime(2024, 01, 01, 8, 0, 0));
         HaMock.TriggerStateChange(Entities.InputBoolean.OwenOnMorningWalk, "on");
-        HaMock.TriggerStateChange(Entities.Person.Owen, "home");
+        HaMock.TriggerStateChange(Entities.Person.Owen, PersonStateEnum.Home.ToStringLowerCase());
         HaMock.TriggerStateChange(Entities.BinarySensor.WorkdaySensor, "on");
         HaMock.TriggerStateChange(Entities.Sensor.OwenPhoneNetworkType, "cellular");
         HaMock.TriggerStateChange(Entities.Lock.FrontDoorLock, "locked");
         HaMock.TriggerStateChange(Entities.Cover.PrimaryGarageDoor, "open");
 
         Context.GetApp<Walk>();
-        HaMock.TriggerStateChange(Entities.Person.Owen, "away");
+        HaMock.TriggerStateChange(Entities.Person.Owen, PersonStateEnum.Away.ToStringLowerCase());
         TestScheduler.AdvanceBy(TimeSpan.FromMinutes(5).Ticks);
         HaMock.VerifyServiceCalled(Entities.InputBoolean.OwenOnMorningWalk, "input_boolean", "turn_on", null, Times.Never());
         

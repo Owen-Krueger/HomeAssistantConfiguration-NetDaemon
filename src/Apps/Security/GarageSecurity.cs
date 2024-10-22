@@ -4,6 +4,7 @@ using NetDaemon.Events;
 using NetDaemon.Extensions;
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Models;
+using NetDaemon.Models.Enums;
 using NetDaemon.Utilities;
 
 namespace NetDaemon.Apps.Security;
@@ -33,13 +34,9 @@ public class GarageSecurity
         this.logger = logger;
         lastExecution = scheduler.Now.AddDays(-1);
 
-        entities.Person.Owen
+        entities.InputSelect.HomeState
             .StateChanges()
-            .WhenStateIsFor(x => !x.IsHome(), TimeSpan.FromMinutes(5), scheduler)
-            .Subscribe(_ => SendGarageDoorOpenNotification());
-        entities.Person.Allison
-            .StateChanges()
-            .WhenStateIsFor(x => !x.IsHome(), TimeSpan.FromMinutes(5), scheduler)
+            .Where(x => x.New.GetEnumFromState<HomeStateEnum>() == HomeStateEnum.Away)
             .Subscribe(_ => SendGarageDoorOpenNotification());
         context.Events.Filter<MobileNotificationActionEvent>(EventTypes.MobileAppNotificationActionEvent)
             .Where(x => x.Data?.Action == CloseGarageDoorAction)

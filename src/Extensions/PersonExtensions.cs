@@ -1,4 +1,5 @@
 ﻿using NetDaemon.HassModel.Entities;
+using NetDaemon.Models.Enums;
 
 namespace NetDaemon.Extensions;
 
@@ -11,11 +12,11 @@ public static class PersonExtensions
     /// Returns if the person's state is "home".
     /// </summary>
     public static bool IsHome(this PersonEntity person)
-        => person.State == "home";
+        => person.GetEnumFromState(PersonStateEnum.Away) == PersonStateEnum.Home;
 
     /// <summary>
     /// Returns if the person's state is "home".
     /// </summary>
     public static bool IsHome(this EntityState<PersonAttributes>? person)
-        => person?.State == "home";
+        => person?.GetEnumFromState(PersonStateEnum.Away) == PersonStateEnum.Home;
 }
