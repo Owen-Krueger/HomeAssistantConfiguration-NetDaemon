@@ -921,17 +921,17 @@
         },
         {
           "id": "binary_sensor.front_door_lock_intrusion",
-          "friendlyName": "Front Door Lock Intrusion",
+          "friendlyName": "Intrusion",
           "cSharpName": "FrontDoorLockIntrusion"
         },
         {
           "id": "binary_sensor.front_door_lock_keypad_temporary_disabled",
-          "friendlyName": "Front Door Lock Keypad temporary disabled",
+          "friendlyName": "Keypad temporary disabled",
           "cSharpName": "FrontDoorLockKeypadTemporaryDisabled"
         },
         {
           "id": "binary_sensor.front_door_lock_lock_jammed",
-          "friendlyName": "Front Door Lock Lock jammed",
+          "friendlyName": "Lock jammed",
           "cSharpName": "FrontDoorLockLockJammed"
         },
         {
@@ -941,17 +941,17 @@
         },
         {
           "id": "binary_sensor.front_door_lock_replace_battery_now",
-          "friendlyName": "Front Door Lock Replace battery now",
+          "friendlyName": "Replace battery now",
           "cSharpName": "FrontDoorLockReplaceBatteryNow"
         },
         {
           "id": "binary_sensor.front_door_lock_replace_battery_soon",
-          "friendlyName": "Front Door Lock Replace battery soon",
+          "friendlyName": "Replace battery soon",
           "cSharpName": "FrontDoorLockReplaceBatterySoon"
         },
         {
           "id": "binary_sensor.front_door_lock_system_hardware_failure",
-          "friendlyName": "Front Door Lock System hardware failure",
+          "friendlyName": "System hardware failure",
           "cSharpName": "FrontDoorLockSystemHardwareFailure"
         },
         {
@@ -1578,7 +1578,7 @@
         },
         {
           "id": "button.deck_string_lights_identify",
-          "friendlyName": "Deck String Lights Identify",
+          "friendlyName": "Identify",
           "cSharpName": "DeckStringLightsIdentify"
         },
         {
@@ -1608,27 +1608,27 @@
         },
         {
           "id": "button.front_door_lock_idle_access_control_keypad_state",
-          "friendlyName": "Front Door Lock Idle Access Control Keypad state",
+          "friendlyName": "Idle Access Control Keypad state",
           "cSharpName": "FrontDoorLockIdleAccessControlKeypadState"
         },
         {
           "id": "button.front_door_lock_idle_access_control_lock_state",
-          "friendlyName": "Front Door Lock Idle Access Control Lock state",
+          "friendlyName": "Idle Access Control Lock state",
           "cSharpName": "FrontDoorLockIdleAccessControlLockState"
         },
         {
           "id": "button.front_door_lock_idle_home_security_sensor_status",
-          "friendlyName": "Front Door Lock Idle Home Security Sensor status",
+          "friendlyName": "Idle Home Security Sensor status",
           "cSharpName": "FrontDoorLockIdleHomeSecuritySensorStatus"
         },
         {
           "id": "button.front_door_lock_idle_power_management_battery_maintenance_status",
-          "friendlyName": "Front Door Lock Idle Power Management Battery maintenance status",
+          "friendlyName": "Idle Power Management Battery maintenance status",
           "cSharpName": "FrontDoorLockIdlePowerManagementBatteryMaintenanceStatus"
         },
         {
           "id": "button.front_door_lock_idle_system_hardware_status",
-          "friendlyName": "Front Door Lock Idle System Hardware status",
+          "friendlyName": "Idle System Hardware status",
           "cSharpName": "FrontDoorLockIdleSystemHardwareStatus"
         },
         {
@@ -2634,6 +2634,16 @@
           "cSharpName": "EntryLightsEventValue"
         },
         {
+          "id": "event.entry_lights_scene_001",
+          "friendlyName": "Entry Lights Scene 001",
+          "cSharpName": "EntryLightsScene001"
+        },
+        {
+          "id": "event.entry_lights_scene_002",
+          "friendlyName": "Entry Lights Scene 002",
+          "cSharpName": "EntryLightsScene002"
+        },
+        {
           "id": "event.entry_lights_scene_id",
           "friendlyName": "Entry Lights Scene ID",
           "cSharpName": "EntryLightsSceneId"
@@ -3320,9 +3330,9 @@
       "domain": "input_select",
       "entities": [
         {
-          "id": "input_select.thermostat_state",
-          "friendlyName": "Thermostat State",
-          "cSharpName": "ThermostatState"
+          "id": "input_select.home_state",
+          "friendlyName": "Home State",
+          "cSharpName": "HomeState"
         }
       ],
       "attributes": [
@@ -3406,7 +3416,7 @@
         },
         {
           "id": "number.deck_string_lights_indicator_value",
-          "friendlyName": "Deck String Lights Indicator value",
+          "friendlyName": "Indicator value",
           "cSharpName": "DeckStringLightsIndicatorValue"
         },
         {
@@ -4961,7 +4971,7 @@
         {
           "jsonName": "dismissed",
           "cSharpName": "Dismissed",
-          "clrType": null
+          "clrType": "System.String"
         },
         {
           "jsonName": "timer",
@@ -6907,7 +6917,7 @@
         },
         {
           "id": "switch.deck_string_lights",
-          "friendlyName": "Deck String Lights ",
+          "friendlyName": "",
           "cSharpName": "DeckStringLights"
         },
         {
@@ -7480,7 +7490,7 @@
         },
         {
           "id": "update.deck_string_lights_firmware",
-          "friendlyName": "Deck String Lights Firmware",
+          "friendlyName": "Firmware",
           "cSharpName": "DeckStringLightsFirmware"
         },
         {

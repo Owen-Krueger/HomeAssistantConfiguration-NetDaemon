@@ -1,9 +1,9 @@
-﻿namespace NetDaemon.Models.Climate;
+﻿namespace NetDaemon.Models;
 
 /// <summary>
-/// The state of the house (climate-wise).
+/// The state of the house.
 /// </summary>
-public enum ThermostatState
+public enum HomeStateEnum
 {
     /// <summary>
     /// Someone is home and temperature should follow a schedule.

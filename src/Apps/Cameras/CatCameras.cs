@@ -1,6 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Reactive.Concurrency;
+using NetDaemon.Apps.State;
 using NetDaemon.HassModel.Entities;
+using NetDaemon.Models;
 using NetDaemon.Utilities;
 
 namespace NetDaemon.Apps.Cameras;
@@ -19,7 +21,7 @@ public class CatCameras
     /// <summary>
     /// Sets up automations.
     /// </summary>
-    public CatCameras(IHaContext context, IScheduler scheduler, ILogger<CatCameras> logger)
+    public CatCameras(IHaContext context, ILogger<CatCameras> logger)
     {
         entities = new Entities(context);
         services = new Services(context);
@@ -30,21 +32,13 @@ public class CatCameras
             entities.Switch.CatCameraDownSmartPlug
         ];
 
-        entities.Person.Allison
+        entities.InputSelect.HomeState
             .StateChanges()
-            .WhenStateIsFor(x => !x.IsHome(), TimeSpan.FromMinutes(15), scheduler)
+            .Where(x => x.Entity.GetEnumFromState<HomeStateEnum>() == HomeStateEnum.Away)
             .Subscribe(_ => TurnOnCameras());
-        entities.Person.Owen
+        entities.InputSelect.HomeState
             .StateChanges()
-            .WhenStateIsFor(x => !x.IsHome(), TimeSpan.FromMinutes(15), scheduler)
-            .Subscribe(_ => TurnOnCameras());
-        entities.Person.Allison
-            .StateChanges()
-            .Where(x => x.New.IsHome())
-            .Subscribe(_ => TurnOffCameras());
-        entities.Person.Owen
-            .StateChanges()
-            .Where(x => x.New.IsHome())
+            .Where(x => x.Entity.GetEnumFromState<HomeStateEnum>() == HomeStateEnum.Home)
             .Subscribe(_ => TurnOffCameras());
     }
 

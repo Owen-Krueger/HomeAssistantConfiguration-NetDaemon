@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Reactive.Concurrency;
 using NetDaemon.HassModel.Entities;
+using NetDaemon.Models;
 using NetDaemon.Models.Climate;
 using NetDaemon.Utilities;
 
@@ -32,7 +33,7 @@ public class ClimateAway
         
         UpdateAutomationTriggers();
         UpdateTimingThresholds();
-        entities.InputSelect.ThermostatState
+        entities.InputSelect.HomeState
             .StateChanges()
             .Subscribe(_ => UpdateAutomationTriggers());
     }
@@ -43,10 +44,10 @@ public class ClimateAway
     /// </summary>
     private void UpdateAutomationTriggers()
     {
-        switch (GetThermostatState())
+        switch (GetHomeState())
         {
             // Sets up automation triggers.
-            case ThermostatState.Away when automationTriggers.Count == 0:
+            case HomeStateEnum.Away when automationTriggers.Count == 0:
                 logger.LogInformation("Climate Away automations enabled.");
                 automationTriggers.Add(entities.InputNumber.ClimateDayTemp
                     .StateChanges()
@@ -60,7 +61,7 @@ public class ClimateAway
                     .Subscribe(_ => UpdateSetTemperature()));
                 break;
             // Removes any existing automation triggers.
-            case ThermostatState.Home when automationTriggers.Count > 0:
+            case HomeStateEnum.Home when automationTriggers.Count > 0:
                 logger.LogInformation("Climate Away automations disabled.");
                 automationTriggers = automationTriggers.DisposeTriggers();
                 break;
@@ -80,7 +81,7 @@ public class ClimateAway
         logger.LogInformation("Updating timing thresholds. Desired temperature: {Temperature}. Is Heat Mode: {IsHeatMode}. Thresholds: {Thresholds}",
             desiredTemperature, isHeatMode, string.Join(", ", timingThresholds));
 
-        if (GetThermostatState() == ThermostatState.Away)
+        if (GetHomeState() == HomeStateEnum.Away)
         {
             UpdateSetTemperature();
         }
@@ -138,10 +139,10 @@ public class ClimateAway
         => entities.Climate.Main.Attributes?.Temperature ?? 0.0;
     
     /// <summary>
-    /// Gets the current state of the house as <see cref="ThermostatState"/>.
+    /// Gets the current state of the house as <see cref="HomeStateEnum"/>.
     /// </summary>
-    private ThermostatState GetThermostatState()
-        => entities.InputSelect.ThermostatState.GetEnumFromState<ThermostatState>();
+    private HomeStateEnum GetHomeState()
+        => entities.InputSelect.HomeState.GetEnumFromState<HomeStateEnum>();
     
     /// <summary>
     /// Notifies Owen that the set temperature has been updated (if he wants updates).

@@ -2,6 +2,7 @@
 using System.Reactive.Concurrency;
 using NetDaemon.Extensions.Scheduler;
 using NetDaemon.HassModel.Entities;
+using NetDaemon.Models;
 using NetDaemon.Models.Climate;
 using NetDaemon.Utilities;
 
@@ -30,7 +31,7 @@ public class ClimateHome
         this.logger = logger;
 
         UpdateAutomationTriggers();
-        entities.InputSelect.ThermostatState
+        entities.InputSelect.HomeState
             .StateChanges()
             .Subscribe(_ => UpdateAutomationTriggers());
     }
@@ -41,17 +42,17 @@ public class ClimateHome
     /// </summary>
     private void UpdateAutomationTriggers()
     {
-        switch (entities.InputSelect.ThermostatState.GetEnumFromState<ThermostatState>())
+        switch (entities.InputSelect.HomeState.GetEnumFromState<HomeStateEnum>())
         {
             // Sets up automation triggers.
-            case ThermostatState.Home when automationTriggers.Count == 0:
+            case HomeStateEnum.Home when automationTriggers.Count == 0:
                 logger.LogInformation("Climate Home automations enabled.");
                 automationTriggers.Add(scheduler.ScheduleCron("0 6 * * *", SetDayTemperature));
                 automationTriggers.Add(scheduler.ScheduleCron("0 21 * * *", SetNightTemperature));
                 UpdateSetTemperature(scheduler.Now.IsBetween(new TimeOnly(6, 0), new TimeOnly(21, 0)));
                 break;
             // Removes any existing automation triggers.
-            case ThermostatState.Away when automationTriggers.Count > 0:
+            case HomeStateEnum.Away when automationTriggers.Count > 0:
                 logger.LogInformation("Climate Home automations disabled.");
                 automationTriggers = automationTriggers.DisposeTriggers();
                 break;
@@ -76,7 +77,7 @@ public class ClimateHome
     private void UpdateSetTemperature(bool isDay)
     {
         // If not home, the away automations will cover setting temp.
-        if (entities.InputSelect.ThermostatState.GetEnumFromState<ThermostatState>() != ThermostatState.Home)
+        if (entities.InputSelect.HomeState.GetEnumFromState<HomeStateEnum>() != HomeStateEnum.Home)
         {
             return;
         }

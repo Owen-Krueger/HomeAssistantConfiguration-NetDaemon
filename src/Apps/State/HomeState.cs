@@ -1,24 +1,25 @@
 ﻿using System.Reactive.Concurrency;
 using NetDaemon.HassModel.Entities;
-using NetDaemon.Models.Climate;
+using NetDaemon.Models;
 using NetDaemon.Utilities;
 
-namespace NetDaemon.Apps.Climate;
+namespace NetDaemon.Apps.State;
+
 
 /// <summary>
-/// Automations to set <see cref="ThermostatState"/>.
+/// Automations to set <see cref="HomeStateEnum"/>.
 /// </summary>
 [NetDaemonApp]
-public class ClimateState
+public class HomeState
 {
     private readonly IEntities entities;
     private readonly IServices services;
-    private readonly ILogger<ClimateState> logger;
+    private readonly ILogger<HomeState> logger;
 
     /// <summary>
     /// Sets up automations.
     /// </summary>
-    public ClimateState(IHaContext context, IScheduler scheduler, ILogger<ClimateState> logger)
+    public HomeState(IHaContext context, IScheduler scheduler, ILogger<HomeState> logger)
     {
         entities = new Entities(context);
         services = new Services(context);
@@ -52,7 +53,7 @@ public class ClimateState
             return;
         }
         
-        SetState(ThermostatState.Home);
+        SetState(HomeStateEnum.Home);
     }
 
     /// <summary>
@@ -65,42 +66,42 @@ public class ClimateState
             return;
         }
         
-        SetState(ThermostatState.Away);
+        SetState(HomeStateEnum.Away);
     }
 
     /// <summary>
     /// Sets the state of the house to the input.
     /// </summary>
-    private void SetState(ThermostatState state)
+    private void SetState(HomeStateEnum stateEnum)
     {
-        if (GetThermostatState() == state)
+        if (GetHomeState() == stateEnum)
         {
             return;
         }
         
-        logger.LogInformation("Setting thermostat state to {State}", state);
+        logger.LogInformation("Setting home state to {State}", stateEnum);
         
-        var target = ServiceTarget.FromEntity(entities.InputSelect.ThermostatState.EntityId);
-        services.InputSelect.SelectOption(target, state.ToString());
-        NotifyStateUpdate(state);
+        var target = ServiceTarget.FromEntity(entities.InputSelect.HomeState.EntityId);
+        services.InputSelect.SelectOption(target, stateEnum.ToString());
+        NotifyStateUpdate(stateEnum);
     }
     
     /// <summary>
     /// Notifies Owen that the state has been updated (if he wants updates).
     /// </summary>
-    private void NotifyStateUpdate(ThermostatState state)
+    private void NotifyStateUpdate(HomeStateEnum stateEnum)
     {
         if (entities.InputBoolean.ClimateNotifyLocationBased.IsOff())
         {
             return;
         }
         
-        services.Notify.Owen($"Temperature state updated to {state}.", "Climate");
+        services.Notify.Owen($"Home state updated to {stateEnum}.", "Climate");
     }
 
     /// <summary>
-    /// Gets the current state of the house as <see cref="ThermostatState"/>.
+    /// Gets the current state of the house as <see cref="HomeStateEnum"/>.
     /// </summary>
-    private ThermostatState GetThermostatState()
-        => entities.InputSelect.ThermostatState.GetEnumFromState<ThermostatState>();
+    private HomeStateEnum GetHomeState()
+        => entities.InputSelect.HomeState.GetEnumFromState<HomeStateEnum>();
 }
