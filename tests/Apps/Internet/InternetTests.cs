@@ -1,12 +1,9 @@
 ﻿using HomeAssistantGenerated;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Reactive.Testing;
 using Moq;
-using NetDaemon.Apps.Internet;
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Tests.TestHelpers;
 
-namespace NetDaemon.Tests.Apps;
+namespace NetDaemon.Tests.Apps.Internet;
 
 public class InternetTests : TestBase
 {
@@ -16,7 +13,7 @@ public class InternetTests : TestBase
         HaMock.TriggerStateChange(Entities.BinarySensor.InternetUp, "on");
         HaMock.TriggerStateChange(Entities.Switch.InternetModemSmartPlug, "on");
         
-        Context.GetApp<Internet>();
+        Context.GetApp<NetDaemon.Apps.Internet.Internet>();
         HaMock.TriggerStateChange(Entities.BinarySensor.InternetUp, "off");
         TestScheduler.AdvanceBy(TimeSpan.FromSeconds(90).Ticks);
         
@@ -37,7 +34,7 @@ public class InternetTests : TestBase
         HaMock.TriggerStateChange(Entities.BinarySensor.InternetUp, "on");
         HaMock.TriggerStateChange(Entities.Switch.InternetModemSmartPlug, "on");
         
-        Context.GetApp<Internet>();
+        Context.GetApp<NetDaemon.Apps.Internet.Internet>();
         HaMock.TriggerStateChange(Entities.BinarySensor.InternetUp, "off");
         TestScheduler.AdvanceBy(TimeSpan.FromSeconds(90).Ticks);
         

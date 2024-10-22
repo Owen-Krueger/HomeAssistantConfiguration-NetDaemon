@@ -16,7 +16,6 @@ public class LaundryTests : TestBase
         HaMock.TriggerStateChange(Entities.Sensor.WasherWasherMachineState, "stop");
         HaMock.Verify(x => x.CallService("notify", "family", null,
             It.Is<NotifyFamilyParameters>(y => y.Message!.Contains("The washer has completed!"))), Times.Once);
-        HaMock.Reset();
     }
     
     [Test]
@@ -29,7 +28,6 @@ public class LaundryTests : TestBase
         HaMock.Verify(x => x.CallService("notify", "family", null,
             It.Is<NotifyFamilyParameters>(y => y.Message!.Contains("The dryer has completed!"))), Times.Once);
         HaMock.TriggerStateChange(Entities.Sensor.DryerDryerJobState, "cooling");
-        HaMock.Reset();
     }
     
     [Test]
@@ -42,6 +40,5 @@ public class LaundryTests : TestBase
         HaMock.Verify(x => x.CallService("notify", "family", null,
             It.Is<NotifyFamilyParameters>(y => y.Message!.Contains("The dryer has completed!"))), Times.Once);
         HaMock.TriggerStateChange(Entities.Sensor.DryerDryerJobState, "cooling");
-        HaMock.Reset();
     }
 }
