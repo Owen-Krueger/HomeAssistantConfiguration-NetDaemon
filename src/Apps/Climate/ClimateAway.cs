@@ -19,7 +19,7 @@ public class ClimateAway
     private readonly IServices services;
     private readonly IScheduler scheduler;
     private readonly ILogger<ClimateAway> logger;
-    private List<IDisposable> automationTriggers = [];
+    private readonly List<IDisposable> automationTriggers = [];
     private List<TimingThreshold> timingThresholds = [];
 
     /// <summary>
@@ -31,42 +31,38 @@ public class ClimateAway
         services = new Services(context);
         this.scheduler = scheduler;
         this.logger = logger;
+        TriggerUtilities.UpdateAutomationTriggers(automationTriggers,
+            entities.InputSelect.HomeState.GetEnumFromState<HomeStateEnum>() == HomeStateEnum.Away,
+            GetAutomationTriggers);
         
-        UpdateAutomationTriggers();
         UpdateTimingThresholds();
         entities.InputSelect.HomeState
             .StateChanges()
-            .Subscribe(_ => UpdateAutomationTriggers());
+            .Subscribe(x => 
+                TriggerUtilities.UpdateAutomationTriggers(automationTriggers,
+                    x.New?.State == "Away", GetAutomationTriggers));
     }
     
+
     /// <summary>
-    /// Updates the automation triggers. If state is "Away", ensures that the triggers are active. If state
-    /// is "Home", ensures all triggers are disposed.
+    /// Sets up all automation triggers.
     /// </summary>
-    private void UpdateAutomationTriggers()
+    private List<IDisposable> GetAutomationTriggers()
     {
-        switch (GetHomeState())
-        {
-            // Sets up automation triggers.
-            case HomeStateEnum.Away when automationTriggers.Count == 0:
-                logger.LogInformation("Climate Away automations enabled.");
-                automationTriggers.Add(entities.InputNumber.ClimateDayTemp
-                    .StateChanges()
-                    .WhenStateIsFor(_ => true, TimeSpan.FromSeconds(15), scheduler)
-                    .Subscribe(_ => UpdateTimingThresholds()));
-                automationTriggers.Add(entities.Sensor.AllisonDistanceMiles
-                    .StateChanges()
-                    .Subscribe(_ => UpdateSetTemperature()));
-                automationTriggers.Add(entities.Sensor.OwenDistanceMiles
-                    .StateChanges()
-                    .Subscribe(_ => UpdateSetTemperature()));
-                break;
-            // Removes any existing automation triggers.
-            case HomeStateEnum.Home when automationTriggers.Count > 0:
-                logger.LogInformation("Climate Away automations disabled.");
-                automationTriggers = automationTriggers.DisposeTriggers();
-                break;
-        }
+        logger.LogInformation("Climate Away automations enabled.");
+        return
+        [
+            entities.InputNumber.ClimateDayTemp
+                .StateChanges()
+                .WhenStateIsFor(_ => true, TimeSpan.FromSeconds(15), scheduler)
+                .Subscribe(_ => UpdateTimingThresholds()),
+            entities.Sensor.AllisonDistanceMiles
+                .StateChanges()
+                .Subscribe(_ => UpdateSetTemperature()),
+            entities.Sensor.OwenDistanceMiles
+                .StateChanges()
+                .Subscribe(_ => UpdateSetTemperature())
+        ];
     }
 
     /// <summary>

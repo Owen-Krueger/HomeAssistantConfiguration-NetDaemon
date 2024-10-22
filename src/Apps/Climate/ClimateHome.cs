@@ -47,7 +47,8 @@ public class ClimateHome
     {
         logger.LogInformation("Climate Home automations enabled.");
         UpdateSetTemperature(scheduler.Now.IsBetween(new TimeOnly(6, 0), new TimeOnly(21, 0)));
-        return [
+        return
+        [
             scheduler.ScheduleCron("0 6 * * *", SetDayTemperature),
             scheduler.ScheduleCron("0 21 * * *", SetNightTemperature)
         ];
