@@ -45,7 +45,7 @@ public class GarageSecurity
             .Subscribe(_ => OpenShutGarageDoor(false));
         entities.InputBoolean.OwenOnMorningWalk
             .StateChanges()
-            .WhenStateIsFor(x => x.IsOn(), TimeSpan.FromMinutes(10), scheduler)
+            .Where(x => x.New.IsOn())
             .Subscribe(_ => SendOpenGarageDoorRequestNotification());
         context.Events.Filter<MobileNotificationActionEvent>(EventTypes.MobileAppNotificationActionEvent)
             .Where(x => x.Data?.Action == OpenGarageDoorAction)
