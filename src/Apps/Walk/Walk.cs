@@ -23,7 +23,11 @@ public class Walk
         entities = new Entities(context);
         this.scheduler = scheduler;
         this.logger = logger;
-        
+
+        entities.Person.Owen
+            .StateChanges()
+            .WhenStateIsFor(x => !x.IsHome(), TimeSpan.FromMinutes(5), scheduler)
+            .Subscribe(_ => TurnOnWalkBoolean());
         entities.Person.Owen
             .StateChanges()
             .WhenStateIsFor(x => x.IsHome(), TimeSpan.FromMinutes(5), scheduler)
@@ -38,6 +42,21 @@ public class Walk
             .Subscribe(_ => TurnOffWalkBoolean());
         // I shouldn't be on a walk after 9, so turn off the boolean if it wasn't already turned off.
         this.scheduler.ScheduleCron("0 9 * * *", TurnOffWalkBoolean);
+    }
+
+    /// <summary>
+    /// Turns on walk boolean, if it seems like Owen is leaving for a walk.
+    /// </summary>
+    private void TurnOnWalkBoolean()
+    {
+        if (IsMorningWalkTime() ||
+            entities.InputBoolean.OwenOnMorningWalk.IsOn())
+        {
+            return;
+        }
+        
+        logger.LogInformation("Turning on morning walk boolean.");
+        entities.InputBoolean.OwenOnMorningWalk.TurnOn();
     }
 
     /// <summary>
