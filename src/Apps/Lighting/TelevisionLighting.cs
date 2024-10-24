@@ -1,7 +1,6 @@
 ﻿using System.Reactive.Concurrency;
 using NetDaemon.Extensions;
 using NetDaemon.HassModel.Entities;
-using NetDaemon.Utilities;
 
 namespace NetDaemon.Apps.Lighting;
 

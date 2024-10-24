@@ -36,13 +36,13 @@ public class ToggleableLighting
             {
                 EventDeviceId = DeviceIds.AllisonLivingRoomButtonId,
                 EventCommand = "on",
-                Lights = [entities.Switch.AllisonLivingRoomLamp, entities.Switch.OwenLivingRoomLamp]
+                Lights = [entities.Switch.LivingRoomLamp1, entities.Switch.LivingRoomLamp2]
             },
             new ToggleableLightingGroup
             {
                 EventDeviceId = DeviceIds.OwenLivingRoomButtonId,
                 EventCommand = "on",
-                Lights = [entities.Switch.AllisonLivingRoomLamp, entities.Switch.OwenLivingRoomLamp]
+                Lights = [entities.Switch.LivingRoomLamp1, entities.Switch.LivingRoomLamp2]
             }
         ];
 

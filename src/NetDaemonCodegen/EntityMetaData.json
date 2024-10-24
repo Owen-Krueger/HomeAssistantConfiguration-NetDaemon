@@ -1542,11 +1542,6 @@
           "cSharpName": "AllisonLivingRoomLampButtonIdentify"
         },
         {
-          "id": "button.allison_living_room_lamp_ping",
-          "friendlyName": "Allison Living Room Lamp Ping",
-          "cSharpName": "AllisonLivingRoomLampPing"
-        },
-        {
           "id": "button.bedroom_fan_ping",
           "friendlyName": "Bedroom Fan Ping",
           "cSharpName": "BedroomFanPing"
@@ -1578,7 +1573,7 @@
         },
         {
           "id": "button.deck_string_lights_identify",
-          "friendlyName": "Identify",
+          "friendlyName": "Deck String Lights Identify",
           "cSharpName": "DeckStringLightsIdentify"
         },
         {
@@ -1590,6 +1585,11 @@
           "id": "button.dining_room_lights_ping",
           "friendlyName": "Dining Room Lights Ping",
           "cSharpName": "DiningRoomLightsPing"
+        },
+        {
+          "id": "button.downstairs_lights_ping",
+          "friendlyName": "Downstairs Lights Ping",
+          "cSharpName": "DownstairsLightsPing"
         },
         {
           "id": "button.elgato_key_light_left_restart",
@@ -1682,14 +1682,14 @@
           "cSharpName": "LivingRoomLamp1Ping"
         },
         {
+          "id": "button.living_room_lamp_2_ping",
+          "friendlyName": "Living Room Lamp 2 Ping",
+          "cSharpName": "LivingRoomLamp2Ping"
+        },
+        {
           "id": "button.main_identify",
           "friendlyName": "Main Identify",
           "cSharpName": "MainIdentify"
-        },
-        {
-          "id": "button.node_10_ping",
-          "friendlyName": "Downstairs Lights Ping",
-          "cSharpName": "Node10Ping"
         },
         {
           "id": "button.node_20_ping",
@@ -1725,11 +1725,6 @@
           "id": "button.owen_living_room_lamp_button_identify_2",
           "friendlyName": "Owen Living Room Lamp Button Identify",
           "cSharpName": "OwenLivingRoomLampButtonIdentify2"
-        },
-        {
-          "id": "button.owen_living_room_lamp_ping",
-          "friendlyName": "Owen Living Room Lamp Ping",
-          "cSharpName": "OwenLivingRoomLampPing"
         },
         {
           "id": "button.philips_rwl020_identify",
@@ -2509,11 +2504,6 @@
       "domain": "event",
       "entities": [
         {
-          "id": "event.allison_living_room_lamp_scene_id",
-          "friendlyName": "Allison Living Room Lamp Scene ID",
-          "cSharpName": "AllisonLivingRoomLampSceneId"
-        },
-        {
           "id": "event.bedroom_fan_event_value",
           "friendlyName": "Bedroom Fan Event value",
           "cSharpName": "BedroomFanEventValue"
@@ -2759,6 +2749,11 @@
           "cSharpName": "LivingRoomLamp1SceneId"
         },
         {
+          "id": "event.living_room_lamp_2_scene_id",
+          "friendlyName": "Living Room Lamp 2 Scene ID",
+          "cSharpName": "LivingRoomLamp2SceneId"
+        },
+        {
           "id": "event.node_5_scene_002",
           "friendlyName": "Laundry Room Lights Scene 002",
           "cSharpName": "Node5Scene002"
@@ -2782,11 +2777,6 @@
           "id": "event.office_lights_scene_id",
           "friendlyName": "Office Lights Scene ID",
           "cSharpName": "OfficeLightsSceneId"
-        },
-        {
-          "id": "event.owen_living_room_lamp_scene_id",
-          "friendlyName": "Scene ID",
-          "cSharpName": "OwenLivingRoomLampSceneId"
         },
         {
           "id": "event.stairway_lights_event_value",
@@ -3023,11 +3013,6 @@
           "cSharpName": "NetdaemonNetDaemonAppsClimateClimateHome"
         },
         {
-          "id": "input_boolean.netdaemon_net_daemon_apps_climate_climate_state",
-          "friendlyName": "netdaemon_net_daemon_apps_climate_climate_state",
-          "cSharpName": "NetdaemonNetDaemonAppsClimateClimateState"
-        },
-        {
           "id": "input_boolean.netdaemon_net_daemon_apps_devices_unavailable_devices",
           "friendlyName": "netdaemon_net_daemon_apps_devices_unavailable_devices",
           "cSharpName": "NetdaemonNetDaemonAppsDevicesUnavailableDevices"
@@ -3088,6 +3073,11 @@
           "cSharpName": "NetdaemonNetDaemonAppsLightingToggleableLighting"
         },
         {
+          "id": "input_boolean.netdaemon_net_daemon_apps_lighting_vacation_lighting",
+          "friendlyName": "netdaemon_net_daemon_apps_lighting_vacation_lighting",
+          "cSharpName": "NetdaemonNetDaemonAppsLightingVacationLighting"
+        },
+        {
           "id": "input_boolean.netdaemon_net_daemon_apps_lighting_work_lighting",
           "friendlyName": "netdaemon_net_daemon_apps_lighting_work_lighting",
           "cSharpName": "NetdaemonNetDaemonAppsLightingWorkLighting"
@@ -3101,6 +3091,11 @@
           "id": "input_boolean.netdaemon_net_daemon_apps_security_garage_security",
           "friendlyName": "netdaemon_net_daemon_apps_security_garage_security",
           "cSharpName": "NetdaemonNetDaemonAppsSecurityGarageSecurity"
+        },
+        {
+          "id": "input_boolean.netdaemon_net_daemon_apps_state_home_state",
+          "friendlyName": "netdaemon_net_daemon_apps_state_home_state",
+          "cSharpName": "NetdaemonNetDaemonAppsStateHomeState"
         },
         {
           "id": "input_boolean.netdaemon_net_daemon_apps_walk_walk",
@@ -3416,7 +3411,7 @@
         },
         {
           "id": "number.deck_string_lights_indicator_value",
-          "friendlyName": "Indicator value",
+          "friendlyName": "Deck String Lights Indicator value",
           "cSharpName": "DeckStringLightsIndicatorValue"
         },
         {
@@ -3922,16 +3917,6 @@
       "domain": "sensor",
       "entities": [
         {
-          "id": "sensor.allison_living_room_lamp_last_seen",
-          "friendlyName": "Allison Living Room Lamp Last seen",
-          "cSharpName": "AllisonLivingRoomLampLastSeen"
-        },
-        {
-          "id": "sensor.allison_living_room_lamp_node_status",
-          "friendlyName": "Allison Living Room Lamp Node status",
-          "cSharpName": "AllisonLivingRoomLampNodeStatus"
-        },
-        {
           "id": "sensor.allison_phone_10_activity",
           "friendlyName": "Allison Phone (10) Activity",
           "cSharpName": "AllisonPhone10Activity"
@@ -4090,6 +4075,16 @@
           "id": "sensor.dining_room_lights_node_status",
           "friendlyName": "Dining Room Lights Node status",
           "cSharpName": "DiningRoomLightsNodeStatus"
+        },
+        {
+          "id": "sensor.downstairs_lights_last_seen",
+          "friendlyName": "Downstairs Lights Last seen",
+          "cSharpName": "DownstairsLightsLastSeen"
+        },
+        {
+          "id": "sensor.downstairs_lights_node_status",
+          "friendlyName": "Downstairs Lights Node status",
+          "cSharpName": "DownstairsLightsNodeStatus"
         },
         {
           "id": "sensor.dryer_dryer_completion_time",
@@ -4322,19 +4317,19 @@
           "cSharpName": "LivingRoomLamp1NodeStatus"
         },
         {
+          "id": "sensor.living_room_lamp_2_last_seen",
+          "friendlyName": "Living Room Lamp 2 Last seen",
+          "cSharpName": "LivingRoomLamp2LastSeen"
+        },
+        {
+          "id": "sensor.living_room_lamp_2_node_status",
+          "friendlyName": "Living Room Lamp 2 Node status",
+          "cSharpName": "LivingRoomLamp2NodeStatus"
+        },
+        {
           "id": "sensor.neptune",
           "friendlyName": null,
           "cSharpName": "Neptune"
-        },
-        {
-          "id": "sensor.node_10_last_seen",
-          "friendlyName": "Downstairs Lights Last seen",
-          "cSharpName": "Node10LastSeen"
-        },
-        {
-          "id": "sensor.node_10_node_status",
-          "friendlyName": "Downstairs Lights Node status",
-          "cSharpName": "Node10NodeStatus"
         },
         {
           "id": "sensor.node_20_last_seen",
@@ -4415,16 +4410,6 @@
           "id": "sensor.olympus",
           "friendlyName": null,
           "cSharpName": "Olympus"
-        },
-        {
-          "id": "sensor.owen_living_room_lamp_last_seen",
-          "friendlyName": "Owen Living Room Lamp Last seen",
-          "cSharpName": "OwenLivingRoomLampLastSeen"
-        },
-        {
-          "id": "sensor.owen_living_room_lamp_node_status",
-          "friendlyName": "Owen Living Room Lamp Node status",
-          "cSharpName": "OwenLivingRoomLampNodeStatus"
         },
         {
           "id": "sensor.owen_phone_battery_health",
@@ -6761,11 +6746,6 @@
       "domain": "switch",
       "entities": [
         {
-          "id": "switch.allison_living_room_lamp",
-          "friendlyName": "Allison Living Room Lamp",
-          "cSharpName": "AllisonLivingRoomLamp"
-        },
-        {
           "id": "switch.arcadia",
           "friendlyName": null,
           "cSharpName": "Arcadia"
@@ -6917,7 +6897,7 @@
         },
         {
           "id": "switch.deck_string_lights",
-          "friendlyName": "",
+          "friendlyName": "Deck String Lights ",
           "cSharpName": "DeckStringLights"
         },
         {
@@ -7126,6 +7106,11 @@
           "cSharpName": "LivingRoomLamp1"
         },
         {
+          "id": "switch.living_room_lamp_2",
+          "friendlyName": "Living Room Lamp 2 ",
+          "cSharpName": "LivingRoomLamp2"
+        },
+        {
           "id": "switch.main_0x50_node_identify_binary",
           "friendlyName": "Main 0x50 (Node Identify) - Binary",
           "cSharpName": "Main0x50NodeIdentifyBinary"
@@ -7184,11 +7169,6 @@
           "id": "switch.owen_computer_smart_plug",
           "friendlyName": "Owen Computer Smart Plug Relay",
           "cSharpName": "OwenComputerSmartPlug"
-        },
-        {
-          "id": "switch.owen_living_room_lamp",
-          "friendlyName": "Owen Living Room Lamp",
-          "cSharpName": "OwenLivingRoomLamp"
         },
         {
           "id": "switch.persephone",
@@ -7444,11 +7424,6 @@
           "cSharpName": "AllisonLivingRoomLampButtonFirmware"
         },
         {
-          "id": "update.allison_living_room_lamp_firmware",
-          "friendlyName": "Allison Living Room Lamp Firmware",
-          "cSharpName": "AllisonLivingRoomLampFirmware"
-        },
-        {
           "id": "update.bedroom_fan_firmware",
           "friendlyName": "Bedroom Fan Firmware",
           "cSharpName": "BedroomFanFirmware"
@@ -7490,7 +7465,7 @@
         },
         {
           "id": "update.deck_string_lights_firmware",
-          "friendlyName": "Firmware",
+          "friendlyName": "Deck String Lights Firmware",
           "cSharpName": "DeckStringLightsFirmware"
         },
         {
@@ -7584,6 +7559,11 @@
           "cSharpName": "LivingRoomLamp1Firmware"
         },
         {
+          "id": "update.living_room_lamp_2_firmware",
+          "friendlyName": "Living Room Lamp 2 Firmware",
+          "cSharpName": "LivingRoomLamp2Firmware"
+        },
+        {
           "id": "update.mini_media_player_update",
           "friendlyName": "Mini Media Player update",
           "cSharpName": "MiniMediaPlayerUpdate"
@@ -7617,11 +7597,6 @@
           "id": "update.owen_living_room_lamp_button_firmware",
           "friendlyName": "Owen Living Room Lamp Button Firmware",
           "cSharpName": "OwenLivingRoomLampButtonFirmware"
-        },
-        {
-          "id": "update.owen_living_room_lamp_firmware",
-          "friendlyName": "Firmware",
-          "cSharpName": "OwenLivingRoomLampFirmware"
         },
         {
           "id": "update.philips_rwl020_firmware",
