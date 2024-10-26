@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Reactive.Concurrency;
+using NetDaemon.Constants;
 using NetDaemon.HassModel.Entities;
 
 namespace NetDaemon.Apps.Devices;
@@ -51,14 +52,14 @@ public class UnavailableDevices
             {
                 group.UnavailableEntity
                     .StateChanges()
-                    .Where(x => x.New?.State == "unavailable")
+                    .Where(x => x.New?.State == EntityStateConstants.Unavailable)
                     .Subscribe(_ => PingEntity(group));
             }
             else
             {
                 group.UnavailableEntity
                     .StateChanges()
-                    .Where(x => x.New?.State == "unavailable")
+                    .Where(x => x.New?.State == EntityStateConstants.Unavailable)
                     .Subscribe(_ => NotifyEntityUnavailable(group.UnavailableEntity));
             }
         }

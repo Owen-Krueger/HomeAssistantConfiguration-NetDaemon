@@ -50,7 +50,7 @@ public class Walk
     /// </summary>
     private void TurnOnWalkBoolean()
     {
-        if (IsMorningWalkTime() ||
+        if (!IsMorningWalkTime() ||
             entities.InputBoolean.OwenOnMorningWalk.IsOn())
         {
             return;

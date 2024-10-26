@@ -81,7 +81,7 @@ public class GarageSecurity
     /// </summary>
     private void SendOpenGarageDoorRequestNotification()
     {
-        if (scheduler.Now.DayOfWeek != DayOfWeek.Friday || entities.Cover.PrimaryGarageDoor.State == "open")
+        if (scheduler.Now.DayOfWeek != DayOfWeek.Thursday || entities.Cover.PrimaryGarageDoor.State == "open")
         {
             return;
         }

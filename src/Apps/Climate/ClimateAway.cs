@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reactive.Concurrency;
+using NetDaemon.Constants;
 using NetDaemon.Extensions;
 using NetDaemon.HassModel.Entities;
 using NetDaemon.Models;
@@ -33,7 +34,8 @@ public class ClimateAway
         this.scheduler = scheduler;
         this.logger = logger;
         TriggerUtilities.UpdateAutomationTriggers(automationTriggers,
-            entities.InputSelect.HomeState.GetEnumFromState<HomeStateEnum>() == HomeStateEnum.Away,
+            entities.InputSelect.HomeState.GetEnumFromState<HomeStateEnum>() == HomeStateEnum.Away &&
+            entities.InputBoolean.ClimateAwayAutomations.IsOn(),
             GetAutomationTriggers);
         
         UpdateTimingThresholds();
@@ -41,9 +43,25 @@ public class ClimateAway
             .StateChanges()
             .Subscribe(x => 
                 TriggerUtilities.UpdateAutomationTriggers(automationTriggers,
-                    x.New.GetEnumFromState<HomeStateEnum>() == HomeStateEnum.Away, GetAutomationTriggers));
+                    x.New.GetEnumFromState<HomeStateEnum>() == HomeStateEnum.Away &&
+                    entities.InputBoolean.ClimateAwayAutomations.IsOn() &&
+                    entities.Climate.Main.State is not EntityStateConstants.Unavailable, GetAutomationTriggers));
+        entities.InputBoolean.ClimateAwayAutomations
+            .StateChanges()
+            .Subscribe(x => 
+                TriggerUtilities.UpdateAutomationTriggers(automationTriggers,
+                    x.New.IsOn() &&
+                    entities.InputSelect.HomeState.GetEnumFromState<HomeStateEnum>() == HomeStateEnum.Away &&
+                    entities.Climate.Main.State is not EntityStateConstants.Unavailable, GetAutomationTriggers));
+        entities.Climate.Main
+            .StateChanges()
+            .Subscribe(x => 
+                TriggerUtilities.UpdateAutomationTriggers(automationTriggers,
+                    x.New?.State is not EntityStateConstants.Unavailable &&
+                    entities.InputBoolean.ClimateAwayAutomations.IsOn() &&
+                    entities.InputSelect.HomeState.GetEnumFromState<HomeStateEnum>() == HomeStateEnum.Away,
+                    GetAutomationTriggers));
     }
-    
 
     /// <summary>
     /// Sets up all automation triggers.
@@ -90,6 +108,11 @@ public class ClimateAway
     /// </summary>
     private void UpdateSetTemperature()
     {
+        if (entities.Climate.Main.State == EntityStateConstants.Unavailable)
+        {
+            return; // Don't update temperature if the thermostat is down.
+        }
+        
         // This isn't exact, but adding 10 to the distance of whoever is closest is usually pretty close.
         var minutesFromHome = new List<double>
         {

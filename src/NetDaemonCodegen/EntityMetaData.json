@@ -921,17 +921,17 @@
         },
         {
           "id": "binary_sensor.front_door_lock_intrusion",
-          "friendlyName": "Intrusion",
+          "friendlyName": "Front Door Lock Intrusion",
           "cSharpName": "FrontDoorLockIntrusion"
         },
         {
           "id": "binary_sensor.front_door_lock_keypad_temporary_disabled",
-          "friendlyName": "Keypad temporary disabled",
+          "friendlyName": "Front Door Lock Keypad temporary disabled",
           "cSharpName": "FrontDoorLockKeypadTemporaryDisabled"
         },
         {
           "id": "binary_sensor.front_door_lock_lock_jammed",
-          "friendlyName": "Lock jammed",
+          "friendlyName": "Front Door Lock Lock jammed",
           "cSharpName": "FrontDoorLockLockJammed"
         },
         {
@@ -941,17 +941,17 @@
         },
         {
           "id": "binary_sensor.front_door_lock_replace_battery_now",
-          "friendlyName": "Replace battery now",
+          "friendlyName": "Front Door Lock Replace battery now",
           "cSharpName": "FrontDoorLockReplaceBatteryNow"
         },
         {
           "id": "binary_sensor.front_door_lock_replace_battery_soon",
-          "friendlyName": "Replace battery soon",
+          "friendlyName": "Front Door Lock Replace battery soon",
           "cSharpName": "FrontDoorLockReplaceBatterySoon"
         },
         {
           "id": "binary_sensor.front_door_lock_system_hardware_failure",
-          "friendlyName": "System hardware failure",
+          "friendlyName": "Front Door Lock System hardware failure",
           "cSharpName": "FrontDoorLockSystemHardwareFailure"
         },
         {
@@ -1093,6 +1093,11 @@
           "id": "binary_sensor.owen_computer_smart_plug_status",
           "friendlyName": "Owen Computer Smart Plug Status",
           "cSharpName": "OwenComputerSmartPlugStatus"
+        },
+        {
+          "id": "binary_sensor.owen_phone_headphones",
+          "friendlyName": "Pixel 7 Headphones",
+          "cSharpName": "OwenPhoneHeadphones"
         },
         {
           "id": "binary_sensor.owen_phone_is_charging",
@@ -1608,27 +1613,27 @@
         },
         {
           "id": "button.front_door_lock_idle_access_control_keypad_state",
-          "friendlyName": "Idle Access Control Keypad state",
+          "friendlyName": "Front Door Lock Idle Access Control Keypad state",
           "cSharpName": "FrontDoorLockIdleAccessControlKeypadState"
         },
         {
           "id": "button.front_door_lock_idle_access_control_lock_state",
-          "friendlyName": "Idle Access Control Lock state",
+          "friendlyName": "Front Door Lock Idle Access Control Lock state",
           "cSharpName": "FrontDoorLockIdleAccessControlLockState"
         },
         {
           "id": "button.front_door_lock_idle_home_security_sensor_status",
-          "friendlyName": "Idle Home Security Sensor status",
+          "friendlyName": "Front Door Lock Idle Home Security Sensor status",
           "cSharpName": "FrontDoorLockIdleHomeSecuritySensorStatus"
         },
         {
           "id": "button.front_door_lock_idle_power_management_battery_maintenance_status",
-          "friendlyName": "Idle Power Management Battery maintenance status",
+          "friendlyName": "Front Door Lock Idle Power Management Battery maintenance status",
           "cSharpName": "FrontDoorLockIdlePowerManagementBatteryMaintenanceStatus"
         },
         {
           "id": "button.front_door_lock_idle_system_hardware_status",
-          "friendlyName": "Idle System Hardware status",
+          "friendlyName": "Front Door Lock Idle System Hardware status",
           "cSharpName": "FrontDoorLockIdleSystemHardwareStatus"
         },
         {
@@ -2505,22 +2510,22 @@
       "entities": [
         {
           "id": "event.bedroom_fan_event_value",
-          "friendlyName": "Bedroom Fan Event value",
+          "friendlyName": "Event value",
           "cSharpName": "BedroomFanEventValue"
         },
         {
           "id": "event.bedroom_fan_scene_001",
-          "friendlyName": "Bedroom Fan Scene 001",
+          "friendlyName": "Scene 001",
           "cSharpName": "BedroomFanScene001"
         },
         {
           "id": "event.bedroom_fan_scene_002",
-          "friendlyName": "Bedroom Fan Scene 002",
+          "friendlyName": "Scene 002",
           "cSharpName": "BedroomFanScene002"
         },
         {
           "id": "event.bedroom_fan_scene_id",
-          "friendlyName": "Bedroom Fan Scene ID",
+          "friendlyName": "Scene ID",
           "cSharpName": "BedroomFanSceneId"
         },
         {
@@ -2545,62 +2550,62 @@
         },
         {
           "id": "event.counter_lights_event_value_3",
-          "friendlyName": "Counter Lights Event value",
+          "friendlyName": "Event value",
           "cSharpName": "CounterLightsEventValue3"
         },
         {
           "id": "event.counter_lights_scene_001_2",
-          "friendlyName": "Counter Lights Scene 001",
+          "friendlyName": "Scene 001",
           "cSharpName": "CounterLightsScene0012"
         },
         {
           "id": "event.counter_lights_scene_002",
-          "friendlyName": "Counter Lights Scene 002",
+          "friendlyName": "Scene 002",
           "cSharpName": "CounterLightsScene002"
         },
         {
           "id": "event.counter_lights_scene_id_3",
-          "friendlyName": "Counter Lights Scene ID",
+          "friendlyName": "Scene ID",
           "cSharpName": "CounterLightsSceneId3"
         },
         {
           "id": "event.deck_lights_event_value",
-          "friendlyName": "Deck Lights Event value",
+          "friendlyName": "Event value",
           "cSharpName": "DeckLightsEventValue"
         },
         {
           "id": "event.deck_lights_scene_001",
-          "friendlyName": "Deck Lights Scene 001",
+          "friendlyName": "Scene 001",
           "cSharpName": "DeckLightsScene001"
         },
         {
           "id": "event.deck_lights_scene_002",
-          "friendlyName": "Deck Lights Scene 002",
+          "friendlyName": "Scene 002",
           "cSharpName": "DeckLightsScene002"
         },
         {
           "id": "event.deck_lights_scene_id",
-          "friendlyName": "Deck Lights Scene ID",
+          "friendlyName": "Scene ID",
           "cSharpName": "DeckLightsSceneId"
         },
         {
           "id": "event.dining_room_lights_event_value",
-          "friendlyName": "Dining Room Lights Event value",
+          "friendlyName": "Event value",
           "cSharpName": "DiningRoomLightsEventValue"
         },
         {
           "id": "event.dining_room_lights_scene_001",
-          "friendlyName": "Dining Room Lights Scene 001",
+          "friendlyName": "Scene 001",
           "cSharpName": "DiningRoomLightsScene001"
         },
         {
           "id": "event.dining_room_lights_scene_002",
-          "friendlyName": "Dining Room Lights Scene 002",
+          "friendlyName": "Scene 002",
           "cSharpName": "DiningRoomLightsScene002"
         },
         {
           "id": "event.dining_room_lights_scene_id",
-          "friendlyName": "Dining Room Lights Scene ID",
+          "friendlyName": "Scene ID",
           "cSharpName": "DiningRoomLightsSceneId"
         },
         {
@@ -2695,37 +2700,37 @@
         },
         {
           "id": "event.kitchen_lights_event_value",
-          "friendlyName": "Kitchen Lights Event value",
+          "friendlyName": "Event value",
           "cSharpName": "KitchenLightsEventValue"
         },
         {
           "id": "event.kitchen_lights_scene_001",
-          "friendlyName": "Kitchen Lights Scene 001",
+          "friendlyName": "Scene 001",
           "cSharpName": "KitchenLightsScene001"
         },
         {
           "id": "event.kitchen_lights_scene_002",
-          "friendlyName": "Kitchen Lights Scene 002",
+          "friendlyName": "Scene 002",
           "cSharpName": "KitchenLightsScene002"
         },
         {
           "id": "event.kitchen_lights_scene_id",
-          "friendlyName": "Kitchen Lights Scene ID",
+          "friendlyName": "Scene ID",
           "cSharpName": "KitchenLightsSceneId"
         },
         {
           "id": "event.laundry_room_lights_event_value",
-          "friendlyName": "Laundry Room Lights Event value",
+          "friendlyName": "Event value",
           "cSharpName": "LaundryRoomLightsEventValue"
         },
         {
           "id": "event.laundry_room_lights_scene_001",
-          "friendlyName": "Laundry Room Lights Scene 001",
+          "friendlyName": "Scene 001",
           "cSharpName": "LaundryRoomLightsScene001"
         },
         {
           "id": "event.laundry_room_lights_scene_id",
-          "friendlyName": "Laundry Room Lights Scene ID",
+          "friendlyName": "Scene ID",
           "cSharpName": "LaundryRoomLightsSceneId"
         },
         {
@@ -2755,47 +2760,47 @@
         },
         {
           "id": "event.node_5_scene_002",
-          "friendlyName": "Laundry Room Lights Scene 002",
+          "friendlyName": "Scene 002",
           "cSharpName": "Node5Scene002"
         },
         {
           "id": "event.office_lights_event_value",
-          "friendlyName": "Office Lights Event value",
+          "friendlyName": "Event value",
           "cSharpName": "OfficeLightsEventValue"
         },
         {
           "id": "event.office_lights_scene_001",
-          "friendlyName": "Office Lights Scene 001",
+          "friendlyName": "Scene 001",
           "cSharpName": "OfficeLightsScene001"
         },
         {
           "id": "event.office_lights_scene_002",
-          "friendlyName": "Office Lights Scene 002",
+          "friendlyName": "Scene 002",
           "cSharpName": "OfficeLightsScene002"
         },
         {
           "id": "event.office_lights_scene_id",
-          "friendlyName": "Office Lights Scene ID",
+          "friendlyName": "Scene ID",
           "cSharpName": "OfficeLightsSceneId"
         },
         {
           "id": "event.stairway_lights_event_value",
-          "friendlyName": "Stairway Lights Event value",
+          "friendlyName": "Event value",
           "cSharpName": "StairwayLightsEventValue"
         },
         {
           "id": "event.stairway_lights_scene_001",
-          "friendlyName": "Stairway Lights Scene 001",
+          "friendlyName": "Scene 001",
           "cSharpName": "StairwayLightsScene001"
         },
         {
           "id": "event.stairway_lights_scene_002",
-          "friendlyName": "Stairway Lights Scene 002",
+          "friendlyName": "Scene 002",
           "cSharpName": "StairwayLightsScene002"
         },
         {
           "id": "event.stairway_lights_scene_id",
-          "friendlyName": "Stairway Lights Scene ID",
+          "friendlyName": "Scene ID",
           "cSharpName": "StairwayLightsSceneId"
         },
         {
@@ -2926,6 +2931,11 @@
           "id": "input_boolean.cat_cameras_on",
           "friendlyName": "Cat Cameras On",
           "cSharpName": "CatCamerasOn"
+        },
+        {
+          "id": "input_boolean.climate_away_automations",
+          "friendlyName": "Climate Away Automations",
+          "cSharpName": "ClimateAwayAutomations"
         },
         {
           "id": "input_boolean.climate_notify_location_based",
@@ -5022,6 +5032,11 @@
           "jsonName": "free_space_in_google_drive",
           "cSharpName": "FreeSpaceInGoogleDrive",
           "clrType": "System.String"
+        },
+        {
+          "jsonName": "Cellular Technology",
+          "cSharpName": "CellularTechnology",
+          "clrType": "System.String"
         }
       ]
     },
@@ -5753,6 +5768,11 @@
           "id": "sensor.owen_phone_battery_level",
           "friendlyName": "Owen Phone Battery Level",
           "cSharpName": "OwenPhoneBatteryLevel"
+        },
+        {
+          "id": "sensor.owen_phone_bluetooth_connection",
+          "friendlyName": "Pixel 7 Bluetooth connection",
+          "cSharpName": "OwenPhoneBluetoothConnection"
         },
         {
           "id": "sensor.philips_rwl020_battery",
@@ -6660,6 +6680,21 @@
           "jsonName": "supported_features",
           "cSharpName": "SupportedFeatures",
           "clrType": "System.Double"
+        },
+        {
+          "jsonName": "connected_not_paired_devices",
+          "cSharpName": "ConnectedNotPairedDevices",
+          "clrType": "System.Collections.Generic.IReadOnlyList\u00601[System.Object]"
+        },
+        {
+          "jsonName": "connected_paired_devices",
+          "cSharpName": "ConnectedPairedDevices",
+          "clrType": "System.Collections.Generic.IReadOnlyList\u00601[System.String]"
+        },
+        {
+          "jsonName": "paired_devices",
+          "cSharpName": "PairedDevices",
+          "clrType": "System.Collections.Generic.IReadOnlyList\u00601[System.String]"
         }
       ]
     },
@@ -6772,7 +6807,7 @@
         },
         {
           "id": "switch.bedroom_fan",
-          "friendlyName": "Bedroom Fan ",
+          "friendlyName": "",
           "cSharpName": "BedroomFan"
         },
         {
@@ -6887,12 +6922,12 @@
         },
         {
           "id": "switch.counter_lights",
-          "friendlyName": "Counter Lights ",
+          "friendlyName": "",
           "cSharpName": "CounterLights"
         },
         {
           "id": "switch.deck_lights",
-          "friendlyName": "Deck Lights ",
+          "friendlyName": "",
           "cSharpName": "DeckLights"
         },
         {
@@ -6902,7 +6937,7 @@
         },
         {
           "id": "switch.dining_room_lights",
-          "friendlyName": "Dining Room Lights ",
+          "friendlyName": "",
           "cSharpName": "DiningRoomLights"
         },
         {
@@ -7067,12 +7102,12 @@
         },
         {
           "id": "switch.kitchen_lights",
-          "friendlyName": "Kitchen Lights ",
+          "friendlyName": "",
           "cSharpName": "KitchenLights"
         },
         {
           "id": "switch.laundry_room_lights",
-          "friendlyName": "Laundry Room Lights ",
+          "friendlyName": "",
           "cSharpName": "LaundryRoomLights"
         },
         {
@@ -7137,7 +7172,7 @@
         },
         {
           "id": "switch.office_lights",
-          "friendlyName": "Office Lights ",
+          "friendlyName": "",
           "cSharpName": "OfficeLights"
         },
         {
@@ -7212,7 +7247,7 @@
         },
         {
           "id": "switch.stairway_lights",
-          "friendlyName": "Stairway Lights ",
+          "friendlyName": "",
           "cSharpName": "StairwayLights"
         },
         {
@@ -7425,7 +7460,7 @@
         },
         {
           "id": "update.bedroom_fan_firmware",
-          "friendlyName": "Bedroom Fan Firmware",
+          "friendlyName": "Firmware",
           "cSharpName": "BedroomFanFirmware"
         },
         {
@@ -7455,12 +7490,12 @@
         },
         {
           "id": "update.counter_lights_firmware_3",
-          "friendlyName": "Counter Lights Firmware",
+          "friendlyName": "Firmware",
           "cSharpName": "CounterLightsFirmware3"
         },
         {
           "id": "update.deck_lights_firmware",
-          "friendlyName": "Deck Lights Firmware",
+          "friendlyName": "Firmware",
           "cSharpName": "DeckLightsFirmware"
         },
         {
@@ -7470,7 +7505,7 @@
         },
         {
           "id": "update.dining_room_lights_firmware",
-          "friendlyName": "Dining Room Lights Firmware",
+          "friendlyName": "Firmware",
           "cSharpName": "DiningRoomLightsFirmware"
         },
         {
@@ -7545,12 +7580,12 @@
         },
         {
           "id": "update.kitchen_lights_firmware",
-          "friendlyName": "Kitchen Lights Firmware",
+          "friendlyName": "Firmware",
           "cSharpName": "KitchenLightsFirmware"
         },
         {
           "id": "update.laundry_room_lights_firmware",
-          "friendlyName": "Laundry Room Lights Firmware",
+          "friendlyName": "Firmware",
           "cSharpName": "LaundryRoomLightsFirmware"
         },
         {
@@ -7585,7 +7620,7 @@
         },
         {
           "id": "update.office_lights_firmware",
-          "friendlyName": "Office Lights Firmware",
+          "friendlyName": "Firmware",
           "cSharpName": "OfficeLightsFirmware"
         },
         {
@@ -7660,7 +7695,7 @@
         },
         {
           "id": "update.stairway_lights_firmware",
-          "friendlyName": "Stairway Lights Firmware",
+          "friendlyName": "Firmware",
           "cSharpName": "StairwayLightsFirmware"
         },
         {
