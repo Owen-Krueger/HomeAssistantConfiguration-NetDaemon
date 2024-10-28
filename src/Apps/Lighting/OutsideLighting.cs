@@ -86,7 +86,8 @@ public class OutsideLighting
     private void SetPorchLightingStateLate(bool isOn)
     {
         var nextSunrise = GetNextTimeFromSensor(entities.Sensor.SunNextRising, DateTime.Today.AddHours(6));
-        if (scheduler.Now.IsBetween(new TimeOnly(22, 0), new TimeOnly(nextSunrise.Ticks)))
+        
+        if (scheduler.Now.IsBetween(new TimeOnly(22, 0), new TimeOnly(nextSunrise.TimeOfDay.Ticks)))
         {
             SetPorchLightingState(isOn);
         }
