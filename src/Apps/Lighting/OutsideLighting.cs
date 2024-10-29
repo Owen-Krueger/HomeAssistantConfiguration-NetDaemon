@@ -2,7 +2,6 @@
 using NetDaemon.Extensions;
 using NetDaemon.Extensions.Scheduler;
 using NetDaemon.HassModel.Entities;
-using NetDaemon.Utilities;
 
 namespace NetDaemon.Apps.Lighting;
 
@@ -61,7 +60,7 @@ public class OutsideLighting
             .Subscribe(_ => SetPorchLightingStateLate(true));
         entities.BinarySensor.G4DoorbellProPersonDetected
             .StateChanges()
-            .WhenStateIsFor(x => x.IsOff(), TimeSpan.FromMinutes(5), scheduler)
+            .WhenStateIsFor(x => x.IsOff(), TimeSpan.FromMinutes(2), scheduler)
             .Subscribe(_ => SetPorchLightingStateLate(false));
     }
 
@@ -76,7 +75,7 @@ public class OutsideLighting
         var nextTrigger = nextSunset.AddMinutes(-15);
         logger.LogInformation("Next time to turn on porch set to {Date}", nextTrigger.ToUsCentralTime());
         
-        scheduler.Schedule(nextTrigger, () => SetPorchLightingState(true));
+        scheduler.Schedule(nextTrigger, () => SetPorchLightingState(true, true));
         scheduler.Schedule(nextSunset.AddMinutes(1), SetUpSunsetTriggers);
     }
 
@@ -89,7 +88,7 @@ public class OutsideLighting
         
         if (scheduler.Now.IsBetween(new TimeOnly(22, 0), new TimeOnly(nextSunrise.TimeOfDay.Ticks)))
         {
-            SetPorchLightingState(isOn);
+            SetPorchLightingState(isOn, false);
         }
     }
 
@@ -108,20 +107,21 @@ public class OutsideLighting
             return;
         }
      
-        SetPorchLightingState(false);
+        SetPorchLightingState(false, true);
     }
 
     /// <summary>
     /// Turns off porch lights if they're actively on.
     /// </summary>
     private void TurnOffPorch()
-        => SetPorchLightingState(false);
+        => SetPorchLightingState(false, true);
 
     /// <summary>
     /// Turns on or off the porch and holiday lights.
     /// </summary>
     /// <param name="isOn">Whether to turn on the lights.</param>
-    private void SetPorchLightingState(bool isOn)
+    /// <param name="turnOnHolidayLights">Whether to turn on holiday lights, if around a holiday.</param>
+    private void SetPorchLightingState(bool isOn, bool turnOnHolidayLights)
     {
         logger.LogInformation("Turning the porch lights {State}.", isOn.GetOnOffString());
         switch (isOn)
@@ -134,7 +134,7 @@ public class OutsideLighting
                 break;
         }
 
-        if (!entities.InputBoolean.HolidayMode.IsOn())
+        if (!turnOnHolidayLights || !entities.InputBoolean.HolidayMode.IsOn())
         {
             return;
         }

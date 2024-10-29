@@ -28,6 +28,10 @@ public class WorkLighting
             .StateChanges()
             .Where(x => x.New.IsOff())
             .Subscribe(_ => TurnOnDiningRoomLights());
+        entities.BinarySensor.UpstairsTvOn
+            .StateChanges()
+            .WhenStateIsFor(x => x.IsOff(), TimeSpan.FromSeconds(10), this.scheduler)
+            .Subscribe(_ => TurnOnDownstairsLights());
     }
 
     /// <summary>
@@ -46,5 +50,23 @@ public class WorkLighting
         
         logger.LogInformation("Turning on dining room lights.");
         entities.Switch.DiningRoomLights.TurnOn();
+    }
+
+    /// <summary>
+    /// Turn on downstairs lights, if it's in the morning of a work day.
+    /// </summary>
+    private void TurnOnDownstairsLights()
+    {
+        if (entities.Light.DownstairsLights.IsOn() ||
+            entities.InputBoolean.ModeGuest.IsOn() ||
+            !entities.Person.Owen.IsHome() ||
+            entities.BinarySensor.WorkdaySensor.IsOff() ||
+            !scheduler.Now.IsBetween(new TimeOnly(6, 30), new TimeOnly(7, 30)))
+        {
+            return;
+        }
+        
+        logger.LogInformation("Turning on downstairs lights.");
+        entities.Light.DownstairsLights.TurnOn();
     }
 }

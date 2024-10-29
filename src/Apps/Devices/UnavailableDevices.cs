@@ -52,14 +52,14 @@ public class UnavailableDevices
             {
                 group.UnavailableEntity
                     .StateChanges()
-                    .Where(x => x.New?.State == EntityStateConstants.Unavailable)
+                    .WhenStateIsFor(x => x?.State == EntityStateConstants.Unavailable, TimeSpan.FromSeconds(10), this.scheduler)
                     .Subscribe(_ => PingEntity(group));
             }
             else
             {
                 group.UnavailableEntity
                     .StateChanges()
-                    .Where(x => x.New?.State == EntityStateConstants.Unavailable)
+                    .WhenStateIsFor(x => x?.State == EntityStateConstants.Unavailable, TimeSpan.FromSeconds(10), this.scheduler)
                     .Subscribe(_ => NotifyEntityUnavailable(group.UnavailableEntity));
             }
         }
