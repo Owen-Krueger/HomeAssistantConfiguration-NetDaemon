@@ -50,16 +50,9 @@ public class ClimateHome
         UpdateSetTemperature(scheduler.Now.IsBetween(new TimeOnly(6, 0), new TimeOnly(21, 0)));
         return
         [
-            scheduler.ScheduleCron("0 6 * * *", SetDayTemperature),
             scheduler.ScheduleCron("0 21 * * *", SetNightTemperature)
         ];
     }
-
-    /// <summary>
-    /// Sets thermostat to day temperature.
-    /// </summary>
-    private void SetDayTemperature()
-        => UpdateSetTemperature(true);
 
     /// <summary>
     /// Sets thermostat to night temperature.
