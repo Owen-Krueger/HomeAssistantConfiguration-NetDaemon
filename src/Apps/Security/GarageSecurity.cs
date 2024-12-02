@@ -20,7 +20,6 @@ public class GarageSecurity
     private readonly IScheduler scheduler;
     private readonly ILogger<GarageSecurity> logger;
     private DateTimeOffset lastExecution;
-    private const string OpenGarageDoorAction = "OPEN_GARAGE_DOOR";
     private const string CloseGarageDoorAction = "CLOSE_GARAGE_DOOR";
 
     /// <summary>
@@ -41,13 +40,6 @@ public class GarageSecurity
         context.Events.Filter<MobileNotificationActionEvent>(EventTypes.MobileAppNotificationActionEvent)
             .Where(x => x.Data?.Action == CloseGarageDoorAction)
             .Subscribe(_ => OpenShutGarageDoor(false));
-        entities.InputBoolean.OwenOnMorningWalk
-            .StateChanges()
-            .Where(x => x.New.IsOn())
-            .Subscribe(_ => SendOpenGarageDoorRequestNotification());
-        context.Events.Filter<MobileNotificationActionEvent>(EventTypes.MobileAppNotificationActionEvent)
-            .Where(x => x.Data?.Action == OpenGarageDoorAction)
-            .Subscribe(_ => OpenShutGarageDoor(true));
     }
 
     /// <summary>
@@ -70,30 +62,6 @@ public class GarageSecurity
                     {
                         Action = CloseGarageDoorAction,
                         Title = "Close Garage Door",
-                        Uri = "/dashboard-mobile-plus/0"
-                    }
-                ]
-            });
-    }
-
-    /// <summary>
-    /// Sends notification to see if Owen wants the garage door open for bringing the garbage in.
-    /// </summary>
-    private void SendOpenGarageDoorRequestNotification()
-    {
-        if (scheduler.Now.DayOfWeek != DayOfWeek.Thursday || entities.Cover.PrimaryGarageDoor.State == "open")
-        {
-            return;
-        }
-        
-        services.Notify.Owen("Open Garage Door for Garbage?", "Garage", 
-            data: new MobileAppNotificationData
-            {
-                Actions = [
-                    new MobileAppNotificationAction
-                    {
-                        Action = OpenGarageDoorAction,
-                        Title = "Open Garage Door",
                         Uri = "/dashboard-mobile-plus/0"
                     }
                 ]
