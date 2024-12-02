@@ -2,7 +2,6 @@
 using NetDaemon.Extensions;
 using NetDaemon.Extensions.Scheduler;
 using NetDaemon.HassModel.Entities;
-using NetDaemon.Utilities;
 
 namespace NetDaemon.Apps.Walk;
 
